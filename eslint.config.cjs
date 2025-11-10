@@ -100,5 +100,6 @@ module.exports = defineConfig([
     '**/tailwind.config.js',
     '**/postcss.config.js',
     '**/eslint.config.cjs',
+    '**/env',
   ]),
 ]);
