@@ -298,7 +298,7 @@ const OpenLeaderboard: React.FC = () => {
               <p className="text-sm text-gray-600 mb-3">Complex form filling with validation and dynamic elements</p>
               <div className="flex items-center justify-between">
                 <span className="text-xs bg-warm-100 text-warm-700 px-2 py-1 rounded">Web</span>
-                <button className="text-warm-600 hover:text-warm-700 text-sm font-medium">View Details</button>
+                <Link to="/environment" className="text-warm-600 hover:text-warm-700 text-sm font-medium">View Details</Link>
               </div>
             </div>
             <div className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
@@ -306,7 +306,7 @@ const OpenLeaderboard: React.FC = () => {
               <p className="text-sm text-gray-600 mb-3">Navigate through complex application workflows</p>
               <div className="flex items-center justify-between">
                 <span className="text-xs bg-warm-100 text-warm-700 px-2 py-1 rounded">Web</span>
-                <button className="text-warm-600 hover:text-warm-700 text-sm font-medium">View Details</button>
+                <Link to="/environment" className="text-warm-600 hover:text-warm-700 text-sm font-medium">View Details</Link>
               </div>
             </div>
             <div className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
@@ -314,14 +314,17 @@ const OpenLeaderboard: React.FC = () => {
               <p className="text-sm text-gray-600 mb-3">Extract and process data from various UI elements</p>
               <div className="flex items-center justify-between">
                 <span className="text-xs bg-warm-100 text-warm-700 px-2 py-1 rounded">Web</span>
-                <button className="text-warm-600 hover:text-warm-700 text-sm font-medium">View Details</button>
+                <Link to="/environment" className="text-warm-600 hover:text-warm-700 text-sm font-medium">View Details</Link>
               </div>
             </div>
           </div>
           <div className="text-center mt-6">
-            <button className="px-6 py-2 border border-warm-500 text-warm-600 rounded-lg hover:bg-warm-50 transition-colors">
-              Browse All Test Cases (527)
-            </button>
+            <Link
+              to="/environment"
+              className="inline-block px-6 py-2 border border-warm-500 text-warm-600 rounded-lg hover:bg-warm-50 transition-colors"
+            >
+              View Test Cases in Environments (527)
+            </Link>
           </div>
         </div>
       </div>
