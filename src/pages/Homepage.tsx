@@ -270,15 +270,16 @@ const Homepage: React.FC = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
-            {/* Primary Stats - Optimized Hover Effects */}
+          {/* Primary Stats - Compact Single Row Layout */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+            {/* Card 1 - Universal */}
             <div className="benchmark-card group relative">
-              <div className="benchmark-card-glow absolute -inset-1 bg-gradient-to-r from-warm-400 to-coral-400 rounded-3xl opacity-0 group-hover:opacity-25 transition-all duration-500 ease-out blur-xl"></div>
-              <div className="relative card p-8 bg-gradient-to-br from-warm-50 to-coral-50 border-0 shadow-xl group-hover:shadow-2xl group-hover:-translate-y-1 transition-all duration-300 ease-out">
-                <div className="flex items-center justify-between mb-6">
-                  <div className="w-16 h-16 bg-gradient-to-br from-warm-400 to-warm-600 rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 ease-out">
+              <div className="benchmark-card-glow absolute -inset-1 bg-gradient-to-r from-warm-400 to-coral-400 rounded-2xl opacity-0 group-hover:opacity-25 transition-all duration-500 ease-out blur-xl"></div>
+              <div className="relative card p-6 bg-gradient-to-br from-warm-50 to-coral-50 border-0 shadow-lg group-hover:shadow-xl group-hover:-translate-y-1 transition-all duration-300 ease-out">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="w-12 h-12 bg-gradient-to-br from-warm-400 to-warm-600 rounded-xl flex items-center justify-center shadow-md group-hover:scale-110 transition-transform duration-300 ease-out">
                     <svg
-                      className="w-8 h-8 text-white"
+                      className="w-6 h-6 text-white"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -291,20 +292,20 @@ const Homepage: React.FC = () => {
                       />
                     </svg>
                   </div>
-                  <span className="text-sm font-medium text-warm-600 bg-warm-100 px-3 py-1 rounded-full group-hover:bg-warm-200 transition-colors duration-300">
+                  <span className="text-xs font-medium text-warm-600 bg-warm-100 px-2 py-1 rounded-full group-hover:bg-warm-200 transition-colors duration-300">
                     Universal Access
                   </span>
                 </div>
-                <div className="text-5xl font-bold text-warm-600 mb-4 group-hover:scale-105 transition-transform duration-300">
+                <div className="text-3xl font-bold text-warm-600 mb-2 group-hover:scale-105 transition-transform duration-300">
                   Universal
                 </div>
-                <p className="text-gray-700 text-lg mb-4">
+                <p className="text-gray-700 text-sm mb-3">
                   Any GUI Agent • Minimum Cost
                 </p>
-                <div className="space-y-2">
-                  <div className="flex items-center text-sm text-gray-600 group-hover:text-warm-600 transition-colors duration-300">
+                <div className="space-y-1">
+                  <div className="flex items-center text-xs text-gray-600 group-hover:text-warm-600 transition-colors duration-300">
                     <svg
-                      className="w-4 h-4 text-warm-500 mr-2 group-hover:text-warm-600 transition-colors duration-300"
+                      className="w-3 h-3 text-warm-500 mr-1.5 group-hover:text-warm-600 transition-colors duration-300"
                       fill="currentColor"
                       viewBox="0 0 20 20"
                     >
@@ -314,11 +315,11 @@ const Homepage: React.FC = () => {
                         clipRule="evenodd"
                       />
                     </svg>
-                    Zero infrastructure requirements
+                    Zero infrastructure
                   </div>
-                  <div className="flex items-center text-sm text-gray-600 group-hover:text-warm-600 transition-colors duration-300">
+                  <div className="flex items-center text-xs text-gray-600 group-hover:text-warm-600 transition-colors duration-300">
                     <svg
-                      className="w-4 h-4 text-warm-500 mr-2 group-hover:text-warm-600 transition-colors duration-300"
+                      className="w-3 h-3 text-warm-500 mr-1.5 group-hover:text-warm-600 transition-colors duration-300"
                       fill="currentColor"
                       viewBox="0 0 20 20"
                     >
@@ -334,13 +335,14 @@ const Homepage: React.FC = () => {
               </div>
             </div>
 
+            {/* Card 2 - Infinite */}
             <div className="benchmark-card group relative">
-              <div className="benchmark-card-glow absolute -inset-1 bg-gradient-to-r from-coral-400 to-gold-400 rounded-3xl opacity-0 group-hover:opacity-25 transition-all duration-500 ease-out blur-xl"></div>
-              <div className="relative card p-8 bg-gradient-to-br from-coral-50 to-gold-50 border-0 shadow-xl group-hover:shadow-2xl group-hover:-translate-y-1 transition-all duration-300 ease-out">
-                <div className="flex items-center justify-between mb-6">
-                  <div className="w-16 h-16 bg-gradient-to-br from-coral-400 to-coral-600 rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 ease-out">
+              <div className="benchmark-card-glow absolute -inset-1 bg-gradient-to-r from-coral-400 to-gold-400 rounded-2xl opacity-0 group-hover:opacity-25 transition-all duration-500 ease-out blur-xl"></div>
+              <div className="relative card p-6 bg-gradient-to-br from-coral-50 to-gold-50 border-0 shadow-lg group-hover:shadow-xl group-hover:-translate-y-1 transition-all duration-300 ease-out">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="w-12 h-12 bg-gradient-to-br from-coral-400 to-coral-600 rounded-xl flex items-center justify-center shadow-md group-hover:scale-110 transition-transform duration-300 ease-out">
                     <svg
-                      className="w-8 h-8 text-white"
+                      className="w-6 h-6 text-white"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -353,20 +355,20 @@ const Homepage: React.FC = () => {
                       />
                     </svg>
                   </div>
-                  <span className="text-sm font-medium text-coral-600 bg-coral-100 px-3 py-1 rounded-full group-hover:bg-coral-200 transition-colors duration-300">
+                  <span className="text-xs font-medium text-coral-600 bg-coral-100 px-2 py-1 rounded-full group-hover:bg-coral-200 transition-colors duration-300">
                     Infinite Scale
                   </span>
                 </div>
-                <div className="text-5xl font-bold text-coral-600 mb-4 group-hover:scale-105 transition-transform duration-300">
+                <div className="text-3xl font-bold text-coral-600 mb-2 group-hover:scale-105 transition-transform duration-300">
                   ∞
                 </div>
-                <p className="text-gray-700 text-lg mb-4">
+                <p className="text-gray-700 text-sm mb-3">
                   Generated Environments
                 </p>
-                <div className="space-y-2">
-                  <div className="flex items-center text-sm text-gray-600 group-hover:text-coral-600 transition-colors duration-300">
+                <div className="space-y-1">
+                  <div className="flex items-center text-xs text-gray-600 group-hover:text-coral-600 transition-colors duration-300">
                     <svg
-                      className="w-4 h-4 text-coral-500 mr-2 group-hover:text-coral-600 transition-colors duration-300"
+                      className="w-3 h-3 text-coral-500 mr-1.5 group-hover:text-coral-600 transition-colors duration-300"
                       fill="currentColor"
                       viewBox="0 0 20 20"
                     >
@@ -378,9 +380,9 @@ const Homepage: React.FC = () => {
                     </svg>
                     AI-powered generation
                   </div>
-                  <div className="flex items-center text-sm text-gray-600 group-hover:text-coral-600 transition-colors duration-300">
+                  <div className="flex items-center text-xs text-gray-600 group-hover:text-coral-600 transition-colors duration-300">
                     <svg
-                      className="w-4 h-4 text-coral-500 mr-2 group-hover:text-coral-600 transition-colors duration-300"
+                      className="w-3 h-3 text-coral-500 mr-1.5 group-hover:text-coral-600 transition-colors duration-300"
                       fill="currentColor"
                       viewBox="0 0 20 20"
                     >
@@ -390,19 +392,20 @@ const Homepage: React.FC = () => {
                         clipRule="evenodd"
                       />
                     </svg>
-                    Never repeated scenarios
+                    Never repeated
                   </div>
                 </div>
               </div>
             </div>
 
+            {/* Card 3 - 50K+ */}
             <div className="benchmark-card group relative">
-              <div className="benchmark-card-glow absolute -inset-1 bg-gradient-to-r from-gold-400 to-warm-400 rounded-3xl opacity-0 group-hover:opacity-25 transition-all duration-500 ease-out blur-xl"></div>
-              <div className="relative card p-8 bg-gradient-to-br from-gold-50 to-warm-50 border-0 shadow-xl group-hover:shadow-2xl group-hover:-translate-y-1 transition-all duration-300 ease-out">
-                <div className="flex items-center justify-between mb-6">
-                  <div className="w-16 h-16 bg-gradient-to-br from-gold-400 to-gold-600 rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 ease-out">
+              <div className="benchmark-card-glow absolute -inset-1 bg-gradient-to-r from-gold-400 to-warm-400 rounded-2xl opacity-0 group-hover:opacity-25 transition-all duration-500 ease-out blur-xl"></div>
+              <div className="relative card p-6 bg-gradient-to-br from-gold-50 to-warm-50 border-0 shadow-lg group-hover:shadow-xl group-hover:-translate-y-1 transition-all duration-300 ease-out">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="w-12 h-12 bg-gradient-to-br from-gold-400 to-gold-600 rounded-xl flex items-center justify-center shadow-md group-hover:scale-110 transition-transform duration-300 ease-out">
                     <svg
-                      className="w-8 h-8 text-white"
+                      className="w-6 h-6 text-white"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -415,18 +418,18 @@ const Homepage: React.FC = () => {
                       />
                     </svg>
                   </div>
-                  <span className="text-sm font-medium text-gold-600 bg-gold-100 px-3 py-1 rounded-full group-hover:bg-gold-200 transition-colors duration-300">
+                  <span className="text-xs font-medium text-gold-600 bg-gold-100 px-2 py-1 rounded-full group-hover:bg-gold-200 transition-colors duration-300">
                     Comprehensive
                   </span>
                 </div>
-                <div className="text-5xl font-bold text-gold-600 mb-4 group-hover:scale-105 transition-transform duration-300">
+                <div className="text-3xl font-bold text-gold-600 mb-2 group-hover:scale-105 transition-transform duration-300">
                   50K+
                 </div>
-                <p className="text-gray-700 text-lg mb-4">Test Scenarios</p>
-                <div className="space-y-2">
-                  <div className="flex items-center text-sm text-gray-600 group-hover:text-gold-600 transition-colors duration-300">
+                <p className="text-gray-700 text-sm mb-3">Test Scenarios</p>
+                <div className="space-y-1">
+                  <div className="flex items-center text-xs text-gray-600 group-hover:text-gold-600 transition-colors duration-300">
                     <svg
-                      className="w-4 h-4 text-gold-500 mr-2 group-hover:text-gold-600 transition-colors duration-300"
+                      className="w-3 h-3 text-gold-500 mr-1.5 group-hover:text-gold-600 transition-colors duration-300"
                       fill="currentColor"
                       viewBox="0 0 20 20"
                     >
@@ -436,11 +439,11 @@ const Homepage: React.FC = () => {
                         clipRule="evenodd"
                       />
                     </svg>
-                    Multi-platform coverage
+                    Multi-platform
                   </div>
-                  <div className="flex items-center text-sm text-gray-600 group-hover:text-gold-600 transition-colors duration-300">
+                  <div className="flex items-center text-xs text-gray-600 group-hover:text-gold-600 transition-colors duration-300">
                     <svg
-                      className="w-4 h-4 text-gold-500 mr-2 group-hover:text-gold-600 transition-colors duration-300"
+                      className="w-3 h-3 text-gold-500 mr-1.5 group-hover:text-gold-600 transition-colors duration-300"
                       fill="currentColor"
                       viewBox="0 0 20 20"
                     >
@@ -450,19 +453,20 @@ const Homepage: React.FC = () => {
                         clipRule="evenodd"
                       />
                     </svg>
-                    Real-world applications
+                    Real-world apps
                   </div>
                 </div>
               </div>
             </div>
 
+            {/* Card 4 - Zero */}
             <div className="benchmark-card group relative">
-              <div className="benchmark-card-glow absolute -inset-1 bg-gradient-to-r from-warm-400 to-coral-400 rounded-3xl opacity-0 group-hover:opacity-25 transition-all duration-500 ease-out blur-xl"></div>
-              <div className="relative card p-8 bg-gradient-to-br from-warm-50 to-coral-50 border-0 shadow-xl group-hover:shadow-2xl group-hover:-translate-y-1 transition-all duration-300 ease-out">
-                <div className="flex items-center justify-between mb-6">
-                  <div className="w-16 h-16 bg-gradient-to-br from-warm-400 to-warm-600 rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 ease-out">
+              <div className="benchmark-card-glow absolute -inset-1 bg-gradient-to-r from-warm-400 to-coral-400 rounded-2xl opacity-0 group-hover:opacity-25 transition-all duration-500 ease-out blur-xl"></div>
+              <div className="relative card p-6 bg-gradient-to-br from-warm-50 to-coral-50 border-0 shadow-lg group-hover:shadow-xl group-hover:-translate-y-1 transition-all duration-300 ease-out">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="w-12 h-12 bg-gradient-to-br from-warm-400 to-warm-600 rounded-xl flex items-center justify-center shadow-md group-hover:scale-110 transition-transform duration-300 ease-out">
                     <svg
-                      className="w-8 h-8 text-white"
+                      className="w-6 h-6 text-white"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -475,18 +479,18 @@ const Homepage: React.FC = () => {
                       />
                     </svg>
                   </div>
-                  <span className="text-sm font-medium text-warm-600 bg-warm-100 px-3 py-1 rounded-full group-hover:bg-warm-200 transition-colors duration-300">
+                  <span className="text-xs font-medium text-warm-600 bg-warm-100 px-2 py-1 rounded-full group-hover:bg-warm-200 transition-colors duration-300">
                     Secure
                   </span>
                 </div>
-                <div className="text-5xl font-bold text-warm-600 mb-4 group-hover:scale-105 transition-transform duration-300">
+                <div className="text-3xl font-bold text-warm-600 mb-2 group-hover:scale-105 transition-transform duration-300">
                   Zero
                 </div>
-                <p className="text-gray-700 text-lg mb-4">Over-fitting Risk</p>
-                <div className="space-y-2">
-                  <div className="flex items-center text-sm text-gray-600 group-hover:text-warm-600 transition-colors duration-300">
+                <p className="text-gray-700 text-sm mb-3">Over-fitting Risk</p>
+                <div className="space-y-1">
+                  <div className="flex items-center text-xs text-gray-600 group-hover:text-warm-600 transition-colors duration-300">
                     <svg
-                      className="w-4 h-4 text-warm-500 mr-2 group-hover:text-warm-600 transition-colors duration-300"
+                      className="w-3 h-3 text-warm-500 mr-1.5 group-hover:text-warm-600 transition-colors duration-300"
                       fill="currentColor"
                       viewBox="0 0 20 20"
                     >
@@ -498,9 +502,9 @@ const Homepage: React.FC = () => {
                     </svg>
                     Dynamic generation
                   </div>
-                  <div className="flex items-center text-sm text-gray-600 group-hover:text-warm-600 transition-colors duration-300">
+                  <div className="flex items-center text-xs text-gray-600 group-hover:text-warm-600 transition-colors duration-300">
                     <svg
-                      className="w-4 h-4 text-warm-500 mr-2 group-hover:text-warm-600 transition-colors duration-300"
+                      className="w-3 h-3 text-warm-500 mr-1.5 group-hover:text-warm-600 transition-colors duration-300"
                       fill="currentColor"
                       viewBox="0 0 20 20"
                     >
@@ -510,7 +514,7 @@ const Homepage: React.FC = () => {
                         clipRule="evenodd"
                       />
                     </svg>
-                    Fair evaluation guaranteed
+                    Fair evaluation
                   </div>
                 </div>
               </div>

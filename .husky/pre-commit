@@ -8,6 +8,15 @@ npm run format
 echo "🔍 Running ESLint with auto-fix..."
 npm run lint:fix
 
+# Check if there are any formatting changes that need to be staged
+if [ -n "$(git status --porcelain)" ]; then
+    echo "📋 Staging formatting changes..."
+    git add .
+
+    echo "🔄 Amending commit with formatted files..."
+    git commit --amend --no-edit --no-verify
+fi
+
 # Check if there are any remaining ESLint errors after auto-fix
 echo "✅ Checking for remaining ESLint issues..."
 npm run lint
