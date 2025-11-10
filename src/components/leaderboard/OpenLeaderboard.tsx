@@ -128,7 +128,7 @@ const OpenLeaderboard: React.FC = () => {
                 <label className="block text-sm font-medium text-gray-700 mb-1">Time Range</label>
                 <select
                   value={selectedTimeRange}
-                  onChange={(e) => setSelectedTimeRange(e.target.value as any)}
+                  onChange={(e) => setSelectedTimeRange(e.target.value as "7d" | "30d" | "90d" | "1y")}
                   className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-warm-500 focus:border-warm-500"
                 >
                   <option value="7d">Last 7 Days</option>
@@ -140,7 +140,7 @@ const OpenLeaderboard: React.FC = () => {
                 <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
                 <select
                   value={selectedCategory}
-                  onChange={(e) => setSelectedCategory(e.target.value as any)}
+                  onChange={(e) => setSelectedCategory(e.target.value as "all" | "web" | "desktop" | "mobile")}
                   className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-warm-500 focus:border-warm-500"
                 >
                   <option value="all">All Categories</option>

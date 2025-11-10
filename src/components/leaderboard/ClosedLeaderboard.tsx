@@ -155,7 +155,7 @@ const ClosedLeaderboard: React.FC = () => {
                 <label className="block text-sm font-medium text-gray-700 mb-1">Evaluation Period</label>
                 <select
                   value={selectedTimeRange}
-                  onChange={(e) => setSelectedTimeRange(e.target.value as any)}
+                  onChange={(e) => setSelectedTimeRange(e.target.value as "current" | "previous")}
                   className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-coral-500 focus:border-coral-500"
                 >
                   <option value="current">Current Period</option>
@@ -166,7 +166,7 @@ const ClosedLeaderboard: React.FC = () => {
                 <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
                 <select
                   value={selectedCategory}
-                  onChange={(e) => setSelectedCategory(e.target.value as any)}
+                  onChange={(e) => setSelectedCategory(e.target.value as "all" | "enterprise" | "research" | "opensource")}
                   className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-coral-500 focus:border-coral-500"
                 >
                   <option value="all">All Categories</option>
