@@ -8,7 +8,7 @@ const Homepage: React.FC = () => {
       <section className="gradient-warm text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
           <div className="text-center">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6 animate-fade-in">
+            <h1 className="text-4xl md:text-6xl font-bold mb-6 animate-fade-in leading-normal" style={{ paddingBottom: '0.1em' }}>
               ScaleCUA Benchmark
             </h1>
             <p className="text-xl md:text-2xl text-warm-100 mb-8 max-w-3xl mx-auto animate-slide-up">
@@ -30,7 +30,7 @@ const Homepage: React.FC = () => {
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gradient mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-gradient mb-4 leading-normal" style={{ paddingBottom: '0.1em' }}>
               Why ScaleCUA?
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
@@ -136,7 +136,7 @@ const Homepage: React.FC = () => {
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gradient mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-gradient mb-4 leading-normal" style={{ paddingBottom: '0.1em' }}>
               Benchmark Scale
             </h2>
           </div>
@@ -165,7 +165,7 @@ const Homepage: React.FC = () => {
       {/* CTA Section */}
       <section className="py-20 gradient-coral text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">
+          <h2 className="text-3xl md:text-4xl font-bold mb-6 leading-normal" style={{ paddingBottom: '0.1em' }}>
             Transform GUI Agent Evaluation
           </h2>
           <p className="text-xl mb-8 max-w-2xl mx-auto">

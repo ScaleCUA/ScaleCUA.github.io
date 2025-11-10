@@ -7,7 +7,7 @@ const Navigation: React.FC = () => {
 
   const navItems = [
     { name: 'Home', path: '/' },
-    { name: 'Leaderboard', path: '/leaderboard' },
+    { name: 'Leaderboards', path: '/leaderboard' },
     { name: 'Environment', path: '/environment' },
   ]
 
