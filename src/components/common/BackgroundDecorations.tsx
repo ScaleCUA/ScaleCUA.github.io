@@ -173,7 +173,7 @@ const BackgroundDecorations: React.FC<BackgroundDecorationsProps> = ({
           .join(' ');
 
         const colorClasses = decoration.color2
-          ? `bg-gradient-to-br ${decoration.color} ${decoration.color2}`
+          ? `bg-linear-to-br ${decoration.color} ${decoration.color2}`
           : decoration.color || 'bg-white';
 
         const animationClasses = decoration.animationDelay

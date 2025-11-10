@@ -24,12 +24,12 @@ const LeaderboardHome: React.FC = () => {
       <section className="relative bg-white py-8 border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-center">
-            <div className="bg-gradient-to-r from-warm-50 to-coral-50 rounded-2xl shadow-xl p-3 inline-flex backdrop-blur-sm gap-2">
+            <div className="bg-linear-to-r from-warm-50 to-coral-50 rounded-2xl shadow-xl p-3 inline-flex backdrop-blur-xs gap-2">
               <button
                 onClick={() => setActiveTab('open')}
                 className={`px-8 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 ${
                   activeTab === 'open'
-                    ? 'bg-gradient-to-r from-warm-500 to-warm-600 text-white shadow-lg'
+                    ? 'bg-linear-to-r from-warm-500 to-warm-600 text-white shadow-lg'
                     : 'text-gray-600 hover:text-warm-600 hover:bg-warm-100/50'
                 }`}
               >
@@ -66,7 +66,7 @@ const LeaderboardHome: React.FC = () => {
                 onClick={() => setActiveTab('closed')}
                 className={`px-8 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 ${
                   activeTab === 'closed'
-                    ? 'bg-gradient-to-r from-coral-500 to-coral-600 text-white shadow-lg'
+                    ? 'bg-linear-to-r from-coral-500 to-coral-600 text-white shadow-lg'
                     : 'text-gray-600 hover:text-coral-600 hover:bg-coral-100/50'
                 }`}
               >
@@ -99,14 +99,14 @@ const LeaderboardHome: React.FC = () => {
       </section>
 
       {/* Content Section */}
-      <section className="relative bg-gradient-to-br from-warm-50 to-white py-16 min-h-[600px]">
+      <section className="relative bg-linear-to-br from-warm-50 to-white py-16 min-h-[600px]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Open Tests Content */}
           {activeTab === 'open' && (
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
               <div className="space-y-8">
                 <div className="flex items-center space-x-4">
-                  <div className="w-16 h-16 bg-gradient-to-br from-warm-200 to-warm-400 rounded-2xl flex items-center justify-center shadow-lg">
+                  <div className="w-16 h-16 bg-linear-to-br from-warm-200 to-warm-400 rounded-2xl flex items-center justify-center shadow-lg">
                     <svg
                       className="w-8 h-8 text-white"
                       fill="none"
@@ -172,7 +172,7 @@ const LeaderboardHome: React.FC = () => {
 
                 <Link
                   to="/leaderboard/open"
-                  className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-warm-500 to-warm-600 text-white font-semibold rounded-2xl hover:from-warm-600 hover:to-warm-700 transition-all duration-300 shadow-lg hover:shadow-2xl transform hover:scale-105 group"
+                  className="inline-flex items-center px-8 py-4 bg-linear-to-r from-warm-500 to-warm-600 text-white font-semibold rounded-2xl hover:from-warm-600 hover:to-warm-700 transition-all duration-300 shadow-lg hover:shadow-2xl transform hover:scale-105 group"
                 >
                   View Open Leaderboard
                   <svg
@@ -193,9 +193,9 @@ const LeaderboardHome: React.FC = () => {
 
               <div className="space-y-6">
                 <div className="benchmark-card group relative">
-                  <div className="benchmark-card-glow absolute -inset-1 bg-gradient-to-r from-warm-400 to-coral-600 rounded-2xl opacity-20 group-hover:opacity-40 transition-all duration-500 ease-out blur-xl"></div>
+                  <div className="benchmark-card-glow absolute -inset-1 bg-linear-to-r from-warm-400 to-coral-600 rounded-2xl opacity-20 group-hover:opacity-40 transition-all duration-500 ease-out blur-xl"></div>
                   <div className="relative card p-8 bg-white border-0 overflow-hidden group-hover:shadow-2xl group-hover:-translate-y-1 transition-all duration-300 ease-out">
-                    <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-warm-100 to-coral-100 rounded-full -mr-16 -mt-16 opacity-50"></div>
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-linear-to-br from-warm-100 to-coral-100 rounded-full -mr-16 -mt-16 opacity-50"></div>
                     <div className="relative z-10">
                       <div className="inline-flex items-center space-x-2 bg-warm-100 text-warm-700 px-4 py-2 rounded-full text-sm font-medium mb-6">
                         <svg
@@ -209,7 +209,7 @@ const LeaderboardHome: React.FC = () => {
                       </div>
                       <div className="space-y-4">
                         <div className="flex items-start space-x-4 group/item">
-                          <div className="w-8 h-8 bg-gradient-to-br from-warm-400 to-warm-600 rounded-xl flex items-center justify-center flex-shrink-0 mt-0.5 group-hover/item:scale-110 transition-transform duration-300">
+                          <div className="w-8 h-8 bg-linear-to-br from-warm-400 to-warm-600 rounded-xl flex items-center justify-center shrink-0 mt-0.5 group-hover/item:scale-110 transition-transform duration-300">
                             <svg
                               className="w-4 h-4 text-white"
                               fill="currentColor"
@@ -233,7 +233,7 @@ const LeaderboardHome: React.FC = () => {
                           </div>
                         </div>
                         <div className="flex items-start space-x-4 group/item">
-                          <div className="w-8 h-8 bg-gradient-to-br from-warm-400 to-warm-600 rounded-xl flex items-center justify-center flex-shrink-0 mt-0.5 group-hover/item:scale-110 transition-transform duration-300">
+                          <div className="w-8 h-8 bg-linear-to-br from-warm-400 to-warm-600 rounded-xl flex items-center justify-center shrink-0 mt-0.5 group-hover/item:scale-110 transition-transform duration-300">
                             <svg
                               className="w-4 h-4 text-white"
                               fill="currentColor"
@@ -257,7 +257,7 @@ const LeaderboardHome: React.FC = () => {
                           </div>
                         </div>
                         <div className="flex items-start space-x-4 group/item">
-                          <div className="w-8 h-8 bg-gradient-to-br from-warm-400 to-warm-600 rounded-xl flex items-center justify-center flex-shrink-0 mt-0.5 group-hover/item:scale-110 transition-transform duration-300">
+                          <div className="w-8 h-8 bg-linear-to-br from-warm-400 to-warm-600 rounded-xl flex items-center justify-center shrink-0 mt-0.5 group-hover/item:scale-110 transition-transform duration-300">
                             <svg
                               className="w-4 h-4 text-white"
                               fill="currentColor"
@@ -281,7 +281,7 @@ const LeaderboardHome: React.FC = () => {
                           </div>
                         </div>
                         <div className="flex items-start space-x-4 group/item">
-                          <div className="w-8 h-8 bg-gradient-to-br from-warm-400 to-warm-600 rounded-xl flex items-center justify-center flex-shrink-0 mt-0.5 group-hover/item:scale-110 transition-transform duration-300">
+                          <div className="w-8 h-8 bg-linear-to-br from-warm-400 to-warm-600 rounded-xl flex items-center justify-center shrink-0 mt-0.5 group-hover/item:scale-110 transition-transform duration-300">
                             <svg
                               className="w-4 h-4 text-white"
                               fill="currentColor"
@@ -317,7 +317,7 @@ const LeaderboardHome: React.FC = () => {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
               <div className="space-y-8">
                 <div className="flex items-center space-x-4">
-                  <div className="w-16 h-16 bg-gradient-to-br from-coral-200 to-coral-400 rounded-2xl flex items-center justify-center shadow-lg">
+                  <div className="w-16 h-16 bg-linear-to-br from-coral-200 to-coral-400 rounded-2xl flex items-center justify-center shadow-lg">
                     <svg
                       className="w-8 h-8 text-white"
                       fill="none"
@@ -376,7 +376,7 @@ const LeaderboardHome: React.FC = () => {
 
                 <Link
                   to="/leaderboard/closed"
-                  className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-coral-500 to-coral-600 text-white font-semibold rounded-2xl hover:from-coral-600 hover:to-coral-700 transition-all duration-300 shadow-lg hover:shadow-2xl transform hover:scale-105 group"
+                  className="inline-flex items-center px-8 py-4 bg-linear-to-r from-coral-500 to-coral-600 text-white font-semibold rounded-2xl hover:from-coral-600 hover:to-coral-700 transition-all duration-300 shadow-lg hover:shadow-2xl transform hover:scale-105 group"
                 >
                   View Closed Leaderboard
                   <svg
@@ -397,9 +397,9 @@ const LeaderboardHome: React.FC = () => {
 
               <div className="space-y-6">
                 <div className="benchmark-card group relative">
-                  <div className="benchmark-card-glow absolute -inset-1 bg-gradient-to-r from-coral-400 to-coral-600 rounded-2xl opacity-20 group-hover:opacity-40 transition-all duration-500 ease-out blur-xl"></div>
+                  <div className="benchmark-card-glow absolute -inset-1 bg-linear-to-r from-coral-400 to-coral-600 rounded-2xl opacity-20 group-hover:opacity-40 transition-all duration-500 ease-out blur-xl"></div>
                   <div className="relative card p-8 bg-white border-0 overflow-hidden group-hover:shadow-2xl group-hover:-translate-y-1 transition-all duration-300 ease-out">
-                    <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-coral-100 to-gold-100 rounded-full -mr-16 -mt-16 opacity-50"></div>
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-linear-to-br from-coral-100 to-gold-100 rounded-full -mr-16 -mt-16 opacity-50"></div>
                     <div className="relative z-10">
                       <div className="inline-flex items-center space-x-2 bg-coral-100 text-coral-700 px-4 py-2 rounded-full text-sm font-medium mb-6">
                         <svg
@@ -413,7 +413,7 @@ const LeaderboardHome: React.FC = () => {
                       </div>
                       <div className="space-y-4">
                         <div className="flex items-start space-x-4 group/item">
-                          <div className="w-8 h-8 bg-gradient-to-br from-coral-400 to-coral-600 rounded-xl flex items-center justify-center flex-shrink-0 mt-0.5 group-hover/item:scale-110 transition-transform duration-300">
+                          <div className="w-8 h-8 bg-linear-to-br from-coral-400 to-coral-600 rounded-xl flex items-center justify-center shrink-0 mt-0.5 group-hover/item:scale-110 transition-transform duration-300">
                             <svg
                               className="w-4 h-4 text-white"
                               fill="currentColor"
@@ -437,7 +437,7 @@ const LeaderboardHome: React.FC = () => {
                           </div>
                         </div>
                         <div className="flex items-start space-x-4 group/item">
-                          <div className="w-8 h-8 bg-gradient-to-br from-coral-400 to-coral-600 rounded-xl flex items-center justify-center flex-shrink-0 mt-0.5 group-hover/item:scale-110 transition-transform duration-300">
+                          <div className="w-8 h-8 bg-linear-to-br from-coral-400 to-coral-600 rounded-xl flex items-center justify-center shrink-0 mt-0.5 group-hover/item:scale-110 transition-transform duration-300">
                             <svg
                               className="w-4 h-4 text-white"
                               fill="currentColor"
@@ -461,7 +461,7 @@ const LeaderboardHome: React.FC = () => {
                           </div>
                         </div>
                         <div className="flex items-start space-x-4 group/item">
-                          <div className="w-8 h-8 bg-gradient-to-br from-coral-400 to-coral-600 rounded-xl flex items-center justify-center flex-shrink-0 mt-0.5 group-hover/item:scale-110 transition-transform duration-300">
+                          <div className="w-8 h-8 bg-linear-to-br from-coral-400 to-coral-600 rounded-xl flex items-center justify-center shrink-0 mt-0.5 group-hover/item:scale-110 transition-transform duration-300">
                             <svg
                               className="w-4 h-4 text-white"
                               fill="currentColor"
@@ -485,7 +485,7 @@ const LeaderboardHome: React.FC = () => {
                           </div>
                         </div>
                         <div className="flex items-start space-x-4 group/item">
-                          <div className="w-8 h-8 bg-gradient-to-br from-coral-400 to-coral-600 rounded-xl flex items-center justify-center flex-shrink-0 mt-0.5 group-hover/item:scale-110 transition-transform duration-300">
+                          <div className="w-8 h-8 bg-linear-to-br from-coral-400 to-coral-600 rounded-xl flex items-center justify-center shrink-0 mt-0.5 group-hover/item:scale-110 transition-transform duration-300">
                             <svg
                               className="w-4 h-4 text-white"
                               fill="currentColor"
@@ -522,7 +522,7 @@ const LeaderboardHome: React.FC = () => {
       <section className="relative bg-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-warm-100 to-coral-100 text-warm-700 px-4 py-2 rounded-full text-sm font-medium mb-6">
+            <div className="inline-flex items-center space-x-2 bg-linear-to-r from-warm-100 to-coral-100 text-warm-700 px-4 py-2 rounded-full text-sm font-medium mb-6">
               <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                 <path
                   fillRule="evenodd"
@@ -543,12 +543,12 @@ const LeaderboardHome: React.FC = () => {
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             <div className="benchmark-card group relative">
-              <div className="benchmark-card-glow absolute -inset-1 bg-gradient-to-r from-warm-400 to-warm-600 rounded-3xl opacity-0 group-hover:opacity-25 transition-all duration-500 ease-out blur-xl"></div>
-              <div className="relative bg-gradient-to-br from-warm-50 to-white rounded-3xl p-8 border-2 border-warm-100 overflow-hidden group-hover:shadow-2xl group-hover:-translate-y-1 transition-all duration-300 ease-out">
-                <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-warm-100 to-coral-100 rounded-full -mr-20 -mt-20 opacity-30"></div>
+              <div className="benchmark-card-glow absolute -inset-1 bg-linear-to-r from-warm-400 to-warm-600 rounded-3xl opacity-0 group-hover:opacity-25 transition-all duration-500 ease-out blur-xl"></div>
+              <div className="relative bg-linear-to-br from-warm-50 to-white rounded-3xl p-8 border-2 border-warm-100 overflow-hidden group-hover:shadow-2xl group-hover:-translate-y-1 transition-all duration-300 ease-out">
+                <div className="absolute top-0 right-0 w-40 h-40 bg-linear-to-br from-warm-100 to-coral-100 rounded-full -mr-20 -mt-20 opacity-30"></div>
                 <div className="relative z-10">
                   <div className="flex items-center space-x-4 mb-8">
-                    <div className="w-12 h-12 bg-gradient-to-br from-warm-400 to-warm-600 rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                    <div className="w-12 h-12 bg-linear-to-br from-warm-400 to-warm-600 rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
                       <svg
                         className="w-6 h-6 text-white"
                         fill="none"
@@ -575,7 +575,7 @@ const LeaderboardHome: React.FC = () => {
                   </div>
                   <ul className="space-y-6">
                     <li className="flex items-start space-x-4 group/item">
-                      <div className="w-8 h-8 bg-gradient-to-br from-warm-300 to-warm-500 rounded-xl flex items-center justify-center flex-shrink-0 mt-0.5 group-hover/item:scale-110 transition-transform duration-300">
+                      <div className="w-8 h-8 bg-linear-to-br from-warm-300 to-warm-500 rounded-xl flex items-center justify-center shrink-0 mt-0.5 group-hover/item:scale-110 transition-transform duration-300">
                         <svg
                           className="w-4 h-4 text-white"
                           fill="currentColor"
@@ -599,7 +599,7 @@ const LeaderboardHome: React.FC = () => {
                       </div>
                     </li>
                     <li className="flex items-start space-x-4 group/item">
-                      <div className="w-8 h-8 bg-gradient-to-br from-warm-300 to-warm-500 rounded-xl flex items-center justify-center flex-shrink-0 mt-0.5 group-hover/item:scale-110 transition-transform duration-300">
+                      <div className="w-8 h-8 bg-linear-to-br from-warm-300 to-warm-500 rounded-xl flex items-center justify-center shrink-0 mt-0.5 group-hover/item:scale-110 transition-transform duration-300">
                         <svg
                           className="w-4 h-4 text-white"
                           fill="currentColor"
@@ -623,7 +623,7 @@ const LeaderboardHome: React.FC = () => {
                       </div>
                     </li>
                     <li className="flex items-start space-x-4 group/item">
-                      <div className="w-8 h-8 bg-gradient-to-br from-warm-300 to-warm-500 rounded-xl flex items-center justify-center flex-shrink-0 mt-0.5 group-hover/item:scale-110 transition-transform duration-300">
+                      <div className="w-8 h-8 bg-linear-to-br from-warm-300 to-warm-500 rounded-xl flex items-center justify-center shrink-0 mt-0.5 group-hover/item:scale-110 transition-transform duration-300">
                         <svg
                           className="w-4 h-4 text-white"
                           fill="currentColor"
@@ -647,7 +647,7 @@ const LeaderboardHome: React.FC = () => {
                       </div>
                     </li>
                     <li className="flex items-start space-x-4 group/item">
-                      <div className="w-8 h-8 bg-gradient-to-br from-warm-300 to-warm-500 rounded-xl flex items-center justify-center flex-shrink-0 mt-0.5 group-hover/item:scale-110 transition-transform duration-300">
+                      <div className="w-8 h-8 bg-linear-to-br from-warm-300 to-warm-500 rounded-xl flex items-center justify-center shrink-0 mt-0.5 group-hover/item:scale-110 transition-transform duration-300">
                         <svg
                           className="w-4 h-4 text-white"
                           fill="currentColor"
@@ -675,12 +675,12 @@ const LeaderboardHome: React.FC = () => {
             </div>
 
             <div className="benchmark-card group relative">
-              <div className="benchmark-card-glow absolute -inset-1 bg-gradient-to-r from-coral-400 to-coral-600 rounded-3xl opacity-0 group-hover:opacity-25 transition-all duration-500 ease-out blur-xl"></div>
-              <div className="relative bg-gradient-to-br from-coral-50 to-white rounded-3xl p-8 border-2 border-coral-100 overflow-hidden group-hover:shadow-2xl group-hover:-translate-y-1 transition-all duration-300 ease-out">
-                <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-coral-100 to-gold-100 rounded-full -mr-20 -mt-20 opacity-30"></div>
+              <div className="benchmark-card-glow absolute -inset-1 bg-linear-to-r from-coral-400 to-coral-600 rounded-3xl opacity-0 group-hover:opacity-25 transition-all duration-500 ease-out blur-xl"></div>
+              <div className="relative bg-linear-to-br from-coral-50 to-white rounded-3xl p-8 border-2 border-coral-100 overflow-hidden group-hover:shadow-2xl group-hover:-translate-y-1 transition-all duration-300 ease-out">
+                <div className="absolute top-0 right-0 w-40 h-40 bg-linear-to-br from-coral-100 to-gold-100 rounded-full -mr-20 -mt-20 opacity-30"></div>
                 <div className="relative z-10">
                   <div className="flex items-center space-x-4 mb-8">
-                    <div className="w-12 h-12 bg-gradient-to-br from-coral-400 to-coral-600 rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                    <div className="w-12 h-12 bg-linear-to-br from-coral-400 to-coral-600 rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
                       <svg
                         className="w-6 h-6 text-white"
                         fill="none"
@@ -701,7 +701,7 @@ const LeaderboardHome: React.FC = () => {
                   </div>
                   <ul className="space-y-6">
                     <li className="flex items-start space-x-4 group/item">
-                      <div className="w-8 h-8 bg-gradient-to-br from-coral-300 to-coral-500 rounded-xl flex items-center justify-center flex-shrink-0 mt-0.5 group-hover/item:scale-110 transition-transform duration-300">
+                      <div className="w-8 h-8 bg-linear-to-br from-coral-300 to-coral-500 rounded-xl flex items-center justify-center shrink-0 mt-0.5 group-hover/item:scale-110 transition-transform duration-300">
                         <svg
                           className="w-4 h-4 text-white"
                           fill="currentColor"
@@ -724,7 +724,7 @@ const LeaderboardHome: React.FC = () => {
                       </div>
                     </li>
                     <li className="flex items-start space-x-4 group/item">
-                      <div className="w-8 h-8 bg-gradient-to-br from-coral-300 to-coral-500 rounded-xl flex items-center justify-center flex-shrink-0 mt-0.5 group-hover/item:scale-110 transition-transform duration-300">
+                      <div className="w-8 h-8 bg-linear-to-br from-coral-300 to-coral-500 rounded-xl flex items-center justify-center shrink-0 mt-0.5 group-hover/item:scale-110 transition-transform duration-300">
                         <svg
                           className="w-4 h-4 text-white"
                           fill="currentColor"
@@ -747,7 +747,7 @@ const LeaderboardHome: React.FC = () => {
                       </div>
                     </li>
                     <li className="flex items-start space-x-4 group/item">
-                      <div className="w-8 h-8 bg-gradient-to-br from-coral-300 to-coral-500 rounded-xl flex items-center justify-center flex-shrink-0 mt-0.5 group-hover/item:scale-110 transition-transform duration-300">
+                      <div className="w-8 h-8 bg-linear-to-br from-coral-300 to-coral-500 rounded-xl flex items-center justify-center shrink-0 mt-0.5 group-hover/item:scale-110 transition-transform duration-300">
                         <svg
                           className="w-4 h-4 text-white"
                           fill="currentColor"
@@ -770,7 +770,7 @@ const LeaderboardHome: React.FC = () => {
                       </div>
                     </li>
                     <li className="flex items-start space-x-4 group/item">
-                      <div className="w-8 h-8 bg-gradient-to-br from-coral-300 to-coral-500 rounded-xl flex items-center justify-center flex-shrink-0 mt-0.5 group-hover/item:scale-110 transition-transform duration-300">
+                      <div className="w-8 h-8 bg-linear-to-br from-coral-300 to-coral-500 rounded-xl flex items-center justify-center shrink-0 mt-0.5 group-hover/item:scale-110 transition-transform duration-300">
                         <svg
                           className="w-4 h-4 text-white"
                           fill="currentColor"

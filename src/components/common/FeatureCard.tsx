@@ -58,11 +58,11 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
 
     switch (variant) {
       case 'featured':
-        return `${baseClasses} ${sizeClasses} shadow-xl bg-gradient-to-br from-white to-warm-50 ${borderAccent ? 'border-l-4 border-warm-500' : ''} ${hoverClasses}`;
+        return `${baseClasses} ${sizeClasses} shadow-xl bg-linear-to-br from-white to-warm-50 ${borderAccent ? 'border-l-4 border-warm-500' : ''} ${hoverClasses}`;
       case 'minimal':
         return `${baseClasses} ${sizeClasses} shadow-lg ${hoverClasses}`;
       case 'gradient':
-        return `${baseClasses} ${sizeClasses} bg-gradient-to-br from-gray-50 to-white ${hoverClasses}`;
+        return `${baseClasses} ${sizeClasses} bg-linear-to-br from-gray-50 to-white ${hoverClasses}`;
       default:
         return `${baseClasses} ${sizeClasses} bg-white shadow-lg ${hoverClasses}`;
     }
@@ -70,7 +70,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
 
   const getIconClasses = () => {
     const baseClasses =
-      'flex items-center justify-center flex-shrink-0 transition-transform duration-300';
+      'flex items-center justify-center shrink-0 transition-transform duration-300';
     const sizeClasses = variant === 'featured' ? 'w-16 h-16' : 'w-12 h-12';
     const shapeClasses =
       variant === 'featured' ? 'rounded-2xl shadow-lg' : 'rounded-xl';
@@ -82,10 +82,10 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
 
   const getColorClasses = () => {
     const colorMap = {
-      warm: 'bg-gradient-to-br from-warm-400 to-warm-600',
-      coral: 'bg-gradient-to-br from-coral-400 to-coral-600',
-      gold: 'bg-gradient-to-br from-gold-400 to-gold-600',
-      gray: 'bg-gradient-to-br from-gray-400 to-gray-600',
+      warm: 'bg-linear-to-br from-warm-400 to-warm-600',
+      coral: 'bg-linear-to-br from-coral-400 to-coral-600',
+      gold: 'bg-linear-to-br from-gold-400 to-gold-600',
+      gray: 'bg-linear-to-br from-gray-400 to-gray-600',
     };
 
     return colorMap[colorTheme];

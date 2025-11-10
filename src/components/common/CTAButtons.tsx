@@ -10,7 +10,7 @@ export interface CTAButton {
     | 'secondary'
     | 'primary-on-warm'
     | 'secondary-on-warm'
-    | 'outline'
+    | 'outline-solid'
     | 'white'
     | 'gradient';
   size?: 'sm' | 'md' | 'lg';
@@ -82,12 +82,12 @@ const CTAButtons: React.FC<CTAButtonsProps> = ({
         return `${baseClasses} ${sizeClasses} ${disabledClasses} btn-primary-on-warm shadow-xl`;
       case 'secondary-on-warm':
         return `${baseClasses} ${sizeClasses} ${disabledClasses} btn-secondary-on-warm shadow-xl`;
-      case 'outline':
-        return `${baseClasses} ${sizeClasses} ${disabledClasses} border-2 border-white text-white bg-white/10 backdrop-blur-sm hover:bg-white/20 hover:border-white hover:text-white`;
+      case 'outline-solid':
+        return `${baseClasses} ${sizeClasses} ${disabledClasses} border-2 border-white text-white bg-white/10 backdrop-blur-xs hover:bg-white/20 hover:border-white hover:text-white`;
       case 'white':
         return `${baseClasses} ${sizeClasses} ${disabledClasses} bg-white text-coral-600 hover:bg-gray-100 shadow-xl hover:shadow-2xl`;
       case 'gradient':
-        return `${baseClasses} ${sizeClasses} ${disabledClasses} bg-gradient-to-r from-warm-500 to-warm-600 text-white hover:from-warm-600 hover:to-warm-700 shadow-lg hover:shadow-2xl`;
+        return `${baseClasses} ${sizeClasses} ${disabledClasses} bg-linear-to-r from-warm-500 to-warm-600 text-white hover:from-warm-600 hover:to-warm-700 shadow-lg hover:shadow-2xl`;
       default:
         return `${baseClasses} ${sizeClasses} ${disabledClasses} btn-primary shadow-lg hover:shadow-2xl`;
     }

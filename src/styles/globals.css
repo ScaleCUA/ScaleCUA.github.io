@@ -1,7 +1,168 @@
-@import url('https://fonts.googleapis.com/css2?family=Stack+Sans+Text:wght@200..700&display=swap');
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Stack+Sans+Text:wght@200..700&display=swap')
+layer(base);
+@import 'tailwindcss';
+
+@theme {
+  --color-warm-50: #fff5f0;
+  --color-warm-100: #ffe5d6;
+  --color-warm-200: #ffc7a8;
+  --color-warm-300: #ffa874;
+  --color-warm-400: #ff8a40;
+  --color-warm-500: #ff6b35;
+  --color-warm-600: #e55a2b;
+  --color-warm-700: #cc4822;
+  --color-warm-800: #a33a1c;
+  --color-warm-900: #7a2b15;
+
+  --color-coral-50: #fff0f5;
+  --color-coral-100: #ffe0ec;
+  --color-coral-200: #ffc1db;
+  --color-coral-300: #ffa2c8;
+  --color-coral-400: #ff82b5;
+  --color-coral-500: #ff6b81;
+  --color-coral-600: #e55a6f;
+  --color-coral-700: #cc485d;
+  --color-coral-800: #a33a4a;
+  --color-coral-900: #7a2b38;
+
+  --color-gold-50: #fffbeb;
+  --color-gold-100: #fff7d1;
+  --color-gold-200: #ffe9a3;
+  --color-gold-300: #ffdb75;
+  --color-gold-400: #ffcd47;
+  --color-gold-500: #ffd93d;
+  --color-gold-600: #e5c237;
+  --color-gold-700: #ccab31;
+  --color-gold-800: #a38928;
+  --color-gold-900: #7a661f;
+
+  --font-sans: Stack Sans Text, ui-sans-serif, system-ui, sans-serif;
+  --font-display: Stack Sans Text, ui-sans-serif, system-ui, sans-serif;
+
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
+  --radius-3xl: 2rem;
+
+  --shadow-warm:
+    0 4px 6px -1px rgba(255, 107, 53, 0.1),
+    0 2px 4px -1px rgba(255, 107, 53, 0.06);
+  --shadow-warm-lg:
+    0 10px 15px -3px rgba(255, 107, 53, 0.1),
+    0 4px 6px -2px rgba(255, 107, 53, 0.05);
+
+  --animate-fade-in: fadeIn 0.5s ease-in-out;
+  --animate-slide-up: slideUp 0.3s ease-out;
+  --animate-pulse-warm: pulseWarm 2s infinite;
+
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  @keyframes slideUp {
+    0% {
+      transform: translateY(10px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  @keyframes pulseWarm {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.7;
+    }
+  }
+}
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
+
+@utility btn-primary {
+  @apply bg-warm-500 hover:bg-warm-600 text-white font-semibold py-3 px-6 rounded-xl shadow-warm transition-all duration-200 hover:shadow-warm-lg transform hover:scale-105;
+}
+
+@utility btn-secondary {
+  @apply bg-coral-500 hover:bg-coral-600 text-white font-semibold py-3 px-6 rounded-xl shadow-warm transition-all duration-200 hover:shadow-warm-lg transform hover:scale-105;
+}
+
+@utility btn-outline {
+  @apply border-2 border-warm-500 text-warm-600 hover:bg-warm-500 hover:text-white font-semibold py-3 px-6 rounded-xl transition-all duration-200;
+}
+
+@utility btn-primary-on-warm {
+  /* Enhanced button styles for better contrast on warm backgrounds */
+  @apply bg-white hover:bg-gray-100 text-coral-600 font-semibold py-3 px-8 rounded-xl shadow-lg transition-all duration-200 hover:shadow-xl transform hover:scale-105 border-2 border-white;
+}
+
+@utility btn-secondary-on-warm {
+  @apply border-2 border-white hover:bg-coral-50 hover:text-coral-700 hover:border-coral-200 text-white font-semibold py-3 px-8 rounded-xl transition-all duration-200 shadow-lg backdrop-blur-xs hover:shadow-xl transform hover:scale-105;
+}
+
+@utility card {
+  @apply bg-white rounded-2xl shadow-warm p-6 transition-all duration-200 hover:shadow-warm-lg;
+}
+
+@utility benchmark-card {
+  /* Optimized benchmark card hover effects */
+  @apply will-change-transform;
+}
+
+@utility benchmark-card-glow {
+  will-change: opacity;
+  /* Performance optimization for blur effects */
+  backface-visibility: hidden;
+  perspective: 1000px;
+  transform: translateZ(0);
+}
+
+@utility gradient-warm {
+  @apply bg-linear-to-br from-warm-400 via-warm-500 to-warm-600;
+}
+
+@utility gradient-coral {
+  @apply bg-linear-to-br from-coral-400 via-coral-500 to-coral-600;
+}
+
+@utility text-gradient {
+  @apply bg-linear-to-r from-warm-600 to-coral-600 bg-clip-text text-transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-fill-color: transparent;
+}
+
+@utility text-shadow-warm {
+  text-shadow: 0 2px 4px rgba(255, 107, 53, 0.1);
+}
+
+@utility backdrop-warm {
+  backdrop-filter: blur(8px);
+  background-color: rgba(255, 245, 240, 0.8);
+}
 
 @layer base {
   * {
@@ -17,72 +178,5 @@
 
   html {
     scroll-behavior: smooth;
-  }
-}
-
-@layer components {
-  .btn-primary {
-    @apply bg-warm-500 hover:bg-warm-600 text-white font-semibold py-3 px-6 rounded-xl shadow-warm transition-all duration-200 hover:shadow-warm-lg transform hover:scale-105;
-  }
-
-  .btn-secondary {
-    @apply bg-coral-500 hover:bg-coral-600 text-white font-semibold py-3 px-6 rounded-xl shadow-warm transition-all duration-200 hover:shadow-warm-lg transform hover:scale-105;
-  }
-
-  .btn-outline {
-    @apply border-2 border-warm-500 text-warm-600 hover:bg-warm-500 hover:text-white font-semibold py-3 px-6 rounded-xl transition-all duration-200;
-  }
-
-  /* Enhanced button styles for better contrast on warm backgrounds */
-  .btn-primary-on-warm {
-    @apply bg-white hover:bg-gray-100 text-coral-600 font-semibold py-3 px-8 rounded-xl shadow-lg transition-all duration-200 hover:shadow-xl transform hover:scale-105 border-2 border-white;
-  }
-
-  .btn-secondary-on-warm {
-    @apply border-2 border-white hover:bg-coral-50 hover:text-coral-700 hover:border-coral-200 text-white font-semibold py-3 px-8 rounded-xl transition-all duration-200 shadow-lg backdrop-blur-sm hover:shadow-xl transform hover:scale-105;
-  }
-
-  .card {
-    @apply bg-white rounded-2xl shadow-warm p-6 transition-all duration-200 hover:shadow-warm-lg;
-  }
-
-  /* Optimized benchmark card hover effects */
-  .benchmark-card {
-    @apply will-change-transform;
-  }
-
-  .benchmark-card-glow {
-    will-change: opacity;
-    /* Performance optimization for blur effects */
-    backface-visibility: hidden;
-    perspective: 1000px;
-    transform: translateZ(0);
-  }
-
-  .gradient-warm {
-    @apply bg-gradient-to-br from-warm-400 via-warm-500 to-warm-600;
-  }
-
-  .gradient-coral {
-    @apply bg-gradient-to-br from-coral-400 via-coral-500 to-coral-600;
-  }
-
-  .text-gradient {
-    @apply bg-gradient-to-r from-warm-600 to-coral-600 bg-clip-text text-transparent;
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-fill-color: transparent;
-  }
-}
-
-@layer utilities {
-  .text-shadow-warm {
-    text-shadow: 0 2px 4px rgba(255, 107, 53, 0.1);
-  }
-
-  .backdrop-warm {
-    backdrop-filter: blur(8px);
-    background-color: rgba(255, 245, 240, 0.8);
   }
 }

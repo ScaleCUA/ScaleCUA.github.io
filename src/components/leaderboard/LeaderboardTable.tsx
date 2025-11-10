@@ -60,11 +60,11 @@ const LeaderboardTable = <T extends BaseAgent = BaseAgent>({
   const getRankBadgeColor = (rank: number) => {
     switch (rank) {
       case 1:
-        return 'bg-gradient-to-r from-yellow-400 to-yellow-600 text-white';
+        return 'bg-linear-to-r from-yellow-400 to-yellow-600 text-white';
       case 2:
-        return 'bg-gradient-to-r from-gray-300 to-gray-400 text-white';
+        return 'bg-linear-to-r from-gray-300 to-gray-400 text-white';
       case 3:
-        return 'bg-gradient-to-r from-orange-400 to-orange-600 text-white';
+        return 'bg-linear-to-r from-orange-400 to-orange-600 text-white';
       default:
         return 'bg-gray-100 text-gray-600';
     }
@@ -235,7 +235,7 @@ const LeaderboardTable = <T extends BaseAgent = BaseAgent>({
             <table className="w-full">
               <thead>
                 <tr
-                  className={`bg-gradient-to-r ${themeColors.gradient} border-b ${themeColors.border}`}
+                  className={`bg-linear-to-r ${themeColors.gradient} border-b ${themeColors.border}`}
                 >
                   {columns.map(column => (
                     <th
@@ -298,7 +298,7 @@ const LeaderboardTable = <T extends BaseAgent = BaseAgent>({
 
           {pagination && (
             <div
-              className={`flex items-center justify-between p-8 bg-gradient-to-r ${themeColors.paginationGradient} border-t ${themeColors.paginationBorder}`}
+              className={`flex items-center justify-between p-8 bg-linear-to-r ${themeColors.paginationGradient} border-t ${themeColors.paginationBorder}`}
             >
               <div className="text-base text-gray-600 font-medium">
                 Showing {(pagination.currentPage - 1) * 10 + 1} to{' '}
@@ -324,7 +324,7 @@ const LeaderboardTable = <T extends BaseAgent = BaseAgent>({
                     key={page}
                     className={`px-6 py-3 ${
                       page === pagination.currentPage
-                        ? `bg-gradient-to-r ${themeColors.buttonGradient} text-white rounded-xl text-sm font-semibold shadow-lg hover:shadow-xl`
+                        ? `bg-linear-to-r ${themeColors.buttonGradient} text-white rounded-xl text-sm font-semibold shadow-lg hover:shadow-xl`
                         : `border ${themeColors.paginationBorder} rounded-xl text-sm font-medium text-gray-600 hover:bg-${colorTheme}-100`
                     } transition-all duration-300`}
                     onClick={() => pagination.onPageChange(page)}

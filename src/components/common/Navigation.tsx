@@ -18,7 +18,7 @@ const Navigation: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <div className="flex-shrink-0">
+          <div className="shrink-0">
             <Link to="/" className="flex items-center">
               <span className="text-2xl font-bold text-gradient">ScaleCUA</span>
             </Link>
@@ -47,7 +47,7 @@ const Navigation: React.FC = () => {
           <div className="md:hidden">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-warm-600 hover:bg-warm-50 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-warm-500 transition-all duration-200"
+              className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-warm-600 hover:bg-warm-50 focus:outline-hidden focus:ring-2 focus:ring-inset focus:ring-warm-500 transition-all duration-200"
               aria-expanded="false"
             >
               <span className="sr-only">Open main menu</span>

@@ -32,7 +32,7 @@ const Homepage: React.FC = () => {
       />
 
       {/* Features Section - Enhanced with Varied Layouts */}
-      <div className="py-20 bg-gradient-to-br from-warm-50 to-coral-50">
+      <div className="py-20 bg-linear-to-br from-warm-50 to-coral-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <div className="inline-flex items-center space-x-2 bg-warm-100 text-warm-700 px-4 py-2 rounded-full text-sm font-medium mb-6">
@@ -294,7 +294,7 @@ const Homepage: React.FC = () => {
           </div>
 
           {/* Summary Stats Bar */}
-          <div className="bg-gradient-to-r from-warm-500 to-coral-500 rounded-3xl p-8 text-white relative overflow-hidden">
+          <div className="bg-linear-to-r from-warm-500 to-coral-500 rounded-3xl p-8 text-white relative overflow-hidden">
             <div className="absolute inset-0 opacity-10">
               <div className="absolute top-10 right-10 w-32 h-32 bg-white rounded-full"></div>
               <div className="absolute bottom-10 left-10 w-24 h-24 bg-white rounded-full"></div>
@@ -324,7 +324,7 @@ const Homepage: React.FC = () => {
       </div>
 
       {/* Enhanced CTA Section with Dynamic Background */}
-      <div className="py-20 md:py-32 bg-gradient-to-br from-coral-400 via-coral-500 to-warm-600 text-white relative overflow-hidden">
+      <div className="py-20 md:py-32 bg-linear-to-br from-coral-400 via-coral-500 to-warm-600 text-white relative overflow-hidden">
         {/* Background decoration */}
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-10 left-10 w-64 h-64 bg-white rounded-full blur-3xl"></div>
@@ -334,7 +334,7 @@ const Homepage: React.FC = () => {
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="mb-8">
-            <span className="inline-block px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full text-sm font-medium text-white shadow-lg border border-white/30">
+            <span className="inline-block px-4 py-2 bg-white/20 backdrop-blur-xs rounded-full text-sm font-medium text-white shadow-lg border border-white/30">
               🚀 Join the Revolution
             </span>
           </div>

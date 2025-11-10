@@ -48,13 +48,13 @@ const StatCard: React.FC<StatCardProps> = ({
 
     switch (variant) {
       case 'warm':
-        return `${baseClasses} ${sizeClasses} bg-gradient-to-br from-warm-50 to-coral-50 ${hoverClasses}`;
+        return `${baseClasses} ${sizeClasses} bg-linear-to-br from-warm-50 to-coral-50 ${hoverClasses}`;
       case 'coral':
-        return `${baseClasses} ${sizeClasses} bg-gradient-to-br from-coral-50 to-gold-50 ${hoverClasses}`;
+        return `${baseClasses} ${sizeClasses} bg-linear-to-br from-coral-50 to-gold-50 ${hoverClasses}`;
       case 'gold':
-        return `${baseClasses} ${sizeClasses} bg-gradient-to-br from-gold-50 to-warm-50 ${hoverClasses}`;
+        return `${baseClasses} ${sizeClasses} bg-linear-to-br from-gold-50 to-warm-50 ${hoverClasses}`;
       case 'benchmark':
-        return `${baseClasses} ${sizeClasses} bg-gradient-to-br from-warm-50 to-white border border-warm-100 shadow-lg ${hoverClasses}`;
+        return `${baseClasses} ${sizeClasses} bg-linear-to-br from-warm-50 to-white border border-warm-100 shadow-lg ${hoverClasses}`;
       case 'minimal':
         return `${baseClasses} ${sizeClasses} bg-white ${hoverClasses}`;
       default:
@@ -84,19 +84,18 @@ const StatCard: React.FC<StatCardProps> = ({
   };
 
   const getIconContainerClasses = () => {
-    const baseClasses =
-      'rounded-xl flex items-center justify-center flex-shrink-0';
+    const baseClasses = 'rounded-xl flex items-center justify-center shrink-0';
     const sizeClasses =
       size === 'lg' ? 'w-16 h-16' : size === 'sm' ? 'w-10 h-10' : 'w-12 h-12';
     const hoverClasses = hover ? 'group-hover:scale-110' : '';
     const colorClasses =
       variant === 'warm'
-        ? 'bg-gradient-to-br from-warm-400 to-warm-600'
+        ? 'bg-linear-to-br from-warm-400 to-warm-600'
         : variant === 'coral'
-          ? 'bg-gradient-to-br from-coral-400 to-coral-600'
+          ? 'bg-linear-to-br from-coral-400 to-coral-600'
           : variant === 'gold'
-            ? 'bg-gradient-to-br from-gold-400 to-gold-600'
-            : 'bg-gradient-to-br from-warm-400 to-warm-600';
+            ? 'bg-linear-to-br from-gold-400 to-gold-600'
+            : 'bg-linear-to-br from-warm-400 to-warm-600';
 
     return `${baseClasses} ${sizeClasses} ${colorClasses} shadow-md ${hoverClasses} transition-transform duration-300`;
   };
@@ -112,7 +111,7 @@ const StatCard: React.FC<StatCardProps> = ({
 
     return (
       <div
-        className={`benchmark-card-glow absolute -inset-1 bg-gradient-to-r ${colorMap[colorTheme] || colorMap.warm} rounded-2xl opacity-0 group-hover:opacity-25 transition-all duration-500 ease-out blur-xl`}
+        className={`benchmark-card-glow absolute -inset-1 bg-linear-to-r ${colorMap[colorTheme] || colorMap.warm} rounded-2xl opacity-0 group-hover:opacity-25 transition-all duration-500 ease-out blur-xl`}
       />
     );
   };

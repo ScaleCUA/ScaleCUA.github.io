@@ -72,7 +72,7 @@ const FilterControls = <T extends string = string>({
                 <select
                   value={filter.value}
                   onChange={e => filter.onChange(e.target.value)}
-                  className={`appearance-none w-full px-6 py-3 pr-12 border ${themeColors.border} rounded-2xl bg-white text-gray-900 ${themeColors.focusRing} ${themeColors.focusBorder} ${themeColors.hoverBorder} transition-all duration-300 cursor-pointer shadow-sm hover:shadow-md font-medium`}
+                  className={`appearance-none w-full px-6 py-3 pr-12 border ${themeColors.border} rounded-2xl bg-white text-gray-900 ${themeColors.focusRing} ${themeColors.focusBorder} ${themeColors.hoverBorder} transition-all duration-300 cursor-pointer shadow-xs hover:shadow-md font-medium`}
                 >
                   {filter.options.map(option => (
                     <option key={option.value} value={option.value}>
@@ -106,7 +106,7 @@ const FilterControls = <T extends string = string>({
               key={action.label}
               className={`px-8 py-3 ${
                 action.variant === 'primary'
-                  ? `bg-gradient-to-r ${themeColors.primaryGradient} text-white font-semibold rounded-2xl transition-all duration-300 shadow-lg hover:shadow-2xl transform hover:scale-105`
+                  ? `bg-linear-to-r ${themeColors.primaryGradient} text-white font-semibold rounded-2xl transition-all duration-300 shadow-lg hover:shadow-2xl transform hover:scale-105`
                   : `${themeColors.secondaryBorder} font-semibold rounded-2xl transition-all duration-300 transform hover:scale-105`
               }`}
               onClick={action.onClick}

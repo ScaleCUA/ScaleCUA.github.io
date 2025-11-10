@@ -99,8 +99,8 @@ const Environment: React.FC = () => {
             </div>
 
             <div className="relative">
-              <div className="card shadow-2xl p-8 bg-gradient-to-br from-gray-50 to-white border border-gray-100">
-                <div className="aspect-video bg-gradient-to-br from-warm-100 to-coral-100 rounded-xl flex items-center justify-center mb-6 relative overflow-hidden">
+              <div className="card shadow-2xl p-8 bg-linear-to-br from-gray-50 to-white border border-gray-100">
+                <div className="aspect-video bg-linear-to-br from-warm-100 to-coral-100 rounded-xl flex items-center justify-center mb-6 relative overflow-hidden">
                   <div className="absolute inset-0 opacity-10">
                     <div className="grid grid-cols-8 grid-rows-6 h-full">
                       {Array.from({ length: 48 }).map((_, i) => (
@@ -152,15 +152,15 @@ const Environment: React.FC = () => {
                   </div>
                 </div>
               </div>
-              <div className="absolute -top-4 -right-4 w-24 h-24 bg-gradient-to-br from-coral-400 to-coral-600 rounded-full opacity-20 blur-xl"></div>
-              <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-gradient-to-br from-warm-400 to-warm-600 rounded-full opacity-20 blur-xl"></div>
+              <div className="absolute -top-4 -right-4 w-24 h-24 bg-linear-to-br from-coral-400 to-coral-600 rounded-full opacity-20 blur-xl"></div>
+              <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-linear-to-br from-warm-400 to-warm-600 rounded-full opacity-20 blur-xl"></div>
             </div>
           </div>
         </div>
       </div>
 
       {/* Environment Features Section - Full Width with Varied Layout */}
-      <div className="py-20 bg-gradient-to-br from-warm-50 to-coral-50">
+      <div className="py-20 bg-linear-to-br from-warm-50 to-coral-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <div className="inline-flex items-center space-x-2 bg-warm-100 text-warm-700 px-4 py-2 rounded-full text-sm font-medium mb-6">
@@ -328,10 +328,10 @@ const Environment: React.FC = () => {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Web Applications - Featured */}
             <div className="benchmark-card group relative">
-              <div className="benchmark-card-glow absolute -inset-1 bg-gradient-to-r from-warm-400 to-warm-600 rounded-2xl opacity-0 group-hover:opacity-25 transition-all duration-500 ease-out blur-xl"></div>
+              <div className="benchmark-card-glow absolute -inset-1 bg-linear-to-r from-warm-400 to-warm-600 rounded-2xl opacity-0 group-hover:opacity-25 transition-all duration-500 ease-out blur-xl"></div>
               <div className="relative card p-8 bg-white border-2 border-warm-100 shadow-xl group-hover:shadow-2xl group-hover:-translate-y-1 transition-all duration-300 ease-out">
                 <div className="text-center">
-                  <div className="w-20 h-20 bg-gradient-to-br from-warm-400 to-warm-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300 ease-out">
+                  <div className="w-20 h-20 bg-linear-to-br from-warm-400 to-warm-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300 ease-out">
                     <svg
                       className="w-10 h-10 text-white"
                       fill="none"
@@ -356,7 +356,7 @@ const Environment: React.FC = () => {
                   </p>
                   <div className="space-y-3 text-left">
                     <div className="flex items-center space-x-3 group-hover:text-warm-600 transition-colors duration-300">
-                      <div className="w-5 h-5 bg-warm-100 rounded-full flex items-center justify-center flex-shrink-0 group-hover:bg-warm-200 transition-colors duration-300">
+                      <div className="w-5 h-5 bg-warm-100 rounded-full flex items-center justify-center shrink-0 group-hover:bg-warm-200 transition-colors duration-300">
                         <svg
                           className="w-3 h-3 text-warm-600 group-hover:text-warm-700 transition-colors duration-300"
                           fill="currentColor"
@@ -374,7 +374,7 @@ const Environment: React.FC = () => {
                       </span>
                     </div>
                     <div className="flex items-center space-x-3 group-hover:text-warm-600 transition-colors duration-300">
-                      <div className="w-5 h-5 bg-warm-100 rounded-full flex items-center justify-center flex-shrink-0 group-hover:bg-warm-200 transition-colors duration-300">
+                      <div className="w-5 h-5 bg-warm-100 rounded-full flex items-center justify-center shrink-0 group-hover:bg-warm-200 transition-colors duration-300">
                         <svg
                           className="w-3 h-3 text-warm-600 group-hover:text-warm-700 transition-colors duration-300"
                           fill="currentColor"
@@ -392,7 +392,7 @@ const Environment: React.FC = () => {
                       </span>
                     </div>
                     <div className="flex items-center space-x-3 group-hover:text-warm-600 transition-colors duration-300">
-                      <div className="w-5 h-5 bg-warm-100 rounded-full flex items-center justify-center flex-shrink-0 group-hover:bg-warm-200 transition-colors duration-300">
+                      <div className="w-5 h-5 bg-warm-100 rounded-full flex items-center justify-center shrink-0 group-hover:bg-warm-200 transition-colors duration-300">
                         <svg
                           className="w-3 h-3 text-warm-600 group-hover:text-warm-700 transition-colors duration-300"
                           fill="currentColor"
@@ -426,10 +426,10 @@ const Environment: React.FC = () => {
 
             {/* Desktop Apps */}
             <div className="benchmark-card group relative">
-              <div className="benchmark-card-glow absolute -inset-1 bg-gradient-to-r from-coral-400 to-coral-600 rounded-2xl opacity-0 group-hover:opacity-25 transition-all duration-500 ease-out blur-xl"></div>
+              <div className="benchmark-card-glow absolute -inset-1 bg-linear-to-r from-coral-400 to-coral-600 rounded-2xl opacity-0 group-hover:opacity-25 transition-all duration-500 ease-out blur-xl"></div>
               <div className="relative card p-8 bg-white border-2 border-coral-100 shadow-xl group-hover:shadow-2xl group-hover:-translate-y-1 transition-all duration-300 ease-out">
                 <div className="text-center">
-                  <div className="w-20 h-20 bg-gradient-to-br from-coral-400 to-coral-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300 ease-out">
+                  <div className="w-20 h-20 bg-linear-to-br from-coral-400 to-coral-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300 ease-out">
                     <svg
                       className="w-10 h-10 text-white"
                       fill="none"
@@ -453,7 +453,7 @@ const Environment: React.FC = () => {
                   </p>
                   <div className="space-y-3 text-left">
                     <div className="flex items-center space-x-3 group-hover:text-coral-600 transition-colors duration-300">
-                      <div className="w-5 h-5 bg-coral-100 rounded-full flex items-center justify-center flex-shrink-0 group-hover:bg-coral-200 transition-colors duration-300">
+                      <div className="w-5 h-5 bg-coral-100 rounded-full flex items-center justify-center shrink-0 group-hover:bg-coral-200 transition-colors duration-300">
                         <svg
                           className="w-3 h-3 text-coral-600 group-hover:text-coral-700 transition-colors duration-300"
                           fill="currentColor"
@@ -471,7 +471,7 @@ const Environment: React.FC = () => {
                       </span>
                     </div>
                     <div className="flex items-center space-x-3 group-hover:text-coral-600 transition-colors duration-300">
-                      <div className="w-5 h-5 bg-coral-100 rounded-full flex items-center justify-center flex-shrink-0 group-hover:bg-coral-200 transition-colors duration-300">
+                      <div className="w-5 h-5 bg-coral-100 rounded-full flex items-center justify-center shrink-0 group-hover:bg-coral-200 transition-colors duration-300">
                         <svg
                           className="w-3 h-3 text-coral-600 group-hover:text-coral-700 transition-colors duration-300"
                           fill="currentColor"
@@ -489,7 +489,7 @@ const Environment: React.FC = () => {
                       </span>
                     </div>
                     <div className="flex items-center space-x-3 group-hover:text-coral-600 transition-colors duration-300">
-                      <div className="w-5 h-5 bg-coral-100 rounded-full flex items-center justify-center flex-shrink-0 group-hover:bg-coral-200 transition-colors duration-300">
+                      <div className="w-5 h-5 bg-coral-100 rounded-full flex items-center justify-center shrink-0 group-hover:bg-coral-200 transition-colors duration-300">
                         <svg
                           className="w-3 h-3 text-coral-600 group-hover:text-coral-700 transition-colors duration-300"
                           fill="currentColor"
@@ -523,10 +523,10 @@ const Environment: React.FC = () => {
 
             {/* Mobile Interfaces */}
             <div className="benchmark-card group relative">
-              <div className="benchmark-card-glow absolute -inset-1 bg-gradient-to-r from-gold-400 to-gold-600 rounded-2xl opacity-0 group-hover:opacity-25 transition-all duration-500 ease-out blur-xl"></div>
+              <div className="benchmark-card-glow absolute -inset-1 bg-linear-to-r from-gold-400 to-gold-600 rounded-2xl opacity-0 group-hover:opacity-25 transition-all duration-500 ease-out blur-xl"></div>
               <div className="relative card p-8 bg-white border-2 border-gold-100 shadow-xl group-hover:shadow-2xl group-hover:-translate-y-1 transition-all duration-300 ease-out">
                 <div className="text-center">
-                  <div className="w-20 h-20 bg-gradient-to-br from-gold-400 to-gold-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300 ease-out">
+                  <div className="w-20 h-20 bg-linear-to-br from-gold-400 to-gold-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300 ease-out">
                     <svg
                       className="w-10 h-10 text-white"
                       fill="none"
@@ -550,7 +550,7 @@ const Environment: React.FC = () => {
                   </p>
                   <div className="space-y-3 text-left">
                     <div className="flex items-center space-x-3 group-hover:text-gold-600 transition-colors duration-300">
-                      <div className="w-5 h-5 bg-gold-100 rounded-full flex items-center justify-center flex-shrink-0 group-hover:bg-gold-200 transition-colors duration-300">
+                      <div className="w-5 h-5 bg-gold-100 rounded-full flex items-center justify-center shrink-0 group-hover:bg-gold-200 transition-colors duration-300">
                         <svg
                           className="w-3 h-3 text-gold-600 group-hover:text-gold-700 transition-colors duration-300"
                           fill="currentColor"
@@ -568,7 +568,7 @@ const Environment: React.FC = () => {
                       </span>
                     </div>
                     <div className="flex items-center space-x-3 group-hover:text-gold-600 transition-colors duration-300">
-                      <div className="w-5 h-5 bg-gold-100 rounded-full flex items-center justify-center flex-shrink-0 group-hover:bg-gold-200 transition-colors duration-300">
+                      <div className="w-5 h-5 bg-gold-100 rounded-full flex items-center justify-center shrink-0 group-hover:bg-gold-200 transition-colors duration-300">
                         <svg
                           className="w-3 h-3 text-gold-600 group-hover:text-gold-700 transition-colors duration-300"
                           fill="currentColor"
@@ -586,7 +586,7 @@ const Environment: React.FC = () => {
                       </span>
                     </div>
                     <div className="flex items-center space-x-3 group-hover:text-gold-600 transition-colors duration-300">
-                      <div className="w-5 h-5 bg-gold-100 rounded-full flex items-center justify-center flex-shrink-0 group-hover:bg-gold-200 transition-colors duration-300">
+                      <div className="w-5 h-5 bg-gold-100 rounded-full flex items-center justify-center shrink-0 group-hover:bg-gold-200 transition-colors duration-300">
                         <svg
                           className="w-3 h-3 text-gold-600 group-hover:text-gold-700 transition-colors duration-300"
                           fill="currentColor"
@@ -621,7 +621,7 @@ const Environment: React.FC = () => {
 
           {/* Summary Stats */}
           <div className="mt-12 text-center">
-            <div className="inline-flex items-center space-x-8 p-6 bg-gradient-to-r from-warm-50 to-coral-50 rounded-2xl">
+            <div className="inline-flex items-center space-x-8 p-6 bg-linear-to-r from-warm-50 to-coral-50 rounded-2xl">
               <div className="flex items-center space-x-3">
                 <div className="w-10 h-10 bg-warm-500 rounded-full flex items-center justify-center">
                   <svg
@@ -680,7 +680,7 @@ const Environment: React.FC = () => {
       </div>
 
       {/* Sample Test Cases Section - Enhanced Information Architecture */}
-      <div className="py-20 bg-gradient-to-br from-coral-50 via-warm-50 to-gold-50">
+      <div className="py-20 bg-linear-to-br from-coral-50 via-warm-50 to-gold-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <div className="inline-flex items-center space-x-2 bg-gold-100 text-gold-700 px-4 py-2 rounded-full text-sm font-medium mb-6">
@@ -708,13 +708,13 @@ const Environment: React.FC = () => {
             {/* Featured Test Case */}
             <div className="lg:col-span-3">
               <div className="benchmark-card group relative">
-                <div className="benchmark-card-glow absolute -inset-1 bg-gradient-to-r from-warm-400 via-coral-400 to-gold-400 rounded-3xl opacity-20 group-hover:opacity-40 transition-all duration-500 ease-out blur-xl"></div>
+                <div className="benchmark-card-glow absolute -inset-1 bg-linear-to-r from-warm-400 via-coral-400 to-gold-400 rounded-3xl opacity-20 group-hover:opacity-40 transition-all duration-500 ease-out blur-xl"></div>
                 <div className="relative card p-8 bg-white shadow-xl border-0 overflow-hidden group-hover:shadow-2xl group-hover:-translate-y-1 transition-all duration-300 ease-out">
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-warm-100 to-coral-100 rounded-full -mr-16 -mt-16 opacity-50"></div>
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-linear-to-br from-warm-100 to-coral-100 rounded-full -mr-16 -mt-16 opacity-50"></div>
                   <div className="relative z-10">
                     <div className="flex items-start justify-between mb-6">
                       <div className="flex items-center space-x-3">
-                        <div className="w-12 h-12 bg-gradient-to-br from-warm-400 to-warm-600 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 ease-out">
+                        <div className="w-12 h-12 bg-linear-to-br from-warm-400 to-warm-600 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 ease-out">
                           <svg
                             className="w-6 h-6 text-white"
                             fill="none"
@@ -770,7 +770,7 @@ const Environment: React.FC = () => {
                           </h4>
                           <div className="space-y-2">
                             <div className="flex items-start space-x-3 group-hover:text-warm-600 transition-colors duration-300">
-                              <div className="w-5 h-5 bg-warm-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 group-hover:bg-warm-200 transition-colors duration-300">
+                              <div className="w-5 h-5 bg-warm-100 rounded-full flex items-center justify-center shrink-0 mt-0.5 group-hover:bg-warm-200 transition-colors duration-300">
                                 <svg
                                   className="w-3 h-3 text-warm-600 group-hover:text-warm-700 transition-colors duration-300"
                                   fill="currentColor"
@@ -794,7 +794,7 @@ const Environment: React.FC = () => {
                               </div>
                             </div>
                             <div className="flex items-start space-x-3 group-hover:text-coral-600 transition-colors duration-300">
-                              <div className="w-5 h-5 bg-coral-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 group-hover:bg-coral-200 transition-colors duration-300">
+                              <div className="w-5 h-5 bg-coral-100 rounded-full flex items-center justify-center shrink-0 mt-0.5 group-hover:bg-coral-200 transition-colors duration-300">
                                 <svg
                                   className="w-3 h-3 text-coral-600 group-hover:text-coral-700 transition-colors duration-300"
                                   fill="currentColor"
@@ -817,7 +817,7 @@ const Environment: React.FC = () => {
                               </div>
                             </div>
                             <div className="flex items-start space-x-3 group-hover:text-gold-600 transition-colors duration-300">
-                              <div className="w-5 h-5 bg-gold-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 group-hover:bg-gold-200 transition-colors duration-300">
+                              <div className="w-5 h-5 bg-gold-100 rounded-full flex items-center justify-center shrink-0 mt-0.5 group-hover:bg-gold-200 transition-colors duration-300">
                                 <svg
                                   className="w-3 h-3 text-gold-600 group-hover:text-gold-700 transition-colors duration-300"
                                   fill="currentColor"
@@ -844,7 +844,7 @@ const Environment: React.FC = () => {
                       </div>
 
                       <div className="space-y-4">
-                        <div className="bg-gradient-to-br from-warm-50 to-coral-50 rounded-xl p-6 border border-warm-100 group-hover:from-warm-100 group-hover:to-coral-100 transition-all duration-300">
+                        <div className="bg-linear-to-br from-warm-50 to-coral-50 rounded-xl p-6 border border-warm-100 group-hover:from-warm-100 group-hover:to-coral-100 transition-all duration-300">
                           <h4 className="font-semibold text-gray-900 mb-4 group-hover:text-gray-800 transition-colors duration-300">
                             Success Metrics
                           </h4>
@@ -868,18 +868,18 @@ const Environment: React.FC = () => {
                           </div>
                         </div>
 
-                        <div className="bg-gradient-to-br from-coral-50 to-gold-50 rounded-xl p-6 border border-coral-100 group-hover:from-coral-100 group-hover:to-gold-100 transition-all duration-300">
+                        <div className="bg-linear-to-br from-coral-50 to-gold-50 rounded-xl p-6 border border-coral-100 group-hover:from-coral-100 group-hover:to-gold-100 transition-all duration-300">
                           <h4 className="font-semibold text-gray-900 mb-3 group-hover:text-gray-800 transition-colors duration-300">
                             Test Variations
                           </h4>
                           <div className="flex flex-wrap gap-2">
-                            <span className="px-2 py-1 bg-white rounded text-xs text-gray-700 group-hover:bg-gray-50 group-hover:text-gray-800 transition-colors duration-300">
+                            <span className="px-2 py-1 bg-white rounded-sm text-xs text-gray-700 group-hover:bg-gray-50 group-hover:text-gray-800 transition-colors duration-300">
                               3-10 fields
                             </span>
-                            <span className="px-2 py-1 bg-white rounded text-xs text-gray-700 group-hover:bg-gray-50 group-hover:text-gray-800 transition-colors duration-300">
+                            <span className="px-2 py-1 bg-white rounded-sm text-xs text-gray-700 group-hover:bg-gray-50 group-hover:text-gray-800 transition-colors duration-300">
                               2-5 steps
                             </span>
-                            <span className="px-2 py-1 bg-white rounded text-xs text-gray-700 group-hover:bg-gray-50 group-hover:text-gray-800 transition-colors duration-300">
+                            <span className="px-2 py-1 bg-white rounded-sm text-xs text-gray-700 group-hover:bg-gray-50 group-hover:text-gray-800 transition-colors duration-300">
                               15+ validation rules
                             </span>
                           </div>
@@ -908,7 +908,7 @@ const Environment: React.FC = () => {
                   </svg>
                   Advanced
                 </span>
-                <div className="w-10 h-10 bg-gradient-to-br from-coral-400 to-coral-600 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
+                <div className="w-10 h-10 bg-linear-to-br from-coral-400 to-coral-600 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
                   <svg
                     className="w-5 h-5 text-white"
                     fill="none"
@@ -1002,7 +1002,7 @@ const Environment: React.FC = () => {
                   </svg>
                   Expert
                 </span>
-                <div className="w-10 h-10 bg-gradient-to-br from-gold-400 to-gold-600 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
+                <div className="w-10 h-10 bg-linear-to-br from-gold-400 to-gold-600 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
                   <svg
                     className="w-5 h-5 text-white"
                     fill="none"
@@ -1101,7 +1101,7 @@ const Environment: React.FC = () => {
                   </svg>
                   Intermediate
                 </span>
-                <div className="w-10 h-10 bg-gradient-to-br from-warm-400 to-warm-600 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
+                <div className="w-10 h-10 bg-linear-to-br from-warm-400 to-warm-600 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
                   <svg
                     className="w-5 h-5 text-white"
                     fill="none"
@@ -1263,8 +1263,8 @@ const Environment: React.FC = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {/* AI Generation Core */}
-            <div className="card p-8 bg-gradient-to-br from-warm-50 to-white border-l-4 border-warm-500 shadow-lg hover:shadow-xl transition-all duration-300">
-              <div className="w-16 h-16 bg-gradient-to-br from-warm-400 to-warm-600 rounded-2xl flex items-center justify-center mb-6 shadow-lg">
+            <div className="card p-8 bg-linear-to-br from-warm-50 to-white border-l-4 border-warm-500 shadow-lg hover:shadow-xl transition-all duration-300">
+              <div className="w-16 h-16 bg-linear-to-br from-warm-400 to-warm-600 rounded-2xl flex items-center justify-center mb-6 shadow-lg">
                 <svg
                   className="w-8 h-8 text-white"
                   fill="none"
@@ -1336,8 +1336,8 @@ const Environment: React.FC = () => {
             </div>
 
             {/* Real-time Rendering */}
-            <div className="card p-8 bg-gradient-to-br from-coral-50 to-white border-l-4 border-coral-500 shadow-lg hover:shadow-xl transition-all duration-300">
-              <div className="w-16 h-16 bg-gradient-to-br from-coral-400 to-coral-600 rounded-2xl flex items-center justify-center mb-6 shadow-lg">
+            <div className="card p-8 bg-linear-to-br from-coral-50 to-white border-l-4 border-coral-500 shadow-lg hover:shadow-xl transition-all duration-300">
+              <div className="w-16 h-16 bg-linear-to-br from-coral-400 to-coral-600 rounded-2xl flex items-center justify-center mb-6 shadow-lg">
                 <svg
                   className="w-8 h-8 text-white"
                   fill="none"
@@ -1407,8 +1407,8 @@ const Environment: React.FC = () => {
             </div>
 
             {/* State Management */}
-            <div className="card p-8 bg-gradient-to-br from-gold-50 to-white border-l-4 border-gold-500 shadow-lg hover:shadow-xl transition-all duration-300">
-              <div className="w-16 h-16 bg-gradient-to-br from-gold-400 to-gold-600 rounded-2xl flex items-center justify-center mb-6 shadow-lg">
+            <div className="card p-8 bg-linear-to-br from-gold-50 to-white border-l-4 border-gold-500 shadow-lg hover:shadow-xl transition-all duration-300">
+              <div className="w-16 h-16 bg-linear-to-br from-gold-400 to-gold-600 rounded-2xl flex items-center justify-center mb-6 shadow-lg">
                 <svg
                   className="w-8 h-8 text-white"
                   fill="none"
@@ -1484,8 +1484,8 @@ const Environment: React.FC = () => {
             </div>
 
             {/* Event Simulation */}
-            <div className="card p-8 bg-gradient-to-br from-gray-50 to-white border-l-4 border-gray-500 shadow-lg hover:shadow-xl transition-all duration-300">
-              <div className="w-16 h-16 bg-gradient-to-br from-gray-400 to-gray-600 rounded-2xl flex items-center justify-center mb-6 shadow-lg">
+            <div className="card p-8 bg-linear-to-br from-gray-50 to-white border-l-4 border-gray-500 shadow-lg hover:shadow-xl transition-all duration-300">
+              <div className="w-16 h-16 bg-linear-to-br from-gray-400 to-gray-600 rounded-2xl flex items-center justify-center mb-6 shadow-lg">
                 <svg
                   className="w-8 h-8 text-white"
                   fill="none"
@@ -1555,8 +1555,8 @@ const Environment: React.FC = () => {
             </div>
 
             {/* Cross-platform Support */}
-            <div className="card p-8 bg-gradient-to-br from-warm-50 to-white border-l-4 border-warm-500 shadow-lg hover:shadow-xl transition-all duration-300">
-              <div className="w-16 h-16 bg-gradient-to-br from-warm-400 to-warm-600 rounded-2xl flex items-center justify-center mb-6 shadow-lg">
+            <div className="card p-8 bg-linear-to-br from-warm-50 to-white border-l-4 border-warm-500 shadow-lg hover:shadow-xl transition-all duration-300">
+              <div className="w-16 h-16 bg-linear-to-br from-warm-400 to-warm-600 rounded-2xl flex items-center justify-center mb-6 shadow-lg">
                 <svg
                   className="w-8 h-8 text-white"
                   fill="none"
@@ -1626,8 +1626,8 @@ const Environment: React.FC = () => {
             </div>
 
             {/* Analytics & Insights */}
-            <div className="card p-8 bg-gradient-to-br from-coral-50 to-white border-l-4 border-coral-500 shadow-lg hover:shadow-xl transition-all duration-300">
-              <div className="w-16 h-16 bg-gradient-to-br from-coral-400 to-coral-600 rounded-2xl flex items-center justify-center mb-6 shadow-lg">
+            <div className="card p-8 bg-linear-to-br from-coral-50 to-white border-l-4 border-coral-500 shadow-lg hover:shadow-xl transition-all duration-300">
+              <div className="w-16 h-16 bg-linear-to-br from-coral-400 to-coral-600 rounded-2xl flex items-center justify-center mb-6 shadow-lg">
                 <svg
                   className="w-8 h-8 text-white"
                   fill="none"
@@ -1699,7 +1699,7 @@ const Environment: React.FC = () => {
 
           {/* CTA Section */}
           <div className="mt-16 text-center">
-            <div className="bg-gradient-to-r from-warm-500 to-coral-500 rounded-3xl p-8 md:p-12 text-white relative overflow-hidden">
+            <div className="bg-linear-to-r from-warm-500 to-coral-500 rounded-3xl p-8 md:p-12 text-white relative overflow-hidden">
               <div className="absolute inset-0 opacity-10">
                 <div className="absolute top-10 right-10 w-32 h-32 bg-white rounded-full"></div>
                 <div className="absolute bottom-10 left-10 w-24 h-24 bg-white rounded-full"></div>

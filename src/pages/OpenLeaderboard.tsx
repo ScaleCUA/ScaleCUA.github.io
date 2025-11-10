@@ -165,13 +165,13 @@ const OpenLeaderboard: React.FC = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-warm-50 via-white to-coral-50 pt-20 pb-16">
+      <section className="relative overflow-hidden bg-linear-to-br from-warm-50 via-white to-coral-50 pt-20 pb-16">
         <BackgroundDecorations variant="hero-light" />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <div className="flex items-center justify-center mb-6">
-              <div className="w-20 h-20 bg-gradient-to-br from-warm-200 to-warm-400 rounded-2xl flex items-center justify-center mr-6 shadow-lg">
+              <div className="w-20 h-20 bg-linear-to-br from-warm-200 to-warm-400 rounded-2xl flex items-center justify-center mr-6 shadow-lg">
                 <svg
                   className="w-10 h-10 text-white"
                   fill="none"
@@ -235,7 +235,7 @@ const OpenLeaderboard: React.FC = () => {
       </section>
 
       {/* Main Content Section */}
-      <section className="relative bg-gradient-to-br from-warm-50 to-white py-12">
+      <section className="relative bg-linear-to-br from-warm-50 to-white py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Filter Controls */}
           <FilterControls
@@ -292,8 +292,8 @@ const OpenLeaderboard: React.FC = () => {
               Public Test Cases
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="group bg-gradient-to-br from-warm-50 to-white rounded-2xl p-8 border border-warm-100 hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2">
-                <div className="absolute inset-0 bg-gradient-to-br from-warm-100/20 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <div className="group bg-linear-to-br from-warm-50 to-white rounded-2xl p-8 border border-warm-100 hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2">
+                <div className="absolute inset-0 bg-linear-to-br from-warm-100/20 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 <div className="relative">
                   <h4 className="font-bold text-gray-900 mb-4 text-lg">
                     Web Form Automation
@@ -302,7 +302,7 @@ const OpenLeaderboard: React.FC = () => {
                     Complex form filling with validation and dynamic elements
                   </p>
                   <div className="flex items-center justify-between">
-                    <span className="text-xs bg-gradient-to-r from-warm-200 to-warm-300 text-warm-800 px-3 py-2 rounded-xl font-semibold">
+                    <span className="text-xs bg-linear-to-r from-warm-200 to-warm-300 text-warm-800 px-3 py-2 rounded-xl font-semibold">
                       Web
                     </span>
                     <Link
@@ -314,8 +314,8 @@ const OpenLeaderboard: React.FC = () => {
                   </div>
                 </div>
               </div>
-              <div className="group bg-gradient-to-br from-warm-50 to-white rounded-2xl p-8 border border-warm-100 hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2">
-                <div className="absolute inset-0 bg-gradient-to-br from-warm-100/20 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <div className="group bg-linear-to-br from-warm-50 to-white rounded-2xl p-8 border border-warm-100 hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2">
+                <div className="absolute inset-0 bg-linear-to-br from-warm-100/20 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 <div className="relative">
                   <h4 className="font-bold text-gray-900 mb-4 text-lg">
                     Multi-step Navigation
@@ -324,7 +324,7 @@ const OpenLeaderboard: React.FC = () => {
                     Navigate through complex application workflows
                   </p>
                   <div className="flex items-center justify-between">
-                    <span className="text-xs bg-gradient-to-r from-warm-200 to-warm-300 text-warm-800 px-3 py-2 rounded-xl font-semibold">
+                    <span className="text-xs bg-linear-to-r from-warm-200 to-warm-300 text-warm-800 px-3 py-2 rounded-xl font-semibold">
                       Web
                     </span>
                     <Link
@@ -336,8 +336,8 @@ const OpenLeaderboard: React.FC = () => {
                   </div>
                 </div>
               </div>
-              <div className="group bg-gradient-to-br from-warm-50 to-white rounded-2xl p-8 border border-warm-100 hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2">
-                <div className="absolute inset-0 bg-gradient-to-br from-warm-100/20 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <div className="group bg-linear-to-br from-warm-50 to-white rounded-2xl p-8 border border-warm-100 hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2">
+                <div className="absolute inset-0 bg-linear-to-br from-warm-100/20 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 <div className="relative">
                   <h4 className="font-bold text-gray-900 mb-4 text-lg">
                     Data Extraction
@@ -346,7 +346,7 @@ const OpenLeaderboard: React.FC = () => {
                     Extract and process data from various UI elements
                   </p>
                   <div className="flex items-center justify-between">
-                    <span className="text-xs bg-gradient-to-r from-warm-200 to-warm-300 text-warm-800 px-3 py-2 rounded-xl font-semibold">
+                    <span className="text-xs bg-linear-to-r from-warm-200 to-warm-300 text-warm-800 px-3 py-2 rounded-xl font-semibold">
                       Web
                     </span>
                     <Link
@@ -362,7 +362,7 @@ const OpenLeaderboard: React.FC = () => {
             <div className="text-center mt-12">
               <Link
                 to="/environment"
-                className="inline-flex items-center px-10 py-4 bg-gradient-to-r from-warm-500 to-warm-600 text-white font-bold rounded-2xl hover:from-warm-600 hover:to-warm-700 transition-all duration-300 shadow-lg hover:shadow-2xl transform hover:scale-105 group"
+                className="inline-flex items-center px-10 py-4 bg-linear-to-r from-warm-500 to-warm-600 text-white font-bold rounded-2xl hover:from-warm-600 hover:to-warm-700 transition-all duration-300 shadow-lg hover:shadow-2xl transform hover:scale-105 group"
               >
                 View All Test Cases in Environments (527)
                 <svg

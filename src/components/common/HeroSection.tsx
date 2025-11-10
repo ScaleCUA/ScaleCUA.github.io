@@ -10,7 +10,7 @@ export interface HeroButton {
     | 'secondary'
     | 'primary-on-warm'
     | 'secondary-on-warm'
-    | 'outline';
+    | 'outline-solid';
   className?: string;
 }
 
@@ -53,13 +53,13 @@ const HeroSection: React.FC<HeroSectionProps> = ({
   const getBackgroundClasses = () => {
     switch (backgroundVariant) {
       case 'warm-gradient':
-        return 'bg-gradient-to-br from-warm-400 via-warm-500 to-coral-600';
+        return 'bg-linear-to-br from-warm-400 via-warm-500 to-coral-600';
       case 'light-gradient':
-        return 'bg-gradient-to-br from-warm-100 via-coral-50 to-gold-50';
+        return 'bg-linear-to-br from-warm-100 via-coral-50 to-gold-50';
       case 'coral-gradient':
-        return 'bg-gradient-to-br from-warm-50 via-white to-coral-50';
+        return 'bg-linear-to-br from-warm-50 via-white to-coral-50';
       default:
-        return 'bg-gradient-to-br from-warm-400 via-warm-500 to-coral-600';
+        return 'bg-linear-to-br from-warm-400 via-warm-500 to-coral-600';
     }
   };
 
@@ -72,7 +72,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({
       case 'gold':
         return 'bg-gold-100 text-gold-700';
       default:
-        return 'bg-white/20 backdrop-blur-sm text-white border border-white/30';
+        return 'bg-white/20 backdrop-blur-xs text-white border border-white/30';
     }
   };
 
@@ -89,8 +89,8 @@ const HeroSection: React.FC<HeroSectionProps> = ({
         return `${baseClasses} btn-primary-on-warm`;
       case 'secondary-on-warm':
         return `${baseClasses} btn-secondary-on-warm`;
-      case 'outline':
-        return `${baseClasses} btn-outline bg-white/80 backdrop-blur-sm`;
+      case 'outline-solid':
+        return `${baseClasses} btn-outline bg-white/80 backdrop-blur-xs`;
       default:
         return `${baseClasses} btn-primary`;
     }
