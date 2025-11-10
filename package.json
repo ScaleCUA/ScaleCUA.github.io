@@ -11,7 +11,7 @@
     "lint:fix": "npx eslint . --fix",
     "format": "npx prettier --write .",
     "format:check": "npx prettier --check .",
-    "precommit": "npm run format && npm run lint:fix && npm run lint",
+    "precommit": "npm run format && npm run lint:fix && npm run lint && npm run build",
     "preview": "vite preview",
     "deploy": "npm run build && gh-pages -d dist --add --no-history",
     "predeploy": "npm run build",
