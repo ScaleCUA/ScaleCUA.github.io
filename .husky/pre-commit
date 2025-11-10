@@ -12,9 +12,6 @@ npm run lint:fix
 if [ -n "$(git status --porcelain)" ]; then
     echo "📋 Staging formatting changes..."
     git add .
-
-    echo "🔄 Amending commit with formatted files..."
-    git commit --amend --no-edit --no-verify
 fi
 
 # Check if there are any remaining ESLint errors after auto-fix

@@ -51,10 +51,10 @@ const LeaderboardHome: React.FC = () => {
       <section className="relative bg-white py-8 border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-center">
-            <div className="bg-gradient-to-r from-warm-50 to-coral-50 rounded-2xl shadow-xl p-2 inline-flex backdrop-blur-sm">
+            <div className="bg-gradient-to-r from-warm-50 to-coral-50 rounded-2xl shadow-xl p-3 inline-flex backdrop-blur-sm gap-2">
               <button
                 onClick={() => setActiveTab('open')}
-                className={`px-12 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 ${
+                className={`px-8 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 ${
                   activeTab === 'open'
                     ? 'bg-gradient-to-r from-warm-500 to-warm-600 text-white shadow-lg'
                     : 'text-gray-600 hover:text-warm-600 hover:bg-warm-100/50'
@@ -91,7 +91,7 @@ const LeaderboardHome: React.FC = () => {
               </button>
               <button
                 onClick={() => setActiveTab('closed')}
-                className={`px-12 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 ${
+                className={`px-8 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 ${
                   activeTab === 'closed'
                     ? 'bg-gradient-to-r from-coral-500 to-coral-600 text-white shadow-lg'
                     : 'text-gray-600 hover:text-coral-600 hover:bg-coral-100/50'
@@ -130,7 +130,7 @@ const LeaderboardHome: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Open Tests Content */}
           {activeTab === 'open' && (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
               <div className="space-y-8">
                 <div className="flex items-center space-x-4">
                   <div className="w-16 h-16 bg-gradient-to-br from-warm-200 to-warm-400 rounded-2xl flex items-center justify-center shadow-lg">
@@ -159,7 +159,7 @@ const LeaderboardHome: React.FC = () => {
                       Open Tests Leaderboard
                     </h2>
                     <div className="flex items-center space-x-2 mt-2">
-                      <span className="inline-flex items-center space-x-2 bg-warm-100 text-warm-700 px-3 py-1 rounded-full text-sm font-medium">
+                      <span className="inline-flex items-center space-x-3 bg-warm-100 text-warm-700 px-3 py-1 rounded-full text-sm font-medium">
                         <div className="w-2 h-2 bg-warm-500 rounded-full animate-pulse"></div>
                         Transparent & Collaborative
                       </span>
@@ -353,7 +353,7 @@ const LeaderboardHome: React.FC = () => {
 
           {/* Closed Tests Content */}
           {activeTab === 'closed' && (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
               <div className="space-y-8">
                 <div className="flex items-center space-x-4">
                   <div className="w-16 h-16 bg-gradient-to-br from-coral-200 to-coral-400 rounded-2xl flex items-center justify-center shadow-lg">
@@ -376,7 +376,7 @@ const LeaderboardHome: React.FC = () => {
                       Closed Tests Leaderboard
                     </h2>
                     <div className="flex items-center space-x-2 mt-2">
-                      <span className="inline-flex items-center space-x-2 bg-coral-100 text-coral-700 px-3 py-1 rounded-full text-sm font-medium">
+                      <span className="inline-flex items-center space-x-3 bg-coral-100 text-coral-700 px-3 py-1 rounded-full text-sm font-medium">
                         <div className="w-2 h-2 bg-coral-500 rounded-full animate-pulse"></div>
                         Secure & Fair Competition
                       </span>
