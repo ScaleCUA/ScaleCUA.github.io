@@ -11,7 +11,7 @@ const Footer: React.FC = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4 text-warm-400">ScaleCUA</h3>
             <p className="text-gray-300 text-sm">
-              A comprehensive benchmark dataset for evaluating and understanding the capabilities of large language models across various tasks and domains.
+              A revolutionary GUI agent benchmark featuring AI-generated testing environments for fair evaluation of graphical interface agents. Unlike LLM benchmarks, ScaleCUA evaluates agents that interact with user interfaces through clicking, typing, and navigation.
             </p>
           </div>
 

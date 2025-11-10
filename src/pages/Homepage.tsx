@@ -15,10 +15,10 @@ const Homepage: React.FC = () => {
               A revolutionary GUI agent benchmark featuring AI-generated testing environments for fair, flexible, and extensible evaluation without over-fitting.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in">
-              <Link to="/leaderboard" className="btn-primary text-center">
+              <Link to="/leaderboard" className="btn-primary-on-warm text-center">
                 View Leaderboard
               </Link>
-              <Link to="/environment" className="btn-secondary text-center">
+              <Link to="/environment" className="btn-secondary-on-warm text-center">
                 Explore Environments
               </Link>
             </div>
@@ -143,8 +143,8 @@ const Homepage: React.FC = () => {
 
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="text-center">
-              <div className="text-4xl font-bold text-warm-600 mb-2">100+</div>
-              <div className="text-gray-600">GUI Agents</div>
+              <div className="text-4xl font-bold text-warm-600 mb-2">Universal</div>
+              <div className="text-gray-600">Any GUI Agent • Minimum Cost</div>
             </div>
             <div className="text-center">
               <div className="text-4xl font-bold text-coral-600 mb-2">∞</div>
