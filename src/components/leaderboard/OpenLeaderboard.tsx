@@ -13,7 +13,7 @@ interface Agent {
 }
 
 const OpenLeaderboard: React.FC = () => {
-  const [selectedTimeRange, setSelectedTimeRange] = useState<'7d' | '30d' | 'all'>('all')
+  const [selectedTimeRange, setSelectedTimeRange] = useState<'7d' | '30d' | '90d' | '1y'>('7d')
   const [selectedCategory, setSelectedCategory] = useState<'all' | 'web' | 'desktop' | 'mobile'>('all')
 
   // Placeholder data
