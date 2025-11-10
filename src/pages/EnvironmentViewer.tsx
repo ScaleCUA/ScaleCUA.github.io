@@ -149,13 +149,14 @@ const EnvironmentViewer: React.FC = () => {
     if (!environmentsWithIcons) return [];
 
     // Apply platform filter
-    let filtered = environmentsWithIcons.filter(env =>
-      selectedPlatform === 'all' || env.platform === selectedPlatform
+    let filtered = environmentsWithIcons.filter(
+      env => selectedPlatform === 'all' || env.platform === selectedPlatform
     );
 
     // Apply difficulty filter
-    filtered = filtered.filter(env =>
-      selectedDifficulty === 'all' || env.difficulty === selectedDifficulty
+    filtered = filtered.filter(
+      env =>
+        selectedDifficulty === 'all' || env.difficulty === selectedDifficulty
     );
 
     return filtered;

@@ -62,3 +62,27 @@ export interface FilterConfig<T> {
   options: FilterOption[];
   onChange: (value: T) => void;
 }
+
+/**
+ * Raw environment data interface (from JSON)
+ */
+export interface RawEnvironmentPreview {
+  id?: string;
+  taskName?: string;
+  platform?: Platform;
+  difficulty?: Difficulty;
+  description?: string;
+  tags?: string[];
+  metrics?: {
+    completion?: number;
+    complexity?: number;
+  };
+  icon?: string;
+  colorTheme?: ColorTheme;
+}
+
+export interface RawEnvironmentData {
+  environments: RawEnvironmentPreview[];
+  lastUpdated: string;
+  version: string;
+}

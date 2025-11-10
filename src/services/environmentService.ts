@@ -9,6 +9,8 @@ import {
   EnvironmentData,
   EnvironmentPreview,
   EnvironmentServiceResponse,
+  RawEnvironmentData,
+  RawEnvironmentPreview,
 } from '../types/environment';
 
 /**
@@ -30,7 +32,10 @@ interface CacheEntry<T> {
 }
 
 class EnvironmentDataService {
-  private cache: Map<string, CacheEntry<any>> = new Map();
+  private cache = new Map<
+    string,
+    CacheEntry<EnvironmentData | EnvironmentPreview[]>
+  >();
   private config: EnvironmentServiceConfig;
 
   constructor(config: EnvironmentServiceConfig = {}) {
@@ -71,7 +76,7 @@ class EnvironmentDataService {
   private async loadDataWithCache<T>(
     key: string,
     dataSource: string,
-    parser?: (raw: any) => T
+    parser?: (raw: unknown) => T
   ): Promise<T> {
     // Check cache first
     if (this.config.enableCache) {
@@ -80,7 +85,7 @@ class EnvironmentDataService {
         cached &&
         Date.now() - cached.timestamp < (this.config.cacheTimeout || 0)
       ) {
-        return cached.data;
+        return cached.data as T;
       }
     }
 
@@ -91,7 +96,7 @@ class EnvironmentDataService {
     // Update cache
     if (this.config.enableCache) {
       this.cache.set(key, {
-        data: processedData,
+        data: processedData as EnvironmentData | EnvironmentPreview[],
         timestamp: Date.now(),
       });
     }
@@ -114,34 +119,37 @@ class EnvironmentDataService {
         return await this.loadDataWithCache<EnvironmentData>(
           'environments',
           '/data/environments.json',
-          raw => {
+          (raw: unknown): EnvironmentData => {
+            const rawData = raw as RawEnvironmentData;
             // Validate and transform data if needed
-            if (!raw.environments || !Array.isArray(raw.environments)) {
+            if (!rawData.environments || !Array.isArray(rawData.environments)) {
               throw new Error('Invalid environment data format');
             }
             return {
-              ...raw,
-              environments: raw.environments.map((env: any) => ({
-                ...env,
-                // Ensure all required fields are present
-                id: env.id || `env-${Date.now()}`,
-                taskName: env.taskName || 'Untitled Environment',
-                platform: env.platform || 'Web Applications',
-                difficulty: env.difficulty || 'Intermediate',
-                description: env.description || '',
-                tags: Array.isArray(env.tags) ? env.tags : [],
-                metrics: {
-                  completion:
-                    typeof env.metrics?.completion === 'number'
-                      ? env.metrics.completion
-                      : 0,
-                  complexity:
-                    typeof env.metrics?.complexity === 'number'
-                      ? env.metrics.complexity
-                      : 1,
-                },
-                colorTheme: env.colorTheme || 'warm',
-              })),
+              ...rawData,
+              environments: rawData.environments.map(
+                (env: RawEnvironmentPreview): EnvironmentPreview => ({
+                  ...env,
+                  // Ensure all required fields are present
+                  id: env.id || `env-${Date.now()}`,
+                  taskName: env.taskName || 'Untitled Environment',
+                  platform: env.platform || 'Web Applications',
+                  difficulty: env.difficulty || 'Intermediate',
+                  description: env.description || '',
+                  tags: Array.isArray(env.tags) ? env.tags : [],
+                  metrics: {
+                    completion:
+                      typeof env.metrics?.completion === 'number'
+                        ? env.metrics.completion
+                        : 0,
+                    complexity:
+                      typeof env.metrics?.complexity === 'number'
+                        ? env.metrics.complexity
+                        : 1,
+                  },
+                  colorTheme: env.colorTheme || 'warm',
+                })
+              ),
             };
           }
         );
