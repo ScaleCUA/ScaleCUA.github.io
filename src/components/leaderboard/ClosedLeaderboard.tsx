@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import BackgroundDecorations from '../common/BackgroundDecorations';
+import StatCard from '../common/StatCard';
 
 interface Agent {
   id: string;
@@ -109,20 +111,9 @@ const ClosedLeaderboard: React.FC = () => {
 
   return (
     <div className="min-h-screen">
-      {/* Hero Section with Full Width and Background Decorations */}
+      {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-to-br from-coral-50 via-white to-warm-50 pt-20 pb-16">
-        {/* Background Decorations */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-coral-200/20 to-warm-200/20 rounded-full blur-3xl animate-pulse"></div>
-          <div
-            className="absolute top-20 -left-20 w-60 h-60 bg-gradient-to-br from-warm-200/20 to-gold-200/20 rounded-full blur-2xl animate-pulse"
-            style={{ animationDelay: '1s' }}
-          ></div>
-          <div
-            className="absolute -bottom-20 right-20 w-72 h-72 bg-gradient-to-br from-gold-200/20 to-coral-200/20 rounded-full blur-2xl animate-pulse"
-            style={{ animationDelay: '2s' }}
-          ></div>
-        </div>
+        <BackgroundDecorations variant="leaderboard" />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
@@ -279,50 +270,30 @@ const ClosedLeaderboard: React.FC = () => {
 
           {/* Enhanced Stats Cards */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
-            <div className="group relative bg-gradient-to-br from-coral-50 to-white rounded-3xl p-8 border border-coral-100 hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2">
-              <div className="absolute inset-0 bg-gradient-to-br from-coral-100/30 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              <div className="relative">
-                <div className="text-2xl font-bold text-coral-600 mb-3 group-hover:scale-110 transition-transform duration-300">
-                  {agents.length}
-                </div>
-                <div className="text-sm text-gray-600 font-medium">
-                  Verified Agents
-                </div>
-              </div>
-            </div>
-            <div className="group relative bg-gradient-to-br from-coral-50 to-white rounded-3xl p-8 border border-coral-100 hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2">
-              <div className="absolute inset-0 bg-gradient-to-br from-coral-100/30 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              <div className="relative">
-                <div className="text-2xl font-bold text-coral-600 mb-3 group-hover:scale-110 transition-transform duration-300">
-                  Private
-                </div>
-                <div className="text-sm text-gray-600 font-medium">
-                  Test Cases
-                </div>
-              </div>
-            </div>
-            <div className="group relative bg-gradient-to-br from-coral-50 to-white rounded-3xl p-8 border border-coral-100 hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2">
-              <div className="absolute inset-0 bg-gradient-to-br from-coral-100/30 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              <div className="relative">
-                <div className="text-2xl font-bold text-coral-600 mb-3 group-hover:scale-110 transition-transform duration-300">
-                  Monthly
-                </div>
-                <div className="text-sm text-gray-600 font-medium">
-                  Evaluation Cycles
-                </div>
-              </div>
-            </div>
-            <div className="group relative bg-gradient-to-br from-coral-50 to-white rounded-3xl p-8 border border-coral-100 hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2">
-              <div className="absolute inset-0 bg-gradient-to-br from-coral-100/30 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              <div className="relative">
-                <div className="text-2xl font-bold text-coral-600 mb-3 group-hover:scale-110 transition-transform duration-300">
-                  87.7%
-                </div>
-                <div className="text-sm text-gray-600 font-medium">
-                  Avg Success Rate
-                </div>
-              </div>
-            </div>
+            <StatCard
+              value={agents.length}
+              label="Verified Agents"
+              variant="coral"
+              hover={true}
+            />
+            <StatCard
+              value="Private"
+              label="Test Cases"
+              variant="coral"
+              hover={true}
+            />
+            <StatCard
+              value="Monthly"
+              label="Evaluation Cycles"
+              variant="coral"
+              hover={true}
+            />
+            <StatCard
+              value="87.7%"
+              label="Avg Success Rate"
+              variant="coral"
+              hover={true}
+            />
           </div>
 
           {/* Enhanced Leaderboard Table */}

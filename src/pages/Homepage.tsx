@@ -1,63 +1,35 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import HeroSection from '../components/common/HeroSection';
+import StatCard from '../components/common/StatCard';
+import FeatureCard from '../components/common/FeatureCard';
+import CTAButtons from '../components/common/CTAButtons';
 
 const Homepage: React.FC = () => {
   return (
     <div className="min-h-screen bg-warm-50">
-      {/* Full-width Hero Section with Enhanced Design */}
-      <div className="relative bg-gradient-to-br from-warm-400 via-warm-500 to-coral-600 py-20 md:py-32 overflow-hidden">
-        {/* Background decoration */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-10 left-10 w-64 h-64 bg-white rounded-full blur-3xl"></div>
-          <div className="absolute top-20 right-20 w-96 h-96 bg-coral-300 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-0 left-1/2 w-80 h-80 bg-gold-300 rounded-full blur-3xl"></div>
-        </div>
-
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <div className="mb-6">
-              <span className="inline-block px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full text-sm font-medium text-white shadow-lg border border-white/30">
-                🚀 Revolutionary GUI Agent Evaluation
-              </span>
-            </div>
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
-              ScaleCUA
-              <br />
-              Benchmark
-            </h1>
-            <p className="text-lg md:text-xl lg:text-2xl text-warm-100 max-w-4xl mx-auto mb-8 leading-relaxed">
-              Experience the future of fair GUI agent testing with AI-generated
-              environments that eliminate over-fitting and ensure authentic
-              evaluation of agent capabilities.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
-              <Link
-                to="/leaderboard"
-                className="btn-primary-on-warm shadow-xl text-lg px-8 py-4"
-              >
-                View Leaderboard
-              </Link>
-              <Link
-                to="/environment"
-                className="btn-secondary-on-warm shadow-xl text-lg px-8 py-4"
-              >
-                Explore Environments
-              </Link>
-            </div>
-            <div className="flex justify-center items-center space-x-3">
-              <div className="w-3 h-3 bg-white rounded-full animate-pulse"></div>
-              <div
-                className="w-3 h-3 bg-gold-300 rounded-full animate-pulse"
-                style={{ animationDelay: '0.2s' }}
-              ></div>
-              <div
-                className="w-3 h-3 bg-coral-300 rounded-full animate-pulse"
-                style={{ animationDelay: '0.4s' }}
-              ></div>
-            </div>
-          </div>
-        </div>
-      </div>
+      {/* Hero Section */}
+      <HeroSection
+        badge={{
+          text: '🚀 Revolutionary GUI Agent Evaluation',
+          variant: 'default',
+        }}
+        title={['ScaleCUA', 'Benchmark']}
+        description="Experience the future of fair GUI agent testing with AI-generated environments that eliminate over-fitting and ensure authentic evaluation of agent capabilities."
+        buttons={[
+          {
+            text: 'View Leaderboard',
+            to: '/leaderboard',
+            variant: 'primary-on-warm',
+          },
+          {
+            text: 'Explore Environments',
+            to: '/environment',
+            variant: 'secondary-on-warm',
+          },
+        ]}
+        backgroundVariant="warm-gradient"
+        showPulseDots={true}
+      />
 
       {/* Features Section - Enhanced with Varied Layouts */}
       <div className="py-20 bg-gradient-to-br from-warm-50 to-coral-50">
@@ -82,167 +54,121 @@ const Homepage: React.FC = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
             {/* Featured Feature - Larger */}
             <div className="lg:col-span-2">
-              <div className="card shadow-xl p-8 bg-gradient-to-br from-white to-warm-50 border-l-4 border-warm-500 hover:shadow-2xl transition-all duration-300">
-                <div className="flex items-start space-x-6">
-                  <div className="w-16 h-16 bg-gradient-to-br from-warm-400 to-warm-600 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-lg">
-                    <svg
-                      className="w-8 h-8 text-white"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M13 10V3L4 14h7v7l9-11h-7z"
-                      />
-                    </svg>
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="text-2xl font-bold text-gray-900 mb-3">
-                      AI-Generated Environments
-                    </h3>
-                    <p className="text-gray-600 text-lg leading-relaxed mb-4">
-                      Dynamic testing environments created by AI ensure unique
-                      evaluation scenarios for every session, preventing
-                      memorization and guaranteeing fair assessment of agent
-                      capabilities.
-                    </p>
-                    <div className="flex flex-wrap gap-3">
-                      <span className="inline-flex items-center px-3 py-1 bg-warm-100 text-warm-700 rounded-full text-sm font-medium">
-                        Unique Per Session
-                      </span>
-                      <span className="inline-flex items-center px-3 py-1 bg-coral-100 text-coral-700 rounded-full text-sm font-medium">
-                        Infinite Variations
-                      </span>
-                      <span className="inline-flex items-center px-3 py-1 bg-gold-100 text-gold-700 rounded-full text-sm font-medium">
-                        Zero Over-fitting
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <FeatureCard
+                variant="featured"
+                title="AI-Generated Environments"
+                description="Dynamic testing environments created by AI ensure unique evaluation scenarios for every session, preventing memorization and guaranteeing fair assessment of agent capabilities."
+                tags={[
+                  'Unique Per Session',
+                  'Infinite Variations',
+                  'Zero Over-fitting',
+                ]}
+                colorTheme="warm"
+                borderAccent={true}
+                icon={
+                  <svg
+                    className="w-8 h-8 text-white"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M13 10V3L4 14h7v7l9-11h-7z"
+                    />
+                  </svg>
+                }
+              />
             </div>
 
             {/* Secondary Features */}
-            <div className="card shadow-lg p-6 bg-white hover:shadow-xl transition-all duration-300 group">
-              <div className="flex items-start space-x-4">
-                <div className="w-12 h-12 bg-gradient-to-br from-coral-400 to-coral-600 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
-                  <svg
-                    className="w-6 h-6 text-white"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                    />
-                  </svg>
-                </div>
-                <div>
-                  <h4 className="text-lg font-bold text-gray-900 mb-2">
-                    GUI Agent Evaluation
-                  </h4>
-                  <p className="text-gray-600 leading-relaxed">
-                    Specialized benchmark for evaluating graphical user
-                    interface agents across diverse interaction scenarios and
-                    real-world applications.
-                  </p>
-                </div>
-              </div>
-            </div>
+            <FeatureCard
+              title="GUI Agent Evaluation"
+              description="Specialized benchmark for evaluating graphical user interface agents across diverse interaction scenarios and real-world applications."
+              colorTheme="coral"
+              icon={
+                <svg
+                  className="w-6 h-6 text-white"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                  />
+                </svg>
+              }
+            />
 
-            <div className="card shadow-lg p-6 bg-white hover:shadow-xl transition-all duration-300 group">
-              <div className="flex items-start space-x-4">
-                <div className="w-12 h-12 bg-gradient-to-br from-gold-400 to-gold-600 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
-                  <svg
-                    className="w-6 h-6 text-white"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
-                    />
-                  </svg>
-                </div>
-                <div>
-                  <h4 className="text-lg font-bold text-gray-900 mb-2">
-                    Fair Evaluation
-                  </h4>
-                  <p className="text-gray-600 leading-relaxed">
-                    Eliminates over-fitting issues found in fixed environment
-                    benchmarks by generating unique testing scenarios for each
-                    evaluation.
-                  </p>
-                </div>
-              </div>
-            </div>
+            <FeatureCard
+              title="Fair Evaluation"
+              description="Eliminates over-fitting issues found in fixed environment benchmarks by generating unique testing scenarios for each evaluation."
+              colorTheme="gold"
+              icon={
+                <svg
+                  className="w-6 h-6 text-white"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+                  />
+                </svg>
+              }
+            />
 
-            <div className="card shadow-lg p-6 bg-gradient-to-br from-gray-50 to-white hover:shadow-xl transition-all duration-300">
-              <div className="flex items-start space-x-4">
-                <div className="w-12 h-12 bg-gradient-to-br from-warm-400 to-warm-600 rounded-xl flex items-center justify-center flex-shrink-0">
-                  <svg
-                    className="w-6 h-6 text-white"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"
-                    />
-                  </svg>
-                </div>
-                <div>
-                  <h4 className="text-lg font-bold text-gray-900 mb-2">
-                    Flexible & Extensible
-                  </h4>
-                  <p className="text-gray-600 leading-relaxed">
-                    Adaptive framework that easily incorporates new agent types,
-                    environments, and evaluation metrics as the field evolves.
-                  </p>
-                </div>
-              </div>
-            </div>
+            <FeatureCard
+              variant="gradient"
+              title="Flexible & Extensible"
+              description="Adaptive framework that easily incorporates new agent types, environments, and evaluation metrics as the field evolves."
+              colorTheme="warm"
+              icon={
+                <svg
+                  className="w-6 h-6 text-white"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"
+                  />
+                </svg>
+              }
+            />
 
-            <div className="card shadow-lg p-6 bg-gradient-to-br from-gray-50 to-white hover:shadow-xl transition-all duration-300">
-              <div className="flex items-start space-x-4">
-                <div className="w-12 h-12 bg-gradient-to-br from-coral-400 to-coral-600 rounded-xl flex items-center justify-center flex-shrink-0">
-                  <svg
-                    className="w-6 h-6 text-white"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"
-                    />
-                  </svg>
-                </div>
-                <div>
-                  <h4 className="text-lg font-bold text-gray-900 mb-2">
-                    Interactive Demos
-                  </h4>
-                  <p className="text-gray-600 leading-relaxed">
-                    Live interactive environments showcasing agent capabilities
-                    in real-time testing scenarios with diverse GUI challenges.
-                  </p>
-                </div>
-              </div>
-            </div>
+            <FeatureCard
+              variant="gradient"
+              title="Interactive Demos"
+              description="Live interactive environments showcasing agent capabilities in real-time testing scenarios with diverse GUI challenges."
+              colorTheme="coral"
+              icon={
+                <svg
+                  className="w-6 h-6 text-white"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"
+                  />
+                </svg>
+              }
+            />
           </div>
         </div>
       </div>
@@ -272,253 +198,101 @@ const Homepage: React.FC = () => {
 
           {/* Primary Stats - Compact Single Row Layout */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-            {/* Card 1 - Universal */}
-            <div className="benchmark-card group relative">
-              <div className="benchmark-card-glow absolute -inset-1 bg-gradient-to-r from-warm-400 to-coral-400 rounded-2xl opacity-0 group-hover:opacity-25 transition-all duration-500 ease-out blur-xl"></div>
-              <div className="relative card p-6 bg-gradient-to-br from-warm-50 to-coral-50 border-0 shadow-lg group-hover:shadow-xl group-hover:-translate-y-1 transition-all duration-300 ease-out">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="w-12 h-12 bg-gradient-to-br from-warm-400 to-warm-600 rounded-xl flex items-center justify-center shadow-md group-hover:scale-110 transition-transform duration-300 ease-out">
-                    <svg
-                      className="w-6 h-6 text-white"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"
-                      />
-                    </svg>
-                  </div>
-                  <span className="text-xs font-medium text-warm-600 bg-warm-100 px-2 py-1 rounded-full group-hover:bg-warm-200 transition-colors duration-300">
-                    Universal Access
-                  </span>
-                </div>
-                <div className="text-3xl font-bold text-warm-600 mb-2 group-hover:scale-105 transition-transform duration-300">
-                  Universal
-                </div>
-                <p className="text-gray-700 text-sm mb-3">
-                  Any GUI Agent • Minimum Cost
-                </p>
-                <div className="space-y-1">
-                  <div className="flex items-center text-xs text-gray-600 group-hover:text-warm-600 transition-colors duration-300">
-                    <svg
-                      className="w-3 h-3 text-warm-500 mr-1.5 group-hover:text-warm-600 transition-colors duration-300"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                    Zero infrastructure
-                  </div>
-                  <div className="flex items-center text-xs text-gray-600 group-hover:text-warm-600 transition-colors duration-300">
-                    <svg
-                      className="w-3 h-3 text-warm-500 mr-1.5 group-hover:text-warm-600 transition-colors duration-300"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                    Cloud-based evaluation
-                  </div>
-                </div>
-              </div>
-            </div>
+            <StatCard
+              variant="benchmark"
+              value="Universal"
+              description="Any GUI Agent • Minimum Cost"
+              label="Universal Access"
+              colorTheme="warm"
+              features={['Zero infrastructure', 'Cloud-based evaluation']}
+              icon={
+                <svg
+                  className="w-6 h-6 text-white"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"
+                  />
+                </svg>
+              }
+            />
 
-            {/* Card 2 - Infinite */}
-            <div className="benchmark-card group relative">
-              <div className="benchmark-card-glow absolute -inset-1 bg-gradient-to-r from-coral-400 to-gold-400 rounded-2xl opacity-0 group-hover:opacity-25 transition-all duration-500 ease-out blur-xl"></div>
-              <div className="relative card p-6 bg-gradient-to-br from-coral-50 to-gold-50 border-0 shadow-lg group-hover:shadow-xl group-hover:-translate-y-1 transition-all duration-300 ease-out">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="w-12 h-12 bg-gradient-to-br from-coral-400 to-coral-600 rounded-xl flex items-center justify-center shadow-md group-hover:scale-110 transition-transform duration-300 ease-out">
-                    <svg
-                      className="w-6 h-6 text-white"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M13 10V3L4 14h7v7l9-11h-7z"
-                      />
-                    </svg>
-                  </div>
-                  <span className="text-xs font-medium text-coral-600 bg-coral-100 px-2 py-1 rounded-full group-hover:bg-coral-200 transition-colors duration-300">
-                    Infinite Scale
-                  </span>
-                </div>
-                <div className="text-3xl font-bold text-coral-600 mb-2 group-hover:scale-105 transition-transform duration-300">
-                  ∞
-                </div>
-                <p className="text-gray-700 text-sm mb-3">
-                  Generated Environments
-                </p>
-                <div className="space-y-1">
-                  <div className="flex items-center text-xs text-gray-600 group-hover:text-coral-600 transition-colors duration-300">
-                    <svg
-                      className="w-3 h-3 text-coral-500 mr-1.5 group-hover:text-coral-600 transition-colors duration-300"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                    AI-powered generation
-                  </div>
-                  <div className="flex items-center text-xs text-gray-600 group-hover:text-coral-600 transition-colors duration-300">
-                    <svg
-                      className="w-3 h-3 text-coral-500 mr-1.5 group-hover:text-coral-600 transition-colors duration-300"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                    Never repeated
-                  </div>
-                </div>
-              </div>
-            </div>
+            <StatCard
+              variant="benchmark"
+              value="∞"
+              description="Generated Environments"
+              label="Infinite Scale"
+              colorTheme="coral"
+              features={['AI-powered generation', 'Never repeated']}
+              icon={
+                <svg
+                  className="w-6 h-6 text-white"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M13 10V3L4 14h7v7l9-11h-7z"
+                  />
+                </svg>
+              }
+            />
 
-            {/* Card 3 - 50K+ */}
-            <div className="benchmark-card group relative">
-              <div className="benchmark-card-glow absolute -inset-1 bg-gradient-to-r from-gold-400 to-warm-400 rounded-2xl opacity-0 group-hover:opacity-25 transition-all duration-500 ease-out blur-xl"></div>
-              <div className="relative card p-6 bg-gradient-to-br from-gold-50 to-warm-50 border-0 shadow-lg group-hover:shadow-xl group-hover:-translate-y-1 transition-all duration-300 ease-out">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="w-12 h-12 bg-gradient-to-br from-gold-400 to-gold-600 rounded-xl flex items-center justify-center shadow-md group-hover:scale-110 transition-transform duration-300 ease-out">
-                    <svg
-                      className="w-6 h-6 text-white"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"
-                      />
-                    </svg>
-                  </div>
-                  <span className="text-xs font-medium text-gold-600 bg-gold-100 px-2 py-1 rounded-full group-hover:bg-gold-200 transition-colors duration-300">
-                    Comprehensive
-                  </span>
-                </div>
-                <div className="text-3xl font-bold text-gold-600 mb-2 group-hover:scale-105 transition-transform duration-300">
-                  50K+
-                </div>
-                <p className="text-gray-700 text-sm mb-3">Test Scenarios</p>
-                <div className="space-y-1">
-                  <div className="flex items-center text-xs text-gray-600 group-hover:text-gold-600 transition-colors duration-300">
-                    <svg
-                      className="w-3 h-3 text-gold-500 mr-1.5 group-hover:text-gold-600 transition-colors duration-300"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                    Multi-platform
-                  </div>
-                  <div className="flex items-center text-xs text-gray-600 group-hover:text-gold-600 transition-colors duration-300">
-                    <svg
-                      className="w-3 h-3 text-gold-500 mr-1.5 group-hover:text-gold-600 transition-colors duration-300"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                    Real-world apps
-                  </div>
-                </div>
-              </div>
-            </div>
+            <StatCard
+              variant="benchmark"
+              value="50K+"
+              description="Test Scenarios"
+              label="Comprehensive"
+              colorTheme="gold"
+              features={['Multi-platform', 'Real-world apps']}
+              icon={
+                <svg
+                  className="w-6 h-6 text-white"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"
+                  />
+                </svg>
+              }
+            />
 
-            {/* Card 4 - Zero */}
-            <div className="benchmark-card group relative">
-              <div className="benchmark-card-glow absolute -inset-1 bg-gradient-to-r from-warm-400 to-coral-400 rounded-2xl opacity-0 group-hover:opacity-25 transition-all duration-500 ease-out blur-xl"></div>
-              <div className="relative card p-6 bg-gradient-to-br from-warm-50 to-coral-50 border-0 shadow-lg group-hover:shadow-xl group-hover:-translate-y-1 transition-all duration-300 ease-out">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="w-12 h-12 bg-gradient-to-br from-warm-400 to-warm-600 rounded-xl flex items-center justify-center shadow-md group-hover:scale-110 transition-transform duration-300 ease-out">
-                    <svg
-                      className="w-6 h-6 text-white"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
-                      />
-                    </svg>
-                  </div>
-                  <span className="text-xs font-medium text-warm-600 bg-warm-100 px-2 py-1 rounded-full group-hover:bg-warm-200 transition-colors duration-300">
-                    Secure
-                  </span>
-                </div>
-                <div className="text-3xl font-bold text-warm-600 mb-2 group-hover:scale-105 transition-transform duration-300">
-                  Zero
-                </div>
-                <p className="text-gray-700 text-sm mb-3">Over-fitting Risk</p>
-                <div className="space-y-1">
-                  <div className="flex items-center text-xs text-gray-600 group-hover:text-warm-600 transition-colors duration-300">
-                    <svg
-                      className="w-3 h-3 text-warm-500 mr-1.5 group-hover:text-warm-600 transition-colors duration-300"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                    Dynamic generation
-                  </div>
-                  <div className="flex items-center text-xs text-gray-600 group-hover:text-warm-600 transition-colors duration-300">
-                    <svg
-                      className="w-3 h-3 text-warm-500 mr-1.5 group-hover:text-warm-600 transition-colors duration-300"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                    Fair evaluation
-                  </div>
-                </div>
-              </div>
-            </div>
+            <StatCard
+              variant="benchmark"
+              value="Zero"
+              description="Over-fitting Risk"
+              label="Secure"
+              colorTheme="warm"
+              features={['Dynamic generation', 'Fair evaluation']}
+              icon={
+                <svg
+                  className="w-6 h-6 text-white"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+                  />
+                </svg>
+              }
+            />
           </div>
 
           {/* Summary Stats Bar */}
@@ -577,20 +351,21 @@ const Homepage: React.FC = () => {
             ensures authentic evaluation.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
-            <Link
-              to="/leaderboard"
-              className="btn-primary-on-warm shadow-xl text-lg px-8 py-4 bg-white hover:bg-gray-100"
-            >
-              View Leaderboard
-            </Link>
-            <Link
-              to="/environment"
-              className="btn-secondary-on-warm shadow-xl text-lg px-8 py-4 border-2 border-white hover:bg-white hover:text-coral-600"
-            >
-              Explore Environments
-            </Link>
-          </div>
+          <CTAButtons
+            buttons={[
+              {
+                text: 'View Leaderboard',
+                to: '/leaderboard',
+                variant: 'white',
+              },
+              {
+                text: 'Explore Environments',
+                to: '/environment',
+                variant: 'outline',
+              },
+            ]}
+            className="mb-12"
+          />
 
           {/* Trust Indicators */}
           <div className="flex flex-wrap justify-center items-center gap-8 opacity-90">

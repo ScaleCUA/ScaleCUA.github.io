@@ -1,51 +1,24 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import HeroSection from '../common/HeroSection';
+import StatCard from '../common/StatCard';
 
 const LeaderboardHome: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'open' | 'closed'>('open');
 
   return (
     <div className="min-h-screen">
-      {/* Enhanced Hero Section with Full Width and Background Decorations */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-warm-100 via-coral-50 to-gold-50 pt-20 pb-16">
-        {/* Background Decorations */}
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute top-10 left-10 w-64 h-64 bg-warm-500 rounded-full blur-3xl"></div>
-          <div className="absolute top-20 right-20 w-96 h-96 bg-coral-500 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-0 left-1/2 w-80 h-80 bg-gold-500 rounded-full blur-3xl"></div>
-        </div>
-
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <div className="mb-6">
-              <span className="inline-block px-4 py-2 bg-white/80 backdrop-blur-sm rounded-full text-sm font-medium text-warm-700 shadow-lg">
-                🏆 Competitive Benchmark Platform
-              </span>
-            </div>
-            <h1
-              className="text-4xl md:text-6xl font-bold text-gradient mb-6 leading-tight"
-              style={{ paddingBottom: '0.1em' }}
-            >
-              GUI Agent Leaderboards
-            </h1>
-            <p className="text-lg text-gray-600 max-w-4xl mx-auto leading-relaxed">
-              Choose your evaluation approach: transparent learning with open
-              tests or fair competition with closed tests
-            </p>
-            <div className="mt-8 flex justify-center items-center space-x-3">
-              <div className="w-3 h-3 bg-warm-500 rounded-full animate-pulse"></div>
-              <div
-                className="w-3 h-3 bg-coral-500 rounded-full animate-pulse"
-                style={{ animationDelay: '0.2s' }}
-              ></div>
-              <div
-                className="w-3 h-3 bg-gold-500 rounded-full animate-pulse"
-                style={{ animationDelay: '0.4s' }}
-              ></div>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Hero Section */}
+      <HeroSection
+        badge={{
+          text: '🏆 Competitive Benchmark Platform',
+          variant: 'default',
+        }}
+        title={['GUI Agent', 'Leaderboards']}
+        description="Choose your evaluation approach: transparent learning with open tests or fair competition with closed tests"
+        backgroundVariant="warm-gradient"
+        showPulseDots={true}
+      />
 
       {/* Enhanced Tab Navigation */}
       <section className="relative bg-white py-8 border-b border-gray-100">
@@ -174,39 +147,27 @@ const LeaderboardHome: React.FC = () => {
                 </p>
 
                 <div className="grid grid-cols-3 gap-6">
-                  <div className="benchmark-card group relative">
-                    <div className="benchmark-card-glow absolute -inset-1 bg-gradient-to-r from-warm-400 to-warm-600 rounded-2xl opacity-0 group-hover:opacity-25 transition-all duration-500 ease-out blur-xl"></div>
-                    <div className="relative text-center p-6 bg-gradient-to-br from-warm-50 to-white rounded-2xl border border-warm-100 hover:shadow-2xl group-hover:-translate-y-1 transition-all duration-300 ease-out">
-                      <div className="text-4xl font-bold text-warm-600 mb-2 group-hover:scale-110 transition-transform duration-300">
-                        100%
-                      </div>
-                      <div className="text-gray-600 font-medium">
-                        Transparent
-                      </div>
-                    </div>
-                  </div>
-                  <div className="benchmark-card group relative">
-                    <div className="benchmark-card-glow absolute -inset-1 bg-gradient-to-r from-warm-400 to-coral-400 rounded-2xl opacity-0 group-hover:opacity-25 transition-all duration-500 ease-out blur-xl"></div>
-                    <div className="relative text-center p-6 bg-gradient-to-br from-warm-50 to-white rounded-2xl border border-warm-100 hover:shadow-2xl group-hover:-translate-y-1 transition-all duration-300 ease-out">
-                      <div className="text-4xl font-bold text-warm-600 mb-2 group-hover:scale-110 transition-transform duration-300">
-                        500+
-                      </div>
-                      <div className="text-gray-600 font-medium">
-                        Test Cases
-                      </div>
-                    </div>
-                  </div>
-                  <div className="benchmark-card group relative">
-                    <div className="benchmark-card-glow absolute -inset-1 bg-gradient-to-r from-coral-400 to-gold-400 rounded-2xl opacity-0 group-hover:opacity-25 transition-all duration-500 ease-out blur-xl"></div>
-                    <div className="relative text-center p-6 bg-gradient-to-br from-warm-50 to-white rounded-2xl border border-warm-100 hover:shadow-2xl group-hover:-translate-y-1 transition-all duration-300 ease-out">
-                      <div className="text-4xl font-bold text-warm-600 mb-2 group-hover:scale-110 transition-transform duration-300">
-                        Free
-                      </div>
-                      <div className="text-gray-600 font-medium">
-                        For Everyone
-                      </div>
-                    </div>
-                  </div>
+                  <StatCard
+                    variant="minimal"
+                    value="100%"
+                    label="Transparent"
+                    colorTheme="warm"
+                    size="lg"
+                  />
+                  <StatCard
+                    variant="minimal"
+                    value="500+"
+                    label="Test Cases"
+                    colorTheme="coral"
+                    size="lg"
+                  />
+                  <StatCard
+                    variant="minimal"
+                    value="Free"
+                    label="For Everyone"
+                    colorTheme="gold"
+                    size="lg"
+                  />
                 </div>
 
                 <Link
@@ -390,39 +351,27 @@ const LeaderboardHome: React.FC = () => {
                 </p>
 
                 <div className="grid grid-cols-3 gap-6">
-                  <div className="benchmark-card group relative">
-                    <div className="benchmark-card-glow absolute -inset-1 bg-gradient-to-r from-coral-400 to-coral-600 rounded-2xl opacity-0 group-hover:opacity-25 transition-all duration-500 ease-out blur-xl"></div>
-                    <div className="relative text-center p-6 bg-gradient-to-br from-coral-50 to-white rounded-2xl border border-coral-100 hover:shadow-2xl group-hover:-translate-y-1 transition-all duration-300 ease-out">
-                      <div className="text-4xl font-bold text-coral-600 mb-2 group-hover:scale-110 transition-transform duration-300">
-                        100%
-                      </div>
-                      <div className="text-gray-600 font-medium">
-                        Fair Competition
-                      </div>
-                    </div>
-                  </div>
-                  <div className="benchmark-card group relative">
-                    <div className="benchmark-card-glow absolute -inset-1 bg-gradient-to-r from-coral-400 to-gold-400 rounded-2xl opacity-0 group-hover:opacity-25 transition-all duration-500 ease-out blur-xl"></div>
-                    <div className="relative text-center p-6 bg-gradient-to-br from-coral-50 to-white rounded-2xl border border-coral-100 hover:shadow-2xl group-hover:-translate-y-1 transition-all duration-300 ease-out">
-                      <div className="text-4xl font-bold text-coral-600 mb-2 group-hover:scale-110 transition-transform duration-300">
-                        0
-                      </div>
-                      <div className="text-gray-600 font-medium">
-                        Public Test Cases
-                      </div>
-                    </div>
-                  </div>
-                  <div className="benchmark-card group relative">
-                    <div className="benchmark-card-glow absolute -inset-1 bg-gradient-to-r from-gold-400 to-coral-600 rounded-2xl opacity-0 group-hover:opacity-25 transition-all duration-500 ease-out blur-xl"></div>
-                    <div className="relative text-center p-6 bg-gradient-to-br from-coral-50 to-white rounded-2xl border border-coral-100 hover:shadow-2xl group-hover:-translate-y-1 transition-all duration-300 ease-out">
-                      <div className="text-4xl font-bold text-coral-600 mb-2 group-hover:scale-110 transition-transform duration-300">
-                        Pro
-                      </div>
-                      <div className="text-gray-600 font-medium">
-                        Evaluation Service
-                      </div>
-                    </div>
-                  </div>
+                  <StatCard
+                    variant="minimal"
+                    value="100%"
+                    label="Fair Competition"
+                    colorTheme="coral"
+                    size="lg"
+                  />
+                  <StatCard
+                    variant="minimal"
+                    value="0"
+                    label="Public Test Cases"
+                    colorTheme="gold"
+                    size="lg"
+                  />
+                  <StatCard
+                    variant="minimal"
+                    value="Pro"
+                    label="Evaluation Service"
+                    colorTheme="coral"
+                    size="lg"
+                  />
                 </div>
 
                 <Link
