@@ -1,9 +1,9 @@
 import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import Layout from './components/common/Layout';
 import Homepage from './pages/Homepage';
-import LeaderboardHome from './components/leaderboard/LeaderboardHome';
-import OpenLeaderboard from './components/leaderboard/OpenLeaderboard';
-import ClosedLeaderboard from './components/leaderboard/ClosedLeaderboard';
+import LeaderboardHome from './pages/LeaderboardHome';
+import OpenLeaderboard from './pages/OpenLeaderboard';
+import ClosedLeaderboard from './pages/ClosedLeaderboard';
 import Environment from './pages/Environment';
 
 function App() {

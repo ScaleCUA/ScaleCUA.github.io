@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import HeroSection from '../common/HeroSection';
-import StatCard from '../common/StatCard';
+import HeroSection from '../components/common/HeroSection';
+import StatCard from '../components/common/StatCard';
 
 const LeaderboardHome: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'open' | 'closed'>('open');
