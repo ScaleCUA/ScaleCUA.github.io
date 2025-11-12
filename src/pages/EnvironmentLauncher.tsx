@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { getEnvironmentUrl } from '../config/environmentUrls';
 import { useEnvironmentData } from '../services/environmentService';
 import { EnvironmentPreview } from '../types/environment';
@@ -258,48 +258,48 @@ const EnvironmentLauncher = () => {
   const getConsoleEntryStyle = (type: ConsoleEntry['type']) => {
     switch (type) {
       case 'action':
-        return 'relative bg-gradient-to-r from-blue-50 to-indigo-50 border-l-4 border-blue-500 text-blue-800 shadow-sm';
+        return 'relative bg-gray-50 border-l-4 border-blue-500 text-gray-800';
       case 'info':
-        return 'relative bg-gradient-to-r from-gray-50 to-slate-50 border-l-4 border-gray-400 text-gray-800 shadow-sm';
+        return 'relative bg-gray-50 border-l-4 border-gray-400 text-gray-800';
       case 'error':
-        return 'relative bg-gradient-to-r from-red-50 to-rose-50 border-l-4 border-red-500 text-red-800 shadow-md';
+        return 'relative bg-gray-50 border-l-4 border-red-500 text-gray-800';
       case 'success':
-        return 'relative bg-gradient-to-r from-green-50 to-emerald-50 border-l-4 border-green-500 text-green-800 shadow-sm';
+        return 'relative bg-gray-50 border-l-4 border-green-500 text-gray-800';
       default:
-        return 'relative bg-gradient-to-r from-gray-50 to-slate-50 border-l-4 border-gray-400 text-gray-800 shadow-sm';
+        return 'relative bg-gray-50 border-l-4 border-gray-400 text-gray-800';
     }
   };
 
   const getBadgeStyle = (type: ConsoleEntry['type']) => {
     switch (type) {
       case 'action':
-        return 'bg-blue-500 text-white shadow-sm';
+        return 'bg-blue-500 text-white';
       case 'info':
-        return 'bg-gray-500 text-white shadow-sm';
+        return 'bg-gray-500 text-white';
       case 'error':
-        return 'bg-red-500 text-white shadow-md';
+        return 'bg-red-500 text-white';
       case 'success':
-        return 'bg-green-500 text-white shadow-sm';
+        return 'bg-green-500 text-white';
       case 'click':
-        return 'bg-blue-600 text-white shadow-sm';
+        return 'bg-blue-600 text-white';
       case 'keypress':
-        return 'bg-green-600 text-white shadow-sm';
+        return 'bg-green-600 text-white';
       case 'scroll':
-        return 'bg-purple-500 text-white shadow-sm';
+        return 'bg-purple-500 text-white';
       case 'focus':
-        return 'bg-yellow-500 text-white shadow-sm';
+        return 'bg-yellow-500 text-white';
       case 'blur':
-        return 'bg-orange-500 text-white shadow-sm';
+        return 'bg-orange-500 text-white';
       case 'submit':
-        return 'bg-indigo-500 text-white shadow-sm';
+        return 'bg-indigo-500 text-white';
       case 'touch':
-        return 'bg-pink-500 text-white shadow-sm';
+        return 'bg-pink-500 text-white';
       case 'navigation':
-        return 'bg-cyan-500 text-white shadow-sm';
+        return 'bg-cyan-500 text-white';
       case 'dom-change':
-        return 'bg-teal-500 text-white shadow-sm';
+        return 'bg-teal-500 text-white';
       default:
-        return 'bg-gray-500 text-white shadow-sm';
+        return 'bg-gray-500 text-white';
     }
   };
 
@@ -528,6 +528,9 @@ const EnvironmentLauncher = () => {
 
   // Set up message listener for ScaleCUA bridge communication
   useEffect(() => {
+    // Scroll to top when component mounts
+    window.scrollTo(0, 0);
+
     // Message listener for bridge events and responses
     const handleMessage = (event: MessageEvent) => {
       const message = event.data;
@@ -624,20 +627,12 @@ const EnvironmentLauncher = () => {
   const mobileDimensions = { width: 390, height: 844 };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-warm-50 to-coral-50">
+    <div className="min-h-screen bg-white">
       {/* Header */}
-      <div className="bg-white border-b border-gray-200 shadow-sm">
+      <div className="bg-white border-b border-gray-300 shadow-sm">
         <div className="px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
-              <Link
-                to="/gallery"
-                className="inline-flex items-center space-x-2 text-gray-600 hover:text-warm-600 transition-colors font-medium"
-              >
-                <span>←</span>
-                <span>Back to Gallery</span>
-              </Link>
-              <div className="h-6 w-px bg-gray-300"></div>
               <div>
                 <h1 className="text-xl font-bold text-gray-900">
                   {environment.taskName}
@@ -648,6 +643,15 @@ const EnvironmentLauncher = () => {
               </div>
             </div>
             <div className="flex items-center space-x-3">
+              {/* Back to Gallery Button */}
+              <Link
+                to="/gallery"
+                className="inline-flex items-center space-x-1 px-3 py-2 bg-gray-800 text-white text-sm font-medium rounded-sm hover:bg-gray-700 transition-colors duration-200"
+              >
+                <span>←</span>
+                <span>Back to Gallery</span>
+              </Link>
+
               {/* Environment Status */}
               <div
                 className={`flex items-center space-x-2 px-3 py-2 rounded-lg border ${
@@ -681,21 +685,21 @@ const EnvironmentLauncher = () => {
       </div>
 
       {/* Main Content */}
-      <div className="flex h-[calc(100vh-64px)]">
+      <div className="flex min-h-[calc(100vh-64px)]">
         {/* Event Console - Left Side */}
-        <div className="w-80 bg-white border-r border-gray-200 flex flex-col overflow-hidden">
-          <div className="p-4 border-b border-gray-200 bg-gradient-to-r from-gray-50 to-white">
+        <div className="w-80 bg-white border-r border-gray-300 flex flex-col overflow-hidden">
+          <div className="p-4 border-b border-gray-300 bg-gray-50">
             <div className="flex items-center justify-between">
               <h2 className="text-sm font-semibold text-gray-700">
                 Event Console
               </h2>
               <button
                 onClick={() => setShowFilters(!showFilters)}
-                className="inline-flex items-center space-x-1 px-2 py-1 text-xs bg-warm-100 text-warm-700 rounded-md hover:bg-warm-200 transition-colors duration-200 font-medium border border-warm-200"
+                className="inline-flex items-center space-x-1 px-2 py-1 text-xs bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 transition-colors duration-200 font-medium border border-gray-200"
               >
                 <span>⚙️</span>
                 <span>Filters</span>
-                <span className="ml-1 px-1.5 py-0.5 bg-warm-200 text-warm-800 rounded-full text-xs font-bold">
+                <span className="ml-1 px-1.5 py-0.5 bg-gray-200 text-gray-800 rounded-full text-xs font-bold">
                   {Object.values(eventPreferences).filter(Boolean).length}
                 </span>
               </button>
@@ -712,7 +716,7 @@ const EnvironmentLauncher = () => {
               .map(entry => (
                 <div
                   key={entry.id}
-                  className={`${getConsoleEntryStyle(entry.type)} p-3 rounded-lg cursor-pointer transition-all duration-200 hover:shadow-md`}
+                  className={`${getConsoleEntryStyle(entry.type)} p-3 rounded-lg cursor-pointer transition-all duration-200 hover:bg-gray-100`}
                   onClick={() => toggleEntryExpansion(entry.id)}
                 >
                   <div className="flex flex-col">
@@ -747,7 +751,7 @@ const EnvironmentLauncher = () => {
 
                     {/* Expanded metadata - spans full width below */}
                     {expandedEntries.has(entry.id) && entry.details && (
-                      <div className="mt-3 p-4 bg-white bg-opacity-90 rounded-lg border border-gray-200 shadow-md w-full max-w-none">
+                      <div className="mt-3 p-4 bg-white bg-opacity-90 rounded-lg border border-gray-200 w-full max-w-none">
                         <div className="text-xs font-mono">
                           {Object.entries(entry.details).map(([key, value]) => (
                             <div key={key} className="mb-2 break-words">
@@ -777,9 +781,9 @@ const EnvironmentLauncher = () => {
         </div>
 
         {/* Iframe Container - Right Side */}
-        <div className="flex-1 flex flex-col bg-gradient-to-br from-gray-50 to-white">
+        <div className="flex-1 flex flex-col bg-white">
           {/* Iframe Container with Fixed Size */}
-          <div className="flex-1 flex items-center justify-center p-8 bg-gradient-to-br from-warm-25 via-coral-25 to-warm-25 overflow-auto min-h-0">
+          <div className="flex-1 flex items-center justify-center p-8 bg-gray-50 overflow-auto min-h-0">
             <div
               className="relative flex-shrink-0"
               style={{
@@ -855,34 +859,31 @@ const EnvironmentLauncher = () => {
         </div>
       </div>
 
-      {/* Event Filter Panel with Frosted Glass Effect */}
+      {/* Event Filter Panel */}
       {showFilters && (
         <div className="fixed inset-0 flex items-center justify-center z-50">
-          {/* Frosted Glass Background */}
+          {/* Background */}
           <div
-            className="fixed inset-0 z-0"
-            style={{
-              backdropFilter: 'blur(10px)',
-              backgroundColor: 'rgba(255, 255, 255, 0.3)',
-              border: '1px solid rgba(255, 255, 255, 0.4)',
-            }}
+            className="fixed inset-0 bg-gray-500 bg-opacity-75 z-0"
+            onClick={() => setShowFilters(false)}
           ></div>
+
           {/* Modal Content */}
-          <div className="relative z-10 bg-white/95 backdrop-blur-sm rounded-xl shadow-2xl w-full max-w-2xl max-h-[80vh] overflow-hidden">
+          <div className="relative z-10 bg-white rounded-sm shadow-xl w-full max-w-2xl max-h-[80vh] overflow-hidden">
             {/* Header */}
-            <div className="p-6 border-b border-gray-200 bg-gradient-to-r from-warm-50 to-coral-50">
+            <div className="p-4 border-b border-gray-300">
               <div className="flex items-center justify-between">
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900">
+                  <h3 className="text-sm font-semibold text-gray-900">
                     Event Filters
                   </h3>
-                  <p className="text-sm text-gray-600 mt-1">
+                  <p className="text-xs text-gray-600 mt-1">
                     Choose which events to display in the console
                   </p>
                 </div>
                 <button
                   onClick={() => setShowFilters(false)}
-                  className="p-2 hover:bg-gray-100 rounded-lg transition-colors duration-200"
+                  className="p-2 hover:bg-gray-100 rounded-md transition-colors duration-200"
                 >
                   <span className="text-gray-400 hover:text-gray-600">✕</span>
                 </button>
@@ -890,23 +891,23 @@ const EnvironmentLauncher = () => {
             </div>
 
             {/* Filter Content */}
-            <div className="p-6 overflow-y-auto max-h-[50vh]">
+            <div className="p-4 overflow-y-auto max-h-[50vh]">
               {/* Quick Actions */}
-              <div className="mb-6 flex items-center space-x-3">
+              <div className="mb-4 flex items-center space-x-3">
                 <button
                   onClick={() => toggleAllEvents(true)}
-                  className="px-3 py-1.5 bg-green-100 text-green-700 rounded-lg hover:bg-green-200 transition-colors duration-200 text-sm font-medium"
+                  className="px-3 py-1.5 bg-green-100 text-green-700 rounded-sm hover:bg-green-200 transition-colors duration-200 text-xs font-medium"
                 >
                   Enable All
                 </button>
                 <button
                   onClick={() => toggleAllEvents(false)}
-                  className="px-3 py-1.5 bg-red-100 text-red-700 rounded-lg hover:bg-red-200 transition-colors duration-200 text-sm font-medium"
+                  className="px-3 py-1.5 bg-red-100 text-red-700 rounded-sm hover:bg-red-200 transition-colors duration-200 text-xs font-medium"
                 >
                   Disable All
                 </button>
                 <div className="h-6 w-px bg-gray-300"></div>
-                <span className="text-sm text-gray-500">
+                <span className="text-xs text-gray-500">
                   <span className="font-medium">
                     {Object.values(eventPreferences).filter(Boolean).length}
                   </span>{' '}
@@ -919,14 +920,14 @@ const EnvironmentLauncher = () => {
               </div>
 
               {/* Filter Categories */}
-              <div className="space-y-6">
+              <div className="space-y-4">
                 {/* System Messages Category */}
                 <div>
-                  <h4 className="text-sm font-semibold text-gray-700 mb-3 flex items-center">
+                  <h4 className="text-xs font-semibold text-gray-700 mb-2 flex items-center">
                     <span className="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
                     System Messages
                   </h4>
-                  <div className="space-y-3">
+                  <div className="space-y-2">
                     {Object.entries(eventPreferences)
                       .filter(([type]) =>
                         ['info', 'error', 'success', 'action', 'init'].includes(
@@ -938,9 +939,9 @@ const EnvironmentLauncher = () => {
                         return (
                           <div
                             key={eventType}
-                            className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-200"
+                            className="flex items-center justify-between p-2 bg-gray-50 rounded-sm border border-gray-200"
                           >
-                            <div className="flex items-center space-x-3">
+                            <div className="flex items-center space-x-2">
                               <button
                                 onClick={() =>
                                   toggleEventPreference(
@@ -948,7 +949,7 @@ const EnvironmentLauncher = () => {
                                   )
                                 }
                                 className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors duration-200 ${
-                                  isEnabled ? 'bg-warm-500' : 'bg-gray-300'
+                                  isEnabled ? 'bg-gray-800' : 'bg-gray-300'
                                 }`}
                               >
                                 <span
@@ -961,10 +962,10 @@ const EnvironmentLauncher = () => {
                               </button>
                               <div className="flex-1">
                                 <div className="flex items-center space-x-2">
-                                  <span className="text-sm font-medium text-gray-700">
+                                  <span className="text-xs font-medium text-gray-700">
                                     {info.label}
                                   </span>
-                                  <span className="text-xs px-2 py-0.5 bg-blue-100 text-blue-700 rounded">
+                                  <span className="text-xs px-1.5 py-0.5 bg-blue-100 text-blue-700 rounded-sm">
                                     {info.category}
                                   </span>
                                 </div>
@@ -981,11 +982,11 @@ const EnvironmentLauncher = () => {
 
                 {/* User Interactions Category */}
                 <div>
-                  <h4 className="text-sm font-semibold text-gray-700 mb-3 flex items-center">
+                  <h4 className="text-xs font-semibold text-gray-700 mb-2 flex items-center">
                     <span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
                     User Interactions
                   </h4>
-                  <div className="space-y-3">
+                  <div className="space-y-2">
                     {Object.entries(eventPreferences)
                       .filter(
                         ([type]) =>
@@ -1002,9 +1003,9 @@ const EnvironmentLauncher = () => {
                         return (
                           <div
                             key={eventType}
-                            className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-200"
+                            className="flex items-center justify-between p-2 bg-gray-50 rounded-sm border border-gray-200"
                           >
-                            <div className="flex items-center space-x-3">
+                            <div className="flex items-center space-x-2">
                               <button
                                 onClick={() =>
                                   toggleEventPreference(
@@ -1012,7 +1013,7 @@ const EnvironmentLauncher = () => {
                                   )
                                 }
                                 className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors duration-200 ${
-                                  isEnabled ? 'bg-warm-500' : 'bg-gray-300'
+                                  isEnabled ? 'bg-gray-800' : 'bg-gray-300'
                                 }`}
                               >
                                 <span
@@ -1025,10 +1026,10 @@ const EnvironmentLauncher = () => {
                               </button>
                               <div className="flex-1">
                                 <div className="flex items-center space-x-2">
-                                  <span className="text-sm font-medium text-gray-700">
+                                  <span className="text-xs font-medium text-gray-700">
                                     {info.label}
                                   </span>
-                                  <span className="text-xs px-2 py-0.5 bg-green-100 text-green-700 rounded">
+                                  <span className="text-xs px-1.5 py-0.5 bg-green-100 text-green-700 rounded-sm">
                                     {info.category}
                                   </span>
                                 </div>
@@ -1046,9 +1047,9 @@ const EnvironmentLauncher = () => {
             </div>
 
             {/* Footer */}
-            <div className="p-4 border-t border-gray-200 bg-gray-50">
+            <div className="p-4 border-t border-gray-300 bg-gray-50">
               <div className="flex items-center justify-between">
-                <p className="text-sm text-gray-600">
+                <p className="text-xs text-gray-600">
                   <span className="font-medium">
                     {Object.values(eventPreferences).filter(Boolean).length}
                   </span>{' '}
@@ -1060,7 +1061,7 @@ const EnvironmentLauncher = () => {
                 </p>
                 <button
                   onClick={() => setShowFilters(false)}
-                  className="px-4 py-2 bg-warm-500 text-white text-sm font-medium rounded-lg hover:bg-warm-600 transition-colors duration-200"
+                  className="px-4 py-2 bg-gray-800 text-white text-xs font-medium rounded-sm hover:bg-gray-700 transition-colors duration-200"
                 >
                   Apply Filters
                 </button>
