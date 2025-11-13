@@ -4,8 +4,8 @@ const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-white border-t border-gray-300">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <footer className="bg-white">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 border-t-2 border-gray-300">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-gray-700">
           {/* About Section */}
           <div>

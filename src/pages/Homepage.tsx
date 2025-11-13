@@ -4,233 +4,317 @@ import { Link } from 'react-router-dom';
 const Homepage: React.FC = () => {
   return (
     <div className="bg-white">
-      {/* Header Section */}
-      <div className="border-b border-gray-300 py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row items-center justify-between">
-            <div className="md:w-3/5">
-              <div className="text-sm font-semibold uppercase tracking-wide text-gray-600 mb-2">
-                GUI Agent Benchmark
+      {/* Header Section - Newspaper Style */}
+      <div className="bg-white">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Newspaper Header */}
+          <div className="py-8 border-b-2 border-gray-400">
+            <div className="flex items-start justify-between">
+              <div className="flex-1">
+                <div className="text-sm font-bold uppercase tracking-wider text-gray-600 mb-2">
+                  Technical Research Report
+                </div>
+                <h1 className="text-5xl md:text-7xl font-black text-gray-900 mb-2 leading-none">
+                  SCALEWOB
+                </h1>
+                <div className="text-lg font-medium text-gray-700">
+                  Revolutionize GUI Agent Evaluation
+                </div>
               </div>
-              <h1 className="text-3xl md:text-5xl font-bold text-gray-900 mb-4 leading-tight">
-                ScaleWoB
-              </h1>
-              <p className="text-lg text-gray-600 mb-6 leading-relaxed">
-                Fair evaluation of GUI agents using AI-generated testing
-                environments.
-              </p>
-              <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4">
-                <Link
-                  to="/gallery"
-                  className="px-5 py-2 bg-gray-800 text-white text-sm font-medium rounded-sm hover:bg-gray-700 transition-colors"
-                >
-                  Explore Environments
-                </Link>
-                <Link
-                  to="/leaderboard"
-                  className="px-5 py-2 border border-gray-300 text-gray-800 text-sm font-medium rounded-sm hover:bg-gray-50 transition-colors"
-                >
-                  View Leaderboard
-                </Link>
-              </div>
-            </div>
-            <div className="md:w-1/3 mt-8 md:mt-0 flex justify-center">
-              <div className="w-48 h-48 rounded-sm bg-gray-200 flex items-center justify-center">
-                <svg
-                  className="w-24 h-24 text-gray-700"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                  />
-                </svg>
+              {/* GitHub-style Avatar */}
+              <div className="ml-6 flex-shrink-0">
+                <div className="w-20 h-20 rounded-lg border-2 border-gray-300 bg-gray-100 flex items-center justify-center shadow-sm">
+                  <svg
+                    className="w-10 h-10 text-gray-600"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                    />
+                  </svg>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
 
-      {/* Key Features Section */}
-      <div className="border-b border-gray-300 py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <div className="text-sm font-semibold uppercase tracking-wide text-gray-600 mb-3">
-              Core Advantages
-            </div>
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
-              Why Choose ScaleWoB
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Feature 1 */}
-            <div className="p-6 border border-gray-300 rounded-sm hover:border-gray-400 transition-colors">
-              <div className="flex items-center justify-center w-12 h-12 bg-gray-800 rounded-sm mb-4">
-                <svg
-                  className="w-6 h-6 text-white"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M13 10V3L4 14h7v7l9-11h-7z"
-                  />
-                </svg>
+          {/* Main Article Area */}
+          <div className="py-8">
+            <div className="max-w-4xl mx-auto">
+              <div className="text-lg font-semibold text-gray-800 mb-4 uppercase tracking-wide">
+                Abstract
               </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                AI-Generated Environments
-              </h3>
-              <p className="text-gray-600 text-sm">
-                Unique testing scenarios for every evaluation, preventing
-                memorization and ensuring fair assessment.
+              <p className="text-base text-gray-700 leading-relaxed mb-8 break-words">
+                ScaleWoB presents a revolutionary approach to GUI agent
+                benchmarking through AI-generated testing environments. This
+                comprehensive platform eliminates over-fitting issues found in
+                traditional fixed-environment benchmarks by creating unique
+                testing scenarios for each evaluation session. Supporting web
+                applications, desktop interfaces, and mobile platforms, ScaleWoB
+                provides unprecedented scale with 50K+ test cases across
+                multiple platforms.
               </p>
             </div>
 
-            {/* Feature 2 */}
-            <div className="p-6 border border-gray-300 rounded-sm hover:border-gray-400 transition-colors">
-              <div className="flex items-center justify-center w-12 h-12 bg-gray-800 rounded-sm mb-4">
-                <svg
-                  className="w-6 h-6 text-white"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
-                  />
-                </svg>
-              </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                Fair Evaluation
-              </h3>
-              <p className="text-gray-600 text-sm">
-                Eliminates over-fitting issues found in fixed environment
-                benchmarks.
-              </p>
-            </div>
+            {/* Divider */}
+            <div className="border-b-2 border-gray-300 mb-8"></div>
 
-            {/* Feature 3 */}
-            <div className="p-6 border border-gray-300 rounded-sm hover:border-gray-400 transition-colors">
-              <div className="flex items-center justify-center w-12 h-12 bg-gray-800 rounded-sm mb-4">
-                <svg
-                  className="w-6 h-6 text-white"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"
-                  />
-                </svg>
-              </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                Multi-platform Support
-              </h3>
-              <p className="text-gray-600 text-sm">
-                Evaluate agents across web applications, desktop apps, and
-                mobile interfaces.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Platform Scale Section */}
-      <div className="py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <div className="text-sm font-semibold uppercase tracking-wide text-gray-600 mb-3">
-              Benchmark Metrics
-            </div>
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
-              Unprecedented Scale
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
-            <div className="text-center">
-              <div className="text-3xl font-bold text-gray-900 mb-2">3+</div>
-              <div className="text-sm text-gray-600 uppercase tracking-wider">
-                Platforms
-              </div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-gray-900 mb-2">50K+</div>
-              <div className="text-sm text-gray-600 uppercase tracking-wider">
-                Test Cases
-              </div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-gray-900 mb-2">∞</div>
-              <div className="text-sm text-gray-600 uppercase tracking-wider">
-                Environments
-              </div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-gray-900 mb-2">100%</div>
-              <div className="text-sm text-gray-600 uppercase tracking-wider">
-                AI Generated
-              </div>
-            </div>
-          </div>
-
-          {/* Description */}
-          <div className="bg-gray-100 rounded-sm p-8">
-            <div className="max-w-3xl mx-auto text-center">
-              <h3 className="text-lg font-semibold text-gray-900 mb-3">
-                Dynamic Testing Ecosystem
-              </h3>
-              <p className="text-gray-600 text-sm leading-relaxed">
-                ScaleWoB creates a unique testing environment for each
-                evaluation session, ensuring that agents are tested on their
-                actual capabilities rather than memorization of fixed scenarios.
-                This dynamic approach provides the most authentic evaluation of
-                GUI agent performance available today.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* CTA Section */}
-      <div className="py-16 border-t border-b border-gray-300">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
-              Get Started Today
-            </h2>
-            <p className="text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed">
-              Experience the future of fair GUI agent testing with our
-              AI-generated environment benchmark.
-            </p>
-
-            <div className="flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-4">
+            {/* Action Buttons */}
+            <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6">
               <Link
                 to="/gallery"
-                className="px-6 py-2 bg-gray-800 text-white text-sm font-medium rounded-sm hover:bg-gray-700 transition-colors"
+                className="px-8 py-3 bg-gray-900 text-white text-sm font-bold uppercase tracking-wide hover:bg-gray-800 transition-colors flex items-center justify-center group"
               >
-                Explore Environments
+                Launch Your WoB
+                <svg
+                  className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform duration-200"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M13 7l5 5m0 0l-5 5m5-5H6"
+                  />
+                </svg>
               </Link>
+              <button
+                disabled
+                className="px-8 py-3 border-2 border-gray-400 text-gray-500 text-sm font-bold uppercase tracking-wide cursor-not-allowed bg-gray-100 flex items-center justify-center"
+              >
+                Create Your WoB
+                <svg
+                  className="ml-2 w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M12 4v16m8-8H4"
+                  />
+                </svg>
+              </button>
               <Link
                 to="/leaderboard"
-                className="px-6 py-2 border border-gray-300 text-gray-800 text-sm font-medium rounded-sm hover:bg-gray-50 transition-colors"
+                className="px-8 py-3 border-2 border-gray-800 text-gray-800 text-sm font-bold uppercase tracking-wide hover:bg-gray-100 transition-colors flex items-center justify-center group"
               >
-                View Leaderboard
+                Leaderboard
+                <svg
+                  className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform duration-200"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M13 7l5 5m0 0l-5 5m5-5H6"
+                  />
+                </svg>
               </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Features Section - Newspaper Columns */}
+      <div className="bg-white">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Section Header */}
+          <div className="py-6 border-b-2 border-gray-300">
+            <div className="text-2xl font-bold text-gray-900 uppercase tracking-wide">
+              Key Features
+            </div>
+          </div>
+
+          {/* Three Column Newspaper Layout */}
+          <div className="py-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+              {/* Column 1 */}
+              <div className="md:border-r md:border-gray-200 md:pr-6 md:px-4 px-2">
+                <div className="text-sm font-bold uppercase text-gray-700 mb-3 md:mb-4">
+                  Innovation
+                </div>
+                <div className="space-y-4 md:space-y-6">
+                  <div>
+                    <h4 className="text-lg md:text-xl font-bold text-gray-900 mb-2 md:mb-3">
+                      AI-Generated Environments
+                    </h4>
+                    <p className="text-sm md:text-base text-gray-700 leading-relaxed break-words">
+                      Unique testing scenarios generated dynamically for each
+                      evaluation session, preventing agent memorization and
+                      ensuring authentic assessment of capabilities rather than
+                      pattern recognition.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Column 2 */}
+              <div className="md:border-r md:border-gray-200 md:px-6 md:px-4 px-2 md:py-0 py-4">
+                <div className="text-sm font-bold uppercase text-gray-700 mb-3 md:mb-4">
+                  Evaluation
+                </div>
+                <div className="space-y-4 md:space-y-6">
+                  <div>
+                    <h4 className="text-lg md:text-xl font-bold text-gray-900 mb-2 md:mb-3">
+                      Fair Assessment Protocol
+                    </h4>
+                    <p className="text-sm md:text-base text-gray-700 leading-relaxed break-words">
+                      Eliminates critical over-fitting issues prevalent in
+                      fixed-environment benchmarks, providing genuine
+                      performance measurement across diverse testing scenarios.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Column 3 */}
+              <div className="md:pl-6 md:px-4 px-2">
+                <div className="text-sm font-bold uppercase text-gray-700 mb-3 md:mb-4">
+                  Compatibility
+                </div>
+                <div className="space-y-4 md:space-y-6">
+                  <div>
+                    <h4 className="text-lg md:text-xl font-bold text-gray-900 mb-2 md:mb-3">
+                      Cross-Platform Testing
+                    </h4>
+                    <p className="text-sm md:text-base text-gray-700 leading-relaxed break-words">
+                      Comprehensive evaluation framework supporting web
+                      applications, desktop interfaces, and mobile platforms
+                      within unified testing methodology.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Statistics Section - Newspaper Style */}
+      <div className="bg-white">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="py-6 border-b-2 border-gray-300">
+            <div className="text-2xl font-bold text-gray-900 uppercase tracking-wide">
+              Platform Statistics
+            </div>
+          </div>
+
+          <div className="py-8">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+              <div className="text-center">
+                <div className="text-4xl font-black text-gray-900 mb-2">3+</div>
+                <div className="text-sm font-semibold text-gray-700 uppercase tracking-wide">
+                  Platforms
+                </div>
+              </div>
+              <div className="text-center">
+                <div className="text-4xl font-black text-gray-900 mb-2">
+                  50K+
+                </div>
+                <div className="text-sm font-semibold text-gray-700 uppercase tracking-wide">
+                  Test Cases
+                </div>
+              </div>
+              <div className="text-center">
+                <div className="text-4xl font-black text-gray-900 mb-2">∞</div>
+                <div className="text-sm font-semibold text-gray-700 uppercase tracking-wide">
+                  Environments
+                </div>
+              </div>
+              <div className="text-center">
+                <div className="text-4xl font-black text-gray-900 mb-2">
+                  100%
+                </div>
+                <div className="text-sm font-semibold text-gray-700 uppercase tracking-wide">
+                  AI Generated
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Solutions Section - Newspaper Style */}
+      <div className="bg-white">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Section Header */}
+          <div className="py-6 border-b-2 border-gray-300">
+            <div className="text-2xl font-bold text-gray-900 uppercase tracking-wide">
+              Our Solutions
+            </div>
+          </div>
+
+          {/* Two Column Layout */}
+          <div className="py-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {/* Solution 1 */}
+              <div className="bg-gray-50 border-2 border-gray-300 p-6 hover:border-gray-400 hover:bg-gray-100 transition-all duration-200 hover:shadow-sm">
+                <div className="text-sm font-bold uppercase text-gray-700 mb-4">
+                  Environment & Task Generation
+                </div>
+                <h4 className="text-xl font-bold text-gray-900 mb-4">
+                  Customized Testing Scenarios
+                </h4>
+                <p className="text-base text-gray-700 leading-relaxed break-words mb-4">
+                  We provide bespoke environment and task generation services
+                  tailored to specific evaluation requirements. Our AI-powered
+                  system creates unique testing scenarios that match your exact
+                  specifications, ensuring comprehensive coverage of edge cases
+                  and real-world use cases.
+                </p>
+                <p className="text-base text-gray-700 leading-relaxed break-words mb-4">
+                  Perfect for research institutions and organizations requiring
+                  specialized benchmark environments with custom difficulty
+                  levels, specific application types, or domain-specific
+                  interaction patterns.
+                </p>
+                <button
+                  disabled
+                  className="px-6 py-2 border-2 border-gray-300 text-gray-400 text-sm font-semibold uppercase tracking-wide cursor-not-allowed bg-gray-100"
+                >
+                  Coming Soon
+                </button>
+              </div>
+
+              {/* Solution 2 */}
+              <div className="bg-gray-50 border-2 border-gray-300 p-6 hover:border-gray-400 hover:bg-gray-100 transition-all duration-200 hover:shadow-sm">
+                <div className="text-sm font-bold uppercase text-gray-700 mb-4">
+                  Agent Evaluation
+                </div>
+                <h4 className="text-xl font-bold text-gray-900 mb-4">
+                  Systematic Performance Assessment
+                </h4>
+                <p className="text-base text-gray-700 leading-relaxed break-words mb-4">
+                  Our comprehensive evaluation framework provides systematic
+                  assessment of GUI agent performance across multiple dimensions
+                  including task completion rate, efficiency, adaptability, and
+                  robustness in novel environments.
+                </p>
+                <p className="text-base text-gray-700 leading-relaxed break-words mb-4">
+                  We deliver detailed performance analytics, comparative
+                  analysis against baseline models, and actionable insights for
+                  improving agent capabilities through rigorous testing
+                  protocols and standardized evaluation metrics.
+                </p>
+                <button
+                  disabled
+                  className="px-6 py-2 border-2 border-gray-300 text-gray-400 text-sm font-semibold uppercase tracking-wide cursor-not-allowed bg-gray-100"
+                >
+                  Coming Soon
+                </button>
+              </div>
             </div>
           </div>
         </div>
