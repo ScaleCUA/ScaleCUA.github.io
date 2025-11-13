@@ -113,17 +113,6 @@ const EnvironmentLauncher = () => {
     }));
   };
 
-  // Toggle all events
-  const toggleAllEvents = (enabled: boolean) => {
-    setEventPreferences(prev => {
-      const newPrefs = { ...prev };
-      Object.keys(newPrefs).forEach(key => {
-        newPrefs[key as keyof typeof eventPreferences] = enabled;
-      });
-      return newPrefs;
-    });
-  };
-
   // Get event info for UI display
   const getEventInfo = (eventType: string) => {
     const eventInfo: Record<
@@ -714,6 +703,140 @@ const EnvironmentLauncher = () => {
             </div>
           </div>
 
+          {/* Expandable Filter Panel - Newspaper Style */}
+          {showFilters && (
+            <div className="border-b-2 border-gray-300 bg-gray-50 flex flex-col max-h-96 overflow-y-auto scrollbar-thin scrollbar-track-gray-100 scrollbar-thumb-gray-300 hover:scrollbar-thumb-gray-400">
+              <div className="px-4 pb-4">
+                <div className="space-y-4">
+                  {/* System Messages Category */}
+                  <div>
+                    <h4 className="text-xs font-bold uppercase text-gray-700 mb-3 flex items-center border-b border-gray-300 pb-2">
+                      <span className="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
+                      System Messages
+                    </h4>
+                    <div className="space-y-2">
+                      {Object.entries(eventPreferences)
+                        .filter(([type]) =>
+                          [
+                            'info',
+                            'error',
+                            'success',
+                            'action',
+                            'init',
+                          ].includes(type)
+                        )
+                        .map(([eventType, isEnabled]) => {
+                          const info = getEventInfo(eventType);
+                          return (
+                            <div
+                              key={eventType}
+                              className="flex items-center justify-between p-3 bg-white border-2 border-gray-300 hover:border-gray-400 hover:bg-gray-100 transition-all duration-200"
+                            >
+                              <div className="flex items-center space-x-3">
+                                <button
+                                  onClick={() =>
+                                    toggleEventPreference(
+                                      eventType as keyof typeof eventPreferences
+                                    )
+                                  }
+                                  className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors duration-200 border-2 ${
+                                    isEnabled
+                                      ? 'bg-gray-900 border-gray-700'
+                                      : 'bg-gray-300 border-gray-400'
+                                  }`}
+                                >
+                                  <span
+                                    className={`inline-block h-3 w-3 transform rounded-full bg-white transition-transform duration-200 border ${
+                                      isEnabled
+                                        ? 'translate-x-5 border-gray-300'
+                                        : 'translate-x-1 border-gray-400'
+                                    }`}
+                                  />
+                                </button>
+                                <div className="flex-1 min-w-0">
+                                  <div className="flex items-center space-x-2 mb-1">
+                                    <span className="text-xs font-bold text-gray-900 uppercase tracking-wide truncate">
+                                      {info.label}
+                                    </span>
+                                  </div>
+                                  <p className="text-xs text-gray-600 leading-tight">
+                                    {info.description}
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          );
+                        })}
+                    </div>
+                  </div>
+
+                  {/* User Interactions Category */}
+                  <div>
+                    <h4 className="text-xs font-bold uppercase text-gray-700 mb-3 flex items-center border-b border-gray-300 pb-2">
+                      <span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
+                      User Interactions
+                    </h4>
+                    <div className="space-y-2">
+                      {Object.entries(eventPreferences)
+                        .filter(
+                          ([type]) =>
+                            ![
+                              'info',
+                              'error',
+                              'success',
+                              'action',
+                              'init',
+                            ].includes(type)
+                        )
+                        .map(([eventType, isEnabled]) => {
+                          const info = getEventInfo(eventType);
+                          return (
+                            <div
+                              key={eventType}
+                              className="flex items-center justify-between p-3 bg-white border-2 border-gray-300 hover:border-gray-400 hover:bg-gray-100 transition-all duration-200"
+                            >
+                              <div className="flex items-center space-x-3">
+                                <button
+                                  onClick={() =>
+                                    toggleEventPreference(
+                                      eventType as keyof typeof eventPreferences
+                                    )
+                                  }
+                                  className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors duration-200 border-2 ${
+                                    isEnabled
+                                      ? 'bg-gray-900 border-gray-700'
+                                      : 'bg-gray-300 border-gray-400'
+                                  }`}
+                                >
+                                  <span
+                                    className={`inline-block h-3 w-3 transform rounded-full bg-white transition-transform duration-200 border ${
+                                      isEnabled
+                                        ? 'translate-x-5 border-gray-300'
+                                        : 'translate-x-1 border-gray-400'
+                                    }`}
+                                  />
+                                </button>
+                                <div className="flex-1 min-w-0">
+                                  <div className="flex items-center space-x-2 mb-1">
+                                    <span className="text-xs font-bold text-gray-900 uppercase tracking-wide truncate">
+                                      {info.label}
+                                    </span>
+                                  </div>
+                                  <p className="text-xs text-gray-600 leading-tight">
+                                    {info.description}
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          );
+                        })}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
           {/* Console entries */}
           <div
             ref={consoleContentRef}
@@ -888,224 +1011,6 @@ const EnvironmentLauncher = () => {
           </div>
         </div>
       </div>
-
-      {/* Event Filter Panel - Newspaper Style */}
-      {showFilters && (
-        <div className="fixed inset-0 flex items-center justify-center z-50">
-          {/* Background */}
-          <div
-            className="fixed inset-0 bg-gray-500 bg-opacity-75 z-0"
-            onClick={() => setShowFilters(false)}
-          ></div>
-
-          {/* Modal Content */}
-          <div className="relative z-10 bg-white border-2 border-gray-300 shadow-lg w-full max-w-2xl max-h-[80vh] overflow-hidden">
-            {/* Header */}
-            <div className="p-6 border-b-2 border-gray-400 bg-gray-50">
-              <div className="flex items-start justify-between">
-                <div>
-                  <h3 className="text-lg font-black text-gray-900 uppercase tracking-wide">
-                    Event Filters
-                  </h3>
-                  <p className="text-sm text-gray-700 mt-2">
-                    Choose which events to display in the console
-                  </p>
-                </div>
-                <button
-                  onClick={() => setShowFilters(false)}
-                  className="p-3 hover:bg-gray-200 rounded-sm transition-colors duration-200 border-2 border-gray-300"
-                >
-                  <span className="text-gray-600 hover:text-gray-900 font-black text-lg">
-                    ✕
-                  </span>
-                </button>
-              </div>
-            </div>
-
-            {/* Filter Content */}
-            <div className="p-6 overflow-y-auto max-h-[50vh]">
-              {/* Quick Actions */}
-              <div className="mb-6 flex items-center space-x-4">
-                <button
-                  onClick={() => toggleAllEvents(true)}
-                  className="px-4 py-2 bg-green-50 border-2 border-green-300 text-green-700 rounded-sm hover:bg-green-100 transition-colors duration-200 text-sm font-bold uppercase tracking-wide"
-                >
-                  Enable All
-                </button>
-                <button
-                  onClick={() => toggleAllEvents(false)}
-                  className="px-4 py-2 bg-red-50 border-2 border-red-300 text-red-700 rounded-sm hover:bg-red-100 transition-colors duration-200 text-sm font-bold uppercase tracking-wide"
-                >
-                  Disable All
-                </button>
-                <div className="h-6 w-px bg-gray-400"></div>
-                <span className="text-sm text-gray-700 font-semibold uppercase tracking-wide">
-                  <span className="font-black text-gray-900">
-                    {Object.values(eventPreferences).filter(Boolean).length}
-                  </span>{' '}
-                  of{' '}
-                  <span className="font-black text-gray-900">
-                    {Object.keys(eventPreferences).length}
-                  </span>{' '}
-                  enabled
-                </span>
-              </div>
-
-              {/* Filter Categories */}
-              <div className="space-y-6">
-                {/* System Messages Category */}
-                <div>
-                  <h4 className="text-sm font-bold uppercase text-gray-700 mb-4 flex items-center border-b-2 border-gray-300 pb-2">
-                    <span className="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>
-                    System Messages
-                  </h4>
-                  <div className="space-y-3">
-                    {Object.entries(eventPreferences)
-                      .filter(([type]) =>
-                        ['info', 'error', 'success', 'action', 'init'].includes(
-                          type
-                        )
-                      )
-                      .map(([eventType, isEnabled]) => {
-                        const info = getEventInfo(eventType);
-                        return (
-                          <div
-                            key={eventType}
-                            className="flex items-center justify-between p-4 bg-gray-50 border-2 border-gray-300 hover:border-gray-400 hover:bg-gray-100 transition-all duration-200"
-                          >
-                            <div className="flex items-center space-x-4">
-                              <button
-                                onClick={() =>
-                                  toggleEventPreference(
-                                    eventType as keyof typeof eventPreferences
-                                  )
-                                }
-                                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 border-2 ${
-                                  isEnabled
-                                    ? 'bg-gray-900 border-gray-700'
-                                    : 'bg-gray-300 border-gray-400'
-                                }`}
-                              >
-                                <span
-                                  className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform duration-200 border ${
-                                    isEnabled
-                                      ? 'translate-x-5 border-gray-300'
-                                      : 'translate-x-1 border-gray-400'
-                                  }`}
-                                />
-                              </button>
-                              <div className="flex-1">
-                                <div className="flex items-center space-x-3 mb-2">
-                                  <span className="text-sm font-bold text-gray-900 uppercase tracking-wide">
-                                    {info.label}
-                                  </span>
-                                  <span className="text-xs px-2 py-1 bg-blue-100 text-blue-700 border border-blue-300 font-bold uppercase tracking-wide">
-                                    {info.category}
-                                  </span>
-                                </div>
-                                <p className="text-sm text-gray-700">
-                                  {info.description}
-                                </p>
-                              </div>
-                            </div>
-                          </div>
-                        );
-                      })}
-                  </div>
-                </div>
-
-                {/* User Interactions Category */}
-                <div>
-                  <h4 className="text-sm font-bold uppercase text-gray-700 mb-4 flex items-center border-b-2 border-gray-300 pb-2">
-                    <span className="w-2 h-2 bg-green-500 rounded-full mr-3"></span>
-                    User Interactions
-                  </h4>
-                  <div className="space-y-3">
-                    {Object.entries(eventPreferences)
-                      .filter(
-                        ([type]) =>
-                          ![
-                            'info',
-                            'error',
-                            'success',
-                            'action',
-                            'init',
-                          ].includes(type)
-                      )
-                      .map(([eventType, isEnabled]) => {
-                        const info = getEventInfo(eventType);
-                        return (
-                          <div
-                            key={eventType}
-                            className="flex items-center justify-between p-4 bg-gray-50 border-2 border-gray-300 hover:border-gray-400 hover:bg-gray-100 transition-all duration-200"
-                          >
-                            <div className="flex items-center space-x-4">
-                              <button
-                                onClick={() =>
-                                  toggleEventPreference(
-                                    eventType as keyof typeof eventPreferences
-                                  )
-                                }
-                                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 border-2 ${
-                                  isEnabled
-                                    ? 'bg-gray-900 border-gray-700'
-                                    : 'bg-gray-300 border-gray-400'
-                                }`}
-                              >
-                                <span
-                                  className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform duration-200 border ${
-                                    isEnabled
-                                      ? 'translate-x-5 border-gray-300'
-                                      : 'translate-x-1 border-gray-400'
-                                  }`}
-                                />
-                              </button>
-                              <div className="flex-1">
-                                <div className="flex items-center space-x-3 mb-2">
-                                  <span className="text-sm font-bold text-gray-900 uppercase tracking-wide">
-                                    {info.label}
-                                  </span>
-                                  <span className="text-xs px-2 py-1 bg-green-100 text-green-700 border border-green-300 font-bold uppercase tracking-wide">
-                                    {info.category}
-                                  </span>
-                                </div>
-                                <p className="text-sm text-gray-700">
-                                  {info.description}
-                                </p>
-                              </div>
-                            </div>
-                          </div>
-                        );
-                      })}
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Footer */}
-            <div className="p-6 border-t-2 border-gray-400 bg-gray-50">
-              <div className="flex items-center justify-between">
-                <p className="text-sm text-gray-700 font-semibold uppercase tracking-wide">
-                  <span className="font-black text-gray-900">
-                    {Object.values(eventPreferences).filter(Boolean).length}
-                  </span>{' '}
-                  of{' '}
-                  <span className="font-black text-gray-900">
-                    {Object.keys(eventPreferences).length}
-                  </span>{' '}
-                  event types enabled
-                </p>
-                <button
-                  onClick={() => setShowFilters(false)}
-                  className="px-6 py-3 bg-gray-900 text-white text-sm font-bold uppercase tracking-wide hover:bg-gray-800 transition-colors duration-200 border-2 border-gray-700"
-                >
-                  Apply Filters
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
