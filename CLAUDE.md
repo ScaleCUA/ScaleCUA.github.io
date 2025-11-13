@@ -1,10 +1,10 @@
-# ScaleCUA Benchmark Website
+# ScaleWoB Benchmark Website
 
-This is the official website for the **ScaleCUA** GUI Agent Benchmark - a revolutionary platform for fair evaluation of GUI agents using AI-generated environments.
+This is the official website for the **ScaleWoB** GUI Agent Benchmark - a revolutionary platform for fair evaluation of GUI agents using AI-generated environments.
 
 ## Project Overview
 
-ScaleCUA is a comprehensive GUI agent benchmark that solves critical problems in AI evaluation by creating unique testing scenarios for each evaluation, preventing over-fitting and ensuring fair assessment of agent capabilities.
+ScaleWoB is a comprehensive GUI agent benchmark that solves critical problems in AI evaluation by creating unique testing scenarios for each evaluation, preventing over-fitting and ensuring fair assessment of agent capabilities.
 
 ### Key Features
 
@@ -61,7 +61,7 @@ The website uses a custom warm color palette:
 ## Deployment
 
 - Configured for GitHub Pages deployment
-- Base URL: `https://ScaleCUA.github.io`
+- Base URL: `https://ScaleWoB.github.io`
 - Build output in `dist/` directory
 - Uses `gh-pages` branch for deployment
 

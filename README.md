@@ -1,3 +1,3 @@
-# ScaleCUA.github.io
+# ScaleWoB.github.io
 
-ScaleCUA benchmark
+ScaleWoB benchmark

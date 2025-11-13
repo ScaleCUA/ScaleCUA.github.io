@@ -10,7 +10,7 @@ const Footer: React.FC = () => {
           {/* About Section */}
           <div>
             <h3 className="text-sm font-semibold uppercase tracking-wide mb-3">
-              ScaleCUA
+              ScaleWoB
             </h3>
             <p className="text-xs leading-relaxed text-gray-600">
               A GUI agent benchmark featuring AI-generated testing environments
@@ -59,7 +59,7 @@ const Footer: React.FC = () => {
             <ul className="space-y-2 text-xs">
               <li>
                 <a
-                  href="https://github.com/ScaleCUA/ScaleCUA.github.io"
+                  href="https://github.com/ScaleWoB/ScaleWoB.github.io"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-gray-600 hover:text-gray-900 transition-colors duration-200"
@@ -84,7 +84,7 @@ const Footer: React.FC = () => {
         {/* Bottom Bar */}
         <div className="mt-6 pt-6 border-t border-gray-200">
           <div className="flex flex-col md:flex-row justify-between items-center text-xs text-gray-500">
-            <p>© {currentYear} ScaleCUA. All rights reserved.</p>
+            <p>© {currentYear} ScaleWoB. All rights reserved.</p>
             <div className="mt-2 md:mt-0">
               <span className="tracking-tight">
                 Built with precision for fair GUI agent evaluation

@@ -1,5 +1,5 @@
 /**
- * Environment types for ScaleCUA benchmark website
+ * Environment types for ScaleWoB benchmark website
  * Defines interfaces for environment data and related structures
  */
 

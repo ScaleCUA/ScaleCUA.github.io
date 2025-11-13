@@ -1,5 +1,5 @@
 /**
- * Environment Service for ScaleCUA benchmark website
+ * Environment Service for ScaleWoB benchmark website
  * Handles loading environment data with proper error handling and state management
  * Designed to be easily replaceable with HTTP requests in the future
  */

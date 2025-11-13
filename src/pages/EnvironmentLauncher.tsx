@@ -526,7 +526,7 @@ const EnvironmentLauncher = () => {
     return getEnvironmentUrl(currentEnvId);
   }, [envId]);
 
-  // Set up message listener for ScaleCUA bridge communication
+  // Set up message listener for ScaleWoB bridge communication
   useEffect(() => {
     // Scroll to top when component mounts
     window.scrollTo(0, 0);
@@ -535,8 +535,8 @@ const EnvironmentLauncher = () => {
     const handleMessage = (event: MessageEvent) => {
       const message = event.data;
 
-      // Handle ScaleCUA bridge events
-      if (message.type === 'scalecua-event') {
+      // Handle ScaleWoB bridge events
+      if (message.type === 'scalewob-event') {
         const { eventType, data } = message.payload;
 
         // Map bridge event types to console entry types
@@ -575,9 +575,9 @@ const EnvironmentLauncher = () => {
 
           switch (eventType) {
             case 'ready':
-              return `ScaleCUA Bridge ready: ${data.environment}`;
+              return `ScaleWoB Bridge ready: ${data.environment}`;
             case 'init':
-              return 'ScaleCUA Event Tracker initialized successfully';
+              return 'ScaleWoB Event Tracker initialized successfully';
             case 'user-action': {
               const action = (data as { action?: string }).action || 'unknown';
               const target =
@@ -824,7 +824,7 @@ const EnvironmentLauncher = () => {
                         if (eventPreferences.info) {
                           addConsoleEntry(
                             'info',
-                            'Bridge-enabled environment loaded - Waiting for ScaleCUA Bridge initialization...',
+                            'Bridge-enabled environment loaded - Waiting for ScaleWoB Bridge initialization...',
                             {
                               bridgeExpected: true,
                               environmentType: 'test',
@@ -835,7 +835,7 @@ const EnvironmentLauncher = () => {
                       } else if (eventPreferences.info) {
                         addConsoleEntry(
                           'info',
-                          'CDN environment loaded - Full event tracking enabled via ScaleCUA Bridge',
+                          'CDN environment loaded - Full event tracking enabled via ScaleWoB Bridge',
                           {
                             source: 'cdn',
                           }

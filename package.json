@@ -1,9 +1,9 @@
 {
-  "name": "scalecua-website",
+  "name": "scalewob-website",
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://ScaleCUA.github.io",
+  "homepage": "https://ScaleWoB.github.io",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",

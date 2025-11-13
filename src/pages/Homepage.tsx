@@ -13,7 +13,7 @@ const Homepage: React.FC = () => {
                 GUI Agent Benchmark
               </div>
               <h1 className="text-3xl md:text-5xl font-bold text-gray-900 mb-4 leading-tight">
-                ScaleCUA
+                ScaleWoB
               </h1>
               <p className="text-lg text-gray-600 mb-6 leading-relaxed">
                 Fair evaluation of GUI agents using AI-generated testing
@@ -63,7 +63,7 @@ const Homepage: React.FC = () => {
               Core Advantages
             </div>
             <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
-              Why Choose ScaleCUA
+              Why Choose ScaleWoB
             </h2>
           </div>
 
@@ -195,7 +195,7 @@ const Homepage: React.FC = () => {
                 Dynamic Testing Ecosystem
               </h3>
               <p className="text-gray-600 text-sm leading-relaxed">
-                ScaleCUA creates a unique testing environment for each
+                ScaleWoB creates a unique testing environment for each
                 evaluation session, ensuring that agents are tested on their
                 actual capabilities rather than memorization of fixed scenarios.
                 This dynamic approach provides the most authentic evaluation of

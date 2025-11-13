@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ScaleCUA - GUI Agent Benchmark</title>
+    <title>ScaleWoB - GUI Agent Benchmark</title>
     <style>
       body {
         margin: 0;
@@ -28,7 +28,7 @@
   </head>
   <body>
     <div class="loading">
-      <div>Loading ScaleCUA...</div>
+      <div>Loading ScaleWoB...</div>
     </div>
     <script>
       // Redirect to the main index.html with the original path as a hash
@@ -38,7 +38,7 @@
       var hash = window.location.hash;
 
       // Remove the base path from the pathname
-      var basePath = '/scalecua.github.io';
+      var basePath = '/scalewob.github.io';
       var cleanPath = path.startsWith(basePath)
         ? path.substring(basePath.length)
         : path;
@@ -48,10 +48,10 @@
       if (encodedPath && encodedPath !== '404.html') {
         // Redirect to index with the path as hash
         window.location.href =
-          '/scalecua.github.io/#' + encodedPath + search + hash;
+          '/scalewob.github.io/#' + encodedPath + search + hash;
       } else {
         // If it's the root or 404.html, just go to index
-        window.location.href = '/scalecua.github.io/';
+        window.location.href = '/scalewob.github.io/';
       }
     </script>
   </body>

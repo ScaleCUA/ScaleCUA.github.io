@@ -1,5 +1,5 @@
 /**
- * ScaleCUA Bridge - Communication layer for CDN environments
+ * ScaleWoB Bridge - Communication layer for CDN environments
  * Provides standardized communication between environment and parent window
  *
  * Features:
@@ -9,7 +9,7 @@
  * - Minimal footprint and non-intrusive integration
  */
 
-class ScaleCUABridge {
+class ScaleWoBBridge {
   constructor(config = {}) {
     this.config = {
       debug: false,
@@ -34,7 +34,7 @@ class ScaleCUABridge {
    * Initialize the bridge and setup communication
    */
   init() {
-    this.log('Initializing ScaleCUA Bridge...');
+    this.log('Initializing ScaleWoB Bridge...');
 
     // Setup message listener for commands from parent
     window.addEventListener('message', this.handleMessage.bind(this));
@@ -52,14 +52,14 @@ class ScaleCUABridge {
       this.isReady = true;
       this.sendEvent(
         'init',
-        'ScaleCUA Event Tracker initialized successfully',
+        'ScaleWoB Event Tracker initialized successfully',
         {
           timestamp: Date.now(),
           environment: window.location.href,
           title: document.title,
         }
       );
-      this.log('ScaleCUA Bridge ready');
+      this.log('ScaleWoB Bridge ready');
     }, 100);
   }
 
@@ -67,7 +67,7 @@ class ScaleCUABridge {
    * Generate unique message ID
    */
   generateId() {
-    return `scalecua_${Date.now()}_${++this.messageId}`;
+    return `scalewob_${Date.now()}_${++this.messageId}`;
   }
 
   /**
@@ -75,7 +75,7 @@ class ScaleCUABridge {
    */
   log(...args) {
     if (this.config.debug) {
-      console.log('[ScaleCUA Bridge]', ...args);
+      console.log('[ScaleWoB Bridge]', ...args);
     }
   }
 
@@ -96,7 +96,7 @@ class ScaleCUABridge {
     }
 
     const postMessage = {
-      type: 'scalecua-event',
+      type: 'scalewob-event',
       id: this.generateId(),
       timestamp: Date.now(),
       payload: {
@@ -114,7 +114,7 @@ class ScaleCUABridge {
    */
   sendResponse(commandId, success, result, error = null) {
     const message = {
-      type: 'scalecua-response',
+      type: 'scalewob-response',
       id: commandId,
       timestamp: Date.now(),
       payload: {
@@ -137,7 +137,7 @@ class ScaleCUABridge {
 
     const message = event.data;
 
-    if (message.type === 'scalecua-command') {
+    if (message.type === 'scalewob-command') {
       const { id, payload } = message;
       const { command, params } = payload;
 
@@ -680,7 +680,7 @@ class ScaleCUABridge {
    * Cleanup method
    */
   destroy() {
-    this.log('Destroying ScaleCUA Bridge...');
+    this.log('Destroying ScaleWoB Bridge...');
 
     // Remove event listeners
     this.eventListeners.forEach((handler, event) => {
@@ -708,14 +708,14 @@ if (typeof window !== 'undefined') {
   // Wait for DOM to be ready
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
-      window.ScaleCUABridge = ScaleCUABridge;
+      window.ScaleWoBBridge = ScaleWoBBridge;
     });
   } else {
-    window.ScaleCUABridge = ScaleCUABridge;
+    window.ScaleWoBBridge = ScaleWoBBridge;
   }
 }
 
 // Export for module systems
 if (typeof module !== 'undefined' && module.exports) {
-  module.exports = ScaleCUABridge;
+  module.exports = ScaleWoBBridge;
 }
