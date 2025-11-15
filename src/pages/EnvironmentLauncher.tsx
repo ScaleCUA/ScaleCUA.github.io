@@ -984,6 +984,8 @@ const EnvironmentLauncher = () => {
                         margin: '0',
                         padding: '0',
                         display: 'block',
+                        pointerEvents:
+                          environmentStatus === 'online' ? 'auto' : 'none',
                       }}
                       title="Environment"
                       onLoad={() => {
@@ -1031,6 +1033,44 @@ const EnvironmentLauncher = () => {
                         }
                       }}
                     />
+
+                    {/* Loading Overlay - Blocks interactions during loading */}
+                    {environmentStatus !== 'online' && (
+                      <div className="absolute inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-10 rounded-xl">
+                        <div className="bg-white p-6 rounded-lg shadow-lg border-2 border-gray-300 text-center max-w-xs mx-4">
+                          {/* Loading Spinner */}
+                          <div className="w-8 h-8 border-3 border-gray-300 border-t-gray-900 rounded-full animate-spin mx-auto mb-4"></div>
+
+                          {/* Loading Status Text */}
+                          <div className="text-sm font-bold text-gray-900 mb-2 uppercase tracking-wide">
+                            {environmentStatus === 'loading'
+                              ? 'Loading'
+                              : 'Offline'}
+                          </div>
+
+                          <div className="text-xs text-gray-600 leading-tight">
+                            {environmentStatus === 'loading'
+                              ? 'Environment is loading. Please wait...'
+                              : 'Failed to load environment. Please try again.'}
+                          </div>
+
+                          {/* Additional loading indicator */}
+                          {environmentStatus === 'loading' && (
+                            <div className="mt-3 flex items-center justify-center space-x-1">
+                              <div className="w-1 h-1 bg-gray-400 rounded-full animate-pulse"></div>
+                              <div
+                                className="w-1 h-1 bg-gray-400 rounded-full animate-pulse"
+                                style={{ animationDelay: '0.2s' }}
+                              ></div>
+                              <div
+                                className="w-1 h-1 bg-gray-400 rounded-full animate-pulse"
+                                style={{ animationDelay: '0.4s' }}
+                              ></div>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
