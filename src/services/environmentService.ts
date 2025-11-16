@@ -172,6 +172,7 @@ class EnvironmentDataService {
                 },
                 colorTheme: env.colorTheme || 'warm',
                 cdnUrl: env.cdnUrl, // Pass through CDN URL if present
+                params: env.params, // Pass through parameters if present
               })
             );
 

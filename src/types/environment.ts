@@ -12,6 +12,12 @@ export type Platform =
 export type Difficulty = 'Intermediate' | 'Advanced' | 'Expert';
 export type ColorTheme = 'warm' | 'coral' | 'gold';
 
+// Parameter types for evaluation input
+export type ParameterType = 'string' | 'number' | 'boolean';
+export interface EnvironmentParameters {
+  [key: string]: ParameterType;
+}
+
 export interface EnvironmentMetrics {
   completion: number;
   complexity: number;
@@ -28,6 +34,7 @@ export interface EnvironmentPreview {
   icon?: string; // Icon identifier string
   colorTheme: ColorTheme;
   cdnUrl?: string; // CDN URL for the environment
+  params?: EnvironmentParameters; // Parameters required for evaluation
 }
 
 // Extended interface for environment with React icon component
@@ -81,6 +88,7 @@ export interface RawEnvironmentPreview {
   icon?: string;
   colorTheme?: ColorTheme;
   cdnUrl?: string; // CDN URL for the environment
+  params?: EnvironmentParameters; // Parameters required for evaluation
 }
 
 export interface RawEnvironmentData {

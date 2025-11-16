@@ -183,6 +183,8 @@ class ScaleWoBBridge {
         return this.getElementInfo(params.selector);
       case 'screenshot':
         return this.takeScreenshot();
+      case 'evaluate':
+        return this.evaluate(params);
       default:
         throw new Error(`Unknown command: ${command}`);
     }
@@ -674,6 +676,19 @@ class ScaleWoBBridge {
       note: 'Screenshot functionality requires additional setup',
       timestamp: Date.now(),
     };
+  }
+
+  /**
+   * Evaluate the current task status in the environment
+   */
+  evaluate(params = {}) {
+    // Check if environment has the evaluate method available
+    if (typeof window.evaluateTask === 'function') {
+      // Call the environment's own evaluation method with parameters
+      const result = window.evaluateTask(params);
+      return result;
+    }
+    throw new Error('Environment does not have evaluateTask method available');
   }
 
   /**
