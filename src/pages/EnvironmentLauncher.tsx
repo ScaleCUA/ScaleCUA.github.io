@@ -925,6 +925,16 @@ const EnvironmentLauncher = () => {
                   </h2>
                 </div>
                 <div className="flex-1 overflow-y-auto p-4 space-y-6">
+                  {/* Task Description */}
+                  <div className="p-4 bg-white border-2 border-gray-300 rounded-lg">
+                    <h3 className="text-sm font-bold text-gray-900 mb-2">
+                      Task Description
+                    </h3>
+                    <p className="text-sm text-gray-700 leading-relaxed">
+                      {environment.description}
+                    </p>
+                  </div>
+
                   {/* Play Mode Switch */}
                   <div className="p-4 bg-white border-2 border-gray-300 rounded-lg">
                     <div className="flex items-center justify-between">
