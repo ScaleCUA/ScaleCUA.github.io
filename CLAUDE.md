@@ -2,6 +2,10 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## User Requirements
+
+Use serena mcp tools proactively. If you have not read about its initial instructions, read it.
+
 ## Project Overview
 
 ScaleWoB is a GUI Agent Benchmark website for fair evaluation of GUI agents using AI-generated environments. This React/TypeScript application showcases benchmark environments, leaderboards, and provides interactive demonstrations with a sophisticated environment communication system.
