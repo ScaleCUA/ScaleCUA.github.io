@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useEnvironmentData } from '../services/environmentService';
 import { EnvironmentPreview } from '../types/environment';
+import ParameterInput from '../components/common/ParameterInput';
 
 interface ConsoleEntry {
   id: string;
@@ -34,9 +35,26 @@ const EnvironmentLauncher = () => {
   const [expandedEntries, setExpandedEntries] = useState<Set<string>>(
     new Set()
   );
-  const [showFilters, setShowFilters] = useState(false);
   // Environment status state - default to loading on mount
   const [environmentStatus, setEnvironmentStatus] = useState('loading'); // loading, online, offline
+
+  // Tab state for right panel
+  const [activeTab, setActiveTab] = useState<'functions' | 'filters'>(
+    'functions'
+  );
+
+  // Play mode and evaluation mode state
+  const [isPlayMode, setIsPlayMode] = useState(true);
+  const [isEvaluating, setIsEvaluating] = useState(false);
+  const [isEvaluationStarted, setIsEvaluationStarted] = useState(false);
+
+  // Parameter state for evaluation
+  const [parameters, setParameters] = useState<
+    Record<string, string | number | boolean>
+  >({});
+
+  // Flag to track when we're doing an evaluation refresh (to avoid duplicate success messages)
+  const [isEvaluationRefresh, setIsEvaluationRefresh] = useState(false);
 
   // Load environment data from service
   const { data: environmentData } = useEnvironmentData();
@@ -274,6 +292,109 @@ const EnvironmentLauncher = () => {
         return 'bg-gray-500 text-white';
     }
   };
+
+  // Function to start evaluation (refresh + start recording)
+  const startEvaluation = useCallback(() => {
+    if (!iframeRef.current) return;
+
+    setIsEvaluationStarted(true);
+    setIsEvaluating(false);
+
+    // Clear console entries for fresh start
+    setConsoleEntries([]);
+
+    // Log evaluation start
+    addConsoleEntry('action', 'Starting evaluation - refreshing environment');
+
+    // Set loading state first to ensure overlay shows
+    setEnvironmentStatus('loading');
+
+    // Set evaluation refresh flag to avoid duplicate success messages
+    setIsEvaluationRefresh(true);
+
+    // Refresh iframe by reloading its src with a slight delay to ensure overlay appears
+    const currentSrc = iframeRef.current.src;
+
+    setTimeout(() => {
+      if (iframeRef.current) {
+        iframeRef.current.src = '';
+        // Another small delay before restoring src to ensure proper refresh
+        setTimeout(() => {
+          if (iframeRef.current) {
+            iframeRef.current.src = currentSrc;
+          }
+        }, 50);
+      }
+    }, 100);
+  }, [iframeRef, addConsoleEntry, setConsoleEntries, setEnvironmentStatus]);
+
+  // Function to finish evaluation (same logic as existing evaluate)
+  const finishEvaluation = useCallback(() => {
+    if (
+      !iframeRef.current ||
+      environmentStatus !== 'online' ||
+      !isEvaluationStarted
+    )
+      return;
+
+    // Prevent multiple finish clicks by checking if already evaluating
+    if (isEvaluating) return;
+
+    // Check if environment requires parameters and validate them
+    if (environment?.params && Object.keys(environment.params).length > 0) {
+      const requiredParams = Object.keys(environment.params);
+      const providedParams = Object.keys(parameters);
+
+      // Check if all required parameters are provided
+      const missingParams = requiredParams.filter(
+        param => !providedParams.includes(param)
+      );
+
+      if (missingParams.length > 0) {
+        addConsoleEntry(
+          'error',
+          `Missing required parameters: ${missingParams.join(', ')}`,
+          { missingParams, requiredParams: environment.params }
+        );
+        return;
+      }
+    }
+
+    // Immediately disable the finish button by setting both states
+    setIsEvaluating(true);
+
+    const command = {
+      type: 'scalewob-command',
+      id: `command_${Date.now()}_${Math.random().toString(36).substring(2, 11)}`,
+      payload: {
+        command: 'evaluate',
+        params: parameters,
+      },
+    };
+
+    // Send command to iframe
+    iframeRef.current.contentWindow?.postMessage(command, '*');
+
+    addConsoleEntry('action', 'Evaluation command sent - recording finished', {
+      parametersProvided: Object.keys(parameters).length > 0,
+      parameterCount: Object.keys(parameters).length,
+      parameters: Object.keys(parameters).length > 0 ? parameters : undefined,
+    });
+
+    // Set a timeout as a fallback to reset states in case message doesn't arrive
+    setTimeout(() => {
+      setIsEvaluating(false);
+      setIsEvaluationStarted(false);
+    }, 10000); // 10 second timeout
+  }, [
+    iframeRef,
+    environmentStatus,
+    addConsoleEntry,
+    isEvaluating,
+    isEvaluationStarted,
+    environment,
+    parameters,
+  ]);
 
   const getConsoleIcon = (type: ConsoleEntry['type']) => {
     const backgroundColor = getBadgeStyle(type).split(' ')[0];
@@ -592,6 +713,28 @@ const EnvironmentLauncher = () => {
           );
         }
       }
+
+      // Handle ScaleWoB bridge command responses
+      else if (message.type === 'scalewob-response') {
+        const { payload } = message;
+        const { success, result, error } = payload;
+
+        // Check if this is a response to evaluate command
+        // We'd need to track command IDs if we had multiple commands,
+        // but for now we'll assume it's an evaluate response
+
+        if (success) {
+          // Handle successful evaluation
+          addConsoleEntry('success', 'Evaluation successful', result);
+        } else {
+          // Handle evaluation failure
+          addConsoleEntry('error', 'Evaluation failed', { error, result });
+        }
+
+        setIsEvaluating(false);
+        // Reset evaluation started state to allow new evaluations
+        setIsEvaluationStarted(false);
+      }
     };
 
     window.addEventListener('message', handleMessage);
@@ -599,7 +742,7 @@ const EnvironmentLauncher = () => {
     return () => {
       window.removeEventListener('message', handleMessage);
     };
-  }, [eventPreferences, addConsoleEntry]);
+  }, [eventPreferences, addConsoleEntry, setIsEvaluating]);
 
   // Mobile dimensions for preview
   const mobileDimensions = { width: 390, height: 844 };
@@ -710,31 +853,250 @@ const EnvironmentLauncher = () => {
 
       {/* Main Content */}
       <div className="flex min-h-[calc(100vh-60px)]">
-        {/* Event Console - Left Side */}
-        <div className="w-80 bg-white border-r-2 border-gray-300 flex flex-col h-[calc(100vh-60px)]">
-          <div className="p-4 border-b-2 border-gray-300 bg-gray-50">
-            <div className="flex items-center justify-between">
-              <h2 className="text-sm font-bold uppercase text-gray-700">
-                Event Console
-              </h2>
+        {/* Functional Panel - Left Side */}
+        <div className="flex border-r-2 border-gray-300">
+          {/* Vertical Tab Selector */}
+          <div className="w-12 bg-gray-800 border-r-2 border-gray-300 flex flex-col">
+            <div className="flex-1 flex flex-col py-2 space-y-1">
               <button
-                onClick={() => setShowFilters(!showFilters)}
-                className="inline-flex items-center space-x-1 px-2 py-1 text-xs bg-gray-100 text-gray-700 rounded-sm hover:bg-gray-200 transition-colors duration-200 font-medium border-2 border-gray-300"
+                onClick={() => setActiveTab('functions')}
+                className={`relative group w-full py-3 px-1 flex items-center justify-center transition-colors duration-200 ${
+                  activeTab === 'functions'
+                    ? 'bg-blue-600 text-white'
+                    : 'text-gray-400 hover:text-white hover:bg-gray-700'
+                }`}
+                title="Functions"
               >
-                <span>⚙️</span>
-                <span>Filters</span>
-                <span className="ml-1 px-1.5 py-0.5 bg-gray-200 text-gray-800 rounded-full text-xs font-bold">
-                  {Object.values(eventPreferences).filter(Boolean).length}
-                </span>
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"
+                  />
+                </svg>
+                {activeTab === 'functions' && (
+                  <div className="absolute right-0 top-0 bottom-0 w-0.5 bg-blue-400"></div>
+                )}
+              </button>
+
+              <button
+                onClick={() => setActiveTab('filters')}
+                className={`relative group w-full py-3 px-1 flex items-center justify-center transition-colors duration-200 ${
+                  activeTab === 'filters'
+                    ? 'bg-blue-600 text-white'
+                    : 'text-gray-400 hover:text-white hover:bg-gray-700'
+                }`}
+                title="Filters"
+              >
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"
+                  />
+                </svg>
+                {activeTab === 'filters' && (
+                  <div className="absolute right-0 top-0 bottom-0 w-0.5 bg-blue-400"></div>
+                )}
               </button>
             </div>
           </div>
 
-          {/* Expandable Filter Panel - Newspaper Style */}
-          {showFilters && (
-            <div className="border-b-2 border-gray-300 bg-gray-50 flex flex-col max-h-96 overflow-y-auto scrollbar-thin scrollbar-track-gray-100 scrollbar-thumb-gray-300 hover:scrollbar-thumb-gray-400">
-              <div className="px-4 pb-4">
-                <div className="space-y-4">
+          {/* Tab Content Panel */}
+          <div className="w-80 bg-gray-50 flex flex-col h-[calc(100vh-60px)]">
+            {/* Functions Tab */}
+            {activeTab === 'functions' && (
+              <>
+                <div className="p-4 border-b-2 border-gray-300 bg-gray-100">
+                  <h2 className="text-sm font-bold uppercase text-gray-700">
+                    Functions
+                  </h2>
+                </div>
+                <div className="flex-1 overflow-y-auto p-4 space-y-6">
+                  {/* Play Mode Switch */}
+                  <div className="p-4 bg-white border-2 border-gray-300 rounded-lg">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <h3 className="text-sm font-bold text-gray-900">
+                          Play Mode
+                        </h3>
+                        <p className="text-xs text-gray-600">
+                          Free interaction with the environment
+                        </p>
+                      </div>
+                      <button
+                        onClick={() => {
+                          const newPlayMode = !isPlayMode;
+                          setIsPlayMode(newPlayMode);
+
+                          if (newPlayMode) {
+                            // Switching to play mode, reset all evaluation state
+                            setIsEvaluationStarted(false);
+                            setIsEvaluating(false);
+                            setParameters({}); // Clear parameters when switching to play mode
+                            setIsEvaluationRefresh(false); // Reset evaluation refresh flag
+                            addConsoleEntry(
+                              'info',
+                              'Switched to Play Mode - Free interaction enabled'
+                            );
+                          } else {
+                            // Switching to evaluate mode
+                            setIsEvaluationStarted(false);
+                            setIsEvaluating(false);
+                            addConsoleEntry(
+                              'info',
+                              'Switched to Evaluate Mode - Use Start/Finish buttons'
+                            );
+                          }
+                        }}
+                        className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 border-2 ${
+                          isPlayMode
+                            ? 'bg-green-600 border-green-500'
+                            : 'bg-gray-300 border-gray-400'
+                        }`}
+                      >
+                        <span
+                          className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform duration-200 border ${
+                            isPlayMode
+                              ? 'translate-x-6 border-green-300'
+                              : 'translate-x-1 border-gray-400'
+                          }`}
+                        />
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Evaluation Controls (always visible, disabled in play mode) */}
+                  <div className="space-y-4">
+                    <div className="p-4 bg-white border-2 border-gray-300 rounded-lg">
+                      <h3 className="text-sm font-bold text-gray-900 mb-3">
+                        Evaluation Controls
+                      </h3>
+                      <p className="text-xs text-gray-600 mb-4">
+                        Start and finish evaluation recording
+                        {isPlayMode && (
+                          <span className="block mt-1 text-amber-600 font-medium">
+                            ⚠️ Switch to Evaluate Mode to enable these controls
+                          </span>
+                        )}
+                      </p>
+
+                      <div className="space-y-3">
+                        <button
+                          onClick={startEvaluation}
+                          disabled={
+                            isPlayMode || (isEvaluationStarted && !isEvaluating)
+                          }
+                          className={`w-full px-4 py-2 text-sm font-bold uppercase tracking-wide rounded transition-colors duration-200 flex items-center justify-center ${
+                            isPlayMode || (isEvaluationStarted && !isEvaluating)
+                              ? 'bg-gray-200 text-gray-500 cursor-not-allowed border-2 border-gray-300'
+                              : 'bg-green-600 text-white hover:bg-green-700 border-2 border-green-500'
+                          }`}
+                        >
+                          <svg
+                            className="w-4 h-4 mr-2"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth="2"
+                              d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"
+                            />
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth="2"
+                              d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                            />
+                          </svg>
+                          {isPlayMode
+                            ? 'Start (Disabled)'
+                            : isEvaluationStarted && !isEvaluating
+                              ? 'Evaluation in Progress'
+                              : 'Start'}
+                        </button>
+
+                        <button
+                          onClick={finishEvaluation}
+                          disabled={
+                            isPlayMode || !isEvaluationStarted || isEvaluating
+                          }
+                          className={`w-full px-4 py-2 text-sm font-bold uppercase tracking-wide rounded transition-colors duration-200 flex items-center justify-center ${
+                            isPlayMode || !isEvaluationStarted || isEvaluating
+                              ? 'bg-gray-200 text-gray-500 cursor-not-allowed border-2 border-gray-300'
+                              : 'bg-blue-600 text-white hover:bg-blue-700 border-2 border-blue-500'
+                          }`}
+                        >
+                          <>
+                            <svg
+                              className="w-4 h-4 mr-2"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                              />
+                            </svg>
+                            {isEvaluating ? (
+                              <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
+                            ) : null}
+                            {isPlayMode ? 'Finish (Disabled)' : 'Finish'}
+                          </>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Evaluation Parameters - Only show if environment requires parameters */}
+                  {environment?.params &&
+                    Object.keys(environment.params).length > 0 && (
+                      <ParameterInput
+                        params={environment.params}
+                        onParametersChange={setParameters}
+                        disabled={isPlayMode || !isEvaluationStarted}
+                        disabledReason={
+                          isPlayMode && !isEvaluationStarted
+                            ? 'both'
+                            : isPlayMode
+                              ? 'play-mode'
+                              : 'not-started'
+                        }
+                      />
+                    )}
+                </div>
+              </>
+            )}
+
+            {/* Filters Tab */}
+            {activeTab === 'filters' && (
+              <>
+                <div className="p-4 border-b-2 border-gray-300 bg-gray-100">
+                  <h2 className="text-sm font-bold uppercase text-gray-700">
+                    Event Filters
+                  </h2>
+                </div>
+
+                {/* Filter Categories */}
+                <div className="flex-1 overflow-y-auto p-4 space-y-6">
                   {/* System Messages Category */}
                   <div>
                     <h4 className="text-xs font-bold uppercase text-gray-700 mb-3 flex items-center border-b border-gray-300 pb-2">
@@ -860,9 +1222,165 @@ const EnvironmentLauncher = () => {
                     </div>
                   </div>
                 </div>
+              </>
+            )}
+          </div>
+        </div>
+
+        {/* Iframe Container - Middle */}
+        <div className="flex-1 flex flex-col bg-white">
+          {/* Iframe Container with Fixed Size - Newspaper Style */}
+          <div className="flex-1 flex items-center justify-center p-6 sm:p-8 bg-gray-50 overflow-auto min-h-0">
+            <div className="w-full max-w-fit">
+              {/* Mobile Device Frame */}
+              <div
+                className="relative mx-auto shrink-0"
+                style={{
+                  width: `${mobileDimensions.width}px`,
+                  height: `${mobileDimensions.height}px`,
+                }}
+              >
+                <div className="absolute inset-0 bg-gray-800 rounded-2xl p-2 shadow-lg border-2 border-gray-600">
+                  <div className="relative w-full h-full bg-white rounded-xl overflow-hidden">
+                    {/* Iframe */}
+                    <iframe
+                      ref={iframeRef}
+                      src={getIframeSrc()}
+                      className="absolute inset-0 w-full h-full bg-white"
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        margin: '0',
+                        padding: '0',
+                        display: 'block',
+                        pointerEvents:
+                          environmentStatus === 'online' &&
+                          (isPlayMode || isEvaluationStarted)
+                            ? 'auto'
+                            : 'none',
+                      }}
+                      title="Environment"
+                      onLoad={() => {
+                        setEnvironmentStatus('online');
+                        const source = 'CDN';
+                        const isTestEnv = envId?.includes('test');
+
+                        // Only show success message if this is not an evaluation refresh
+                        if (!isEvaluationRefresh && eventPreferences.success) {
+                          addConsoleEntry(
+                            'success',
+                            `Mobile environment loaded successfully from ${source}`
+                          );
+                        }
+
+                        // Reset the evaluation refresh flag
+                        if (isEvaluationRefresh) {
+                          setIsEvaluationRefresh(false);
+                        }
+
+                        // Check if this is a bridge-enabled environment
+                        if (isTestEnv) {
+                          if (eventPreferences.info) {
+                            addConsoleEntry(
+                              'info',
+                              'Bridge-enabled environment loaded - Waiting for ScaleWoB Bridge initialization...',
+                              {
+                                bridgeExpected: true,
+                                environmentType: 'test',
+                                source: 'test-cdn',
+                              }
+                            );
+                          }
+                        } else if (eventPreferences.info) {
+                          addConsoleEntry(
+                            'info',
+                            'CDN environment loaded - Full event tracking enabled via ScaleWoB Bridge',
+                            {
+                              source: 'cdn',
+                            }
+                          );
+                        }
+                      }}
+                      onError={() => {
+                        setEnvironmentStatus('offline');
+                        if (eventPreferences.error) {
+                          addConsoleEntry(
+                            'error',
+                            'Failed to load environment from CDN'
+                          );
+                        }
+                      }}
+                    />
+
+                    {/* Loading Overlay - Blocks interactions during loading */}
+                    {environmentStatus !== 'online' && (
+                      <div className="absolute inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-10 rounded-xl">
+                        <div className="bg-white p-6 rounded-lg shadow-lg border-2 border-gray-300 text-center max-w-xs mx-4">
+                          {/* Loading Spinner */}
+                          <div className="w-8 h-8 border-3 border-gray-300 border-t-gray-900 rounded-full animate-spin mx-auto mb-4"></div>
+
+                          {/* Loading Status Text */}
+                          <div className="text-sm font-bold text-gray-900 mb-2 uppercase tracking-wide">
+                            {environmentStatus === 'loading'
+                              ? 'Loading'
+                              : 'Offline'}
+                          </div>
+
+                          <div className="text-xs text-gray-600 leading-tight">
+                            {environmentStatus === 'loading'
+                              ? 'Environment is loading. Please wait...'
+                              : 'Failed to load environment. Please try again.'}
+                          </div>
+
+                          {/* Additional loading indicator */}
+                          {environmentStatus === 'loading' && (
+                            <div className="mt-3 flex items-center justify-center space-x-1">
+                              <div className="w-1 h-1 bg-gray-400 rounded-full animate-pulse"></div>
+                              <div
+                                className="w-1 h-1 bg-gray-400 rounded-full animate-pulse"
+                                style={{ animationDelay: '0.2s' }}
+                              ></div>
+                              <div
+                                className="w-1 h-1 bg-gray-400 rounded-full animate-pulse"
+                                style={{ animationDelay: '0.4s' }}
+                              ></div>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
               </div>
             </div>
-          )}
+          </div>
+        </div>
+
+        {/* Event Console - Right Side */}
+        <div className="w-80 bg-white border-l-2 border-gray-300 flex flex-col h-[calc(100vh-60px)]">
+          <div className="p-4 border-b-2 border-gray-300 bg-gray-50">
+            <div className="flex items-center justify-between">
+              <h2 className="text-sm font-bold uppercase text-gray-700">
+                Event Console
+              </h2>
+
+              {/* Current Mode Indicator */}
+              <div
+                className={`flex items-center space-x-2 px-3 py-1 border-2 text-xs font-bold uppercase tracking-wide flex-shrink-0 ${
+                  isPlayMode
+                    ? 'bg-green-50 border-green-300 text-green-700'
+                    : 'bg-blue-50 border-blue-300 text-blue-700'
+                }`}
+              >
+                <div
+                  className={`w-2 h-2 rounded-full ${
+                    isPlayMode ? 'bg-green-500 animate-pulse' : 'bg-blue-500'
+                  }`}
+                ></div>
+                <span>{isPlayMode ? 'Play Mode' : 'Evaluate Mode'}</span>
+              </div>
+            </div>
+          </div>
 
           {/* Console entries */}
           <div
@@ -955,126 +1473,6 @@ const EnvironmentLauncher = () => {
                 </p>
               </div>
             )}
-          </div>
-        </div>
-
-        {/* Iframe Container - Right Side */}
-        <div className="flex-1 flex flex-col bg-white">
-          {/* Iframe Container with Fixed Size - Newspaper Style */}
-          <div className="flex-1 flex items-center justify-center p-6 sm:p-8 bg-gray-50 overflow-auto min-h-0">
-            <div className="w-full max-w-fit">
-              {/* Mobile Device Frame */}
-              <div
-                className="relative mx-auto shrink-0"
-                style={{
-                  width: `${mobileDimensions.width}px`,
-                  height: `${mobileDimensions.height}px`,
-                }}
-              >
-                <div className="absolute inset-0 bg-gray-800 rounded-2xl p-2 shadow-lg border-2 border-gray-600">
-                  <div className="relative w-full h-full bg-white rounded-xl overflow-hidden">
-                    {/* Iframe */}
-                    <iframe
-                      ref={iframeRef}
-                      src={getIframeSrc()}
-                      className="absolute inset-0 w-full h-full bg-white"
-                      style={{
-                        width: '100%',
-                        height: '100%',
-                        margin: '0',
-                        padding: '0',
-                        display: 'block',
-                        pointerEvents:
-                          environmentStatus === 'online' ? 'auto' : 'none',
-                      }}
-                      title="Environment"
-                      onLoad={() => {
-                        setEnvironmentStatus('online');
-                        const source = 'CDN';
-                        const isTestEnv = envId?.includes('test');
-
-                        if (eventPreferences.success) {
-                          addConsoleEntry(
-                            'success',
-                            `Mobile environment loaded successfully from ${source}`
-                          );
-                        }
-
-                        // Check if this is a bridge-enabled environment
-                        if (isTestEnv) {
-                          if (eventPreferences.info) {
-                            addConsoleEntry(
-                              'info',
-                              'Bridge-enabled environment loaded - Waiting for ScaleWoB Bridge initialization...',
-                              {
-                                bridgeExpected: true,
-                                environmentType: 'test',
-                                source: 'test-cdn',
-                              }
-                            );
-                          }
-                        } else if (eventPreferences.info) {
-                          addConsoleEntry(
-                            'info',
-                            'CDN environment loaded - Full event tracking enabled via ScaleWoB Bridge',
-                            {
-                              source: 'cdn',
-                            }
-                          );
-                        }
-                      }}
-                      onError={() => {
-                        setEnvironmentStatus('offline');
-                        if (eventPreferences.error) {
-                          addConsoleEntry(
-                            'error',
-                            'Failed to load environment from CDN'
-                          );
-                        }
-                      }}
-                    />
-
-                    {/* Loading Overlay - Blocks interactions during loading */}
-                    {environmentStatus !== 'online' && (
-                      <div className="absolute inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-10 rounded-xl">
-                        <div className="bg-white p-6 rounded-lg shadow-lg border-2 border-gray-300 text-center max-w-xs mx-4">
-                          {/* Loading Spinner */}
-                          <div className="w-8 h-8 border-3 border-gray-300 border-t-gray-900 rounded-full animate-spin mx-auto mb-4"></div>
-
-                          {/* Loading Status Text */}
-                          <div className="text-sm font-bold text-gray-900 mb-2 uppercase tracking-wide">
-                            {environmentStatus === 'loading'
-                              ? 'Loading'
-                              : 'Offline'}
-                          </div>
-
-                          <div className="text-xs text-gray-600 leading-tight">
-                            {environmentStatus === 'loading'
-                              ? 'Environment is loading. Please wait...'
-                              : 'Failed to load environment. Please try again.'}
-                          </div>
-
-                          {/* Additional loading indicator */}
-                          {environmentStatus === 'loading' && (
-                            <div className="mt-3 flex items-center justify-center space-x-1">
-                              <div className="w-1 h-1 bg-gray-400 rounded-full animate-pulse"></div>
-                              <div
-                                className="w-1 h-1 bg-gray-400 rounded-full animate-pulse"
-                                style={{ animationDelay: '0.2s' }}
-                              ></div>
-                              <div
-                                className="w-1 h-1 bg-gray-400 rounded-full animate-pulse"
-                                style={{ animationDelay: '0.4s' }}
-                              ></div>
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </div>
