@@ -716,24 +716,53 @@ const EnvironmentLauncher = () => {
 
       // Handle ScaleWoB bridge command responses
       else if (message.type === 'scalewob-response') {
-        const { payload } = message;
+        const { payload, id } = message;
         const { success, result, error } = payload;
 
-        // Check if this is a response to evaluate command
-        // We'd need to track command IDs if we had multiple commands,
-        // but for now we'll assume it's an evaluate response
+        // Only process responses to evaluate commands from the launcher UI
+        // Other command responses (click, get-state, type, etc.) should pass through
+        // to allow Python SDK automation to work properly
 
-        if (success) {
-          // Handle successful evaluation
-          addConsoleEntry('success', 'Evaluation successful', result);
-        } else {
-          // Handle evaluation failure
-          addConsoleEntry('error', 'Evaluation failed', { error, result });
+        // Check if this is an evaluate command response based on:
+        // 1. Command ID matches launcher's pattern (command_*)
+        // 2. Result structure indicates evaluation response
+        // 3. We're currently in evaluation mode
+
+        const isEvaluateResponse =
+          (id && id.startsWith('command_') && isEvaluationStarted) ||
+          (result &&
+            typeof result === 'object' &&
+            ('score' in result ||
+              'correctness' in result ||
+              'evaluation' in result ||
+              'success' in result));
+
+        if (isEvaluateResponse) {
+          if (success) {
+            // Check if result contains a success field for the actual evaluation outcome
+            const evaluationSuccess =
+              result && typeof result === 'object' && 'success' in result
+                ? result.success
+                : true;
+
+            if (evaluationSuccess) {
+              addConsoleEntry('success', 'Test passed', result);
+            } else {
+              addConsoleEntry('error', 'Test failed', result);
+            }
+          } else {
+            // Handle command execution failure
+            addConsoleEntry('error', 'Evaluation command failed', {
+              error,
+              result,
+            });
+          }
+
+          setIsEvaluating(false);
+          // Reset evaluation started state to allow new evaluations
+          setIsEvaluationStarted(false);
         }
-
-        setIsEvaluating(false);
-        // Reset evaluation started state to allow new evaluations
-        setIsEvaluationStarted(false);
+        // For non-evaluate responses, do nothing to allow Python SDK to receive them
       }
     };
 
@@ -742,7 +771,7 @@ const EnvironmentLauncher = () => {
     return () => {
       window.removeEventListener('message', handleMessage);
     };
-  }, [eventPreferences, addConsoleEntry, setIsEvaluating]);
+  }, [eventPreferences, addConsoleEntry, setIsEvaluating, isEvaluationStarted]);
 
   // Mobile dimensions for preview
   const mobileDimensions = { width: 390, height: 844 };
@@ -786,9 +815,9 @@ const EnvironmentLauncher = () => {
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="h-screen bg-white flex flex-col">
       {/* Header - Newspaper Style */}
-      <div className="bg-white border-b border-gray-300">
+      <div className="bg-white border-b border-gray-300 flex-shrink-0">
         <div className="px-4 py-2">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3 min-w-0 flex-1">
@@ -852,7 +881,7 @@ const EnvironmentLauncher = () => {
       </div>
 
       {/* Main Content */}
-      <div className="flex min-h-[calc(100vh-60px)]">
+      <div className="flex flex-1 min-h-0">
         {/* Functional Panel - Left Side */}
         <div className="flex border-r-2 border-gray-300">
           {/* Vertical Tab Selector */}
@@ -915,7 +944,7 @@ const EnvironmentLauncher = () => {
           </div>
 
           {/* Tab Content Panel */}
-          <div className="w-80 bg-gray-50 flex flex-col h-[calc(100vh-60px)]">
+          <div className="w-80 bg-gray-50 flex flex-col">
             {/* Functions Tab */}
             {activeTab === 'functions' && (
               <>
@@ -1240,7 +1269,7 @@ const EnvironmentLauncher = () => {
         {/* Iframe Container - Middle */}
         <div className="flex-1 flex flex-col bg-white">
           {/* Iframe Container with Fixed Size - Newspaper Style */}
-          <div className="flex-1 flex items-center justify-center p-6 sm:p-8 bg-gray-50 overflow-auto min-h-0">
+          <div className="flex-1 flex items-center justify-center p-6 sm:p-8 bg-gray-50 overflow-hidden">
             <div className="w-full max-w-fit">
               {/* Mobile Device Frame */}
               <div
@@ -1367,7 +1396,7 @@ const EnvironmentLauncher = () => {
         </div>
 
         {/* Event Console - Right Side */}
-        <div className="w-80 bg-white border-l-2 border-gray-300 flex flex-col h-[calc(100vh-60px)]">
+        <div className="w-80 bg-white border-l-2 border-gray-300 flex flex-col">
           <div className="p-4 border-b-2 border-gray-300 bg-gray-50">
             <div className="flex items-center justify-between">
               <h2 className="text-sm font-bold uppercase text-gray-700">

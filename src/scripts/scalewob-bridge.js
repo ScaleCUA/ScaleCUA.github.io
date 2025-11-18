@@ -165,26 +165,38 @@ class ScaleWoBBridge {
    */
   executeCommand(command, params) {
     switch (command) {
+      // Coordinate-based actions
       case 'click':
-        return this.clickElement(params.selector, params.options);
+        return this.clickCoordinate(params.x, params.y, params.options);
+      case 'long_press':
+        return this.longPress(params.x, params.y, params.options);
       case 'type':
-        return this.typeText(params.selector, params.text, params.options);
-      case 'navigate':
-        return this.navigateTo(params.url);
+        return this.typeText(params.text, params.options);
+      case 'scroll':
+        return this.scrollDirection(
+          params.x,
+          params.y,
+          params.direction,
+          params.options
+        );
+      case 'drag':
+        return this.dragDirection(
+          params.x,
+          params.y,
+          params.direction,
+          params.options
+        );
+      case 'back':
+        return this.goBack();
+
+      // System commands
       case 'get-state':
         return this.getEnvironmentState();
-      case 'load-script':
-        return this.loadScript(params.url);
-      case 'scroll':
-        return this.scrollTo(params.x, params.y);
-      case 'wait':
-        return this.wait(params.ms);
-      case 'get-element-info':
-        return this.getElementInfo(params.selector);
-      case 'screenshot':
-        return this.takeScreenshot();
       case 'evaluate':
         return this.evaluate(params);
+      case 'execute-script':
+        return this.executeScript(params.script);
+
       default:
         throw new Error(`Unknown command: ${command}`);
     }
@@ -567,64 +579,343 @@ class ScaleWoBBridge {
   }
 
   /**
-   * Command implementations
+   * Click at specific coordinates
    */
-
-  clickElement(selector, options = {}) {
-    const element = document.querySelector(selector);
+  clickCoordinate(x, y, options = {}) {
+    const element = document.elementFromPoint(x, y);
     if (!element) {
-      throw new Error(`Element not found: ${selector}`);
+      throw new Error(`No element found at coordinates (${x}, ${y})`);
     }
 
-    // Ensure element is visible and clickable
-    element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    // Create and dispatch mouse events at the specified coordinates
+    const clickEvent = new MouseEvent('click', {
+      bubbles: true,
+      cancelable: true,
+      view: window,
+      clientX: x,
+      clientY: y,
+      button: 0,
+    });
 
     return new Promise(resolve => {
       setTimeout(() => {
-        element.click();
-        resolve(this.getElementInfoFromNode(element));
-      }, options.delay || 100);
+        element.dispatchEvent(clickEvent);
+        // Focus the element if it's focusable
+        if (element.focus) {
+          element.focus();
+        }
+        resolve({
+          x: x,
+          y: y,
+          element: this.getElementInfoFromNode(element),
+          timestamp: Date.now(),
+        });
+      }, options.delay || 0);
     });
   }
 
-  typeText(selector, text, options = {}) {
-    const element = document.querySelector(selector);
+  /**
+   * Long press at specific coordinates
+   */
+  longPress(x, y, options = {}) {
+    const element = document.elementFromPoint(x, y);
     if (!element) {
-      throw new Error(`Element not found: ${selector}`);
+      throw new Error(`No element found at coordinates (${x}, ${y})`);
     }
 
-    if (!['INPUT', 'TEXTAREA', 'SELECT'].includes(element.tagName)) {
-      throw new Error(`Element is not an input: ${selector}`);
-    }
+    const duration = options.duration || 1000; // Default 1 second
 
-    element.focus();
-    element.value = '';
+    return new Promise(resolve => {
+      // Dispatch mousedown event
+      const mousedownEvent = new MouseEvent('mousedown', {
+        bubbles: true,
+        cancelable: true,
+        view: window,
+        clientX: x,
+        clientY: y,
+        button: 0,
+      });
+      element.dispatchEvent(mousedownEvent);
+
+      // Wait for duration, then dispatch mouseup
+      setTimeout(() => {
+        const mouseupEvent = new MouseEvent('mouseup', {
+          bubbles: true,
+          cancelable: true,
+          view: window,
+          clientX: x,
+          clientY: y,
+          button: 0,
+        });
+        element.dispatchEvent(mouseupEvent);
+
+        resolve({
+          x: x,
+          y: y,
+          duration: duration,
+          element: this.getElementInfoFromNode(element),
+          timestamp: Date.now(),
+        });
+      }, duration);
+    });
+  }
+
+  /**
+   * Type text into the currently focused element
+   */
+  typeText(text, options = {}) {
+    const element = document.activeElement;
+
+    if (!element || !['INPUT', 'TEXTAREA'].includes(element.tagName)) {
+      throw new Error('No input element is currently focused');
+    }
 
     // Type character by character for realism
     return new Promise(resolve => {
       let index = 0;
       const typeChar = () => {
         if (index < text.length) {
-          element.value += text[index];
+          const char = text[index];
+
+          // Dispatch keyboard events
+          const keydownEvent = new KeyboardEvent('keydown', {
+            key: char,
+            bubbles: true,
+            cancelable: true,
+          });
+          element.dispatchEvent(keydownEvent);
+
+          // Update value
+          element.value += char;
           element.dispatchEvent(new Event('input', { bubbles: true }));
+
+          const keyupEvent = new KeyboardEvent('keyup', {
+            key: char,
+            bubbles: true,
+            cancelable: true,
+          });
+          element.dispatchEvent(keyupEvent);
+
           index++;
           setTimeout(typeChar, options.typingDelay || 50);
         } else {
           element.dispatchEvent(new Event('change', { bubbles: true }));
-          resolve(this.getElementInfoFromNode(element));
+          resolve({
+            text: text,
+            element: this.getElementInfoFromNode(element),
+            timestamp: Date.now(),
+          });
         }
       };
       typeChar();
     });
   }
 
-  navigateTo(url) {
-    if (url.startsWith('/')) {
-      url = window.location.origin + url;
+  /**
+   * Scroll from a starting point in a direction
+   */
+  scrollDirection(x, y, direction, options = {}) {
+    const distance = options.distance || 100;
+    let deltaX = 0;
+    let deltaY = 0;
+
+    // Map direction to delta values
+    switch (direction.toLowerCase()) {
+      case 'up':
+        deltaY = -distance;
+        break;
+      case 'down':
+        deltaY = distance;
+        break;
+      case 'left':
+        deltaX = -distance;
+        break;
+      case 'right':
+        deltaX = distance;
+        break;
+      default:
+        throw new Error(`Invalid scroll direction: ${direction}`);
     }
-    window.location.href = url;
-    return { navigatedTo: url };
+
+    // Find first scrollable ancestor from the point
+    let element = document.elementFromPoint(x, y);
+    while (element && element !== document.documentElement) {
+      const hasVerticalScroll = element.scrollHeight > element.clientHeight;
+      const hasHorizontalScroll = element.scrollWidth > element.clientWidth;
+      const overflowY = window.getComputedStyle(element).overflowY;
+      const overflowX = window.getComputedStyle(element).overflowX;
+
+      const isScrollable =
+        (hasVerticalScroll &&
+          (overflowY === 'auto' || overflowY === 'scroll')) ||
+        (hasHorizontalScroll &&
+          (overflowX === 'auto' || overflowX === 'scroll'));
+
+      if (isScrollable) break;
+      element = element.parentElement;
+    }
+
+    if (!element) element = document.documentElement;
+
+    return new Promise(resolve => {
+      // Dispatch wheel event with small delay to ensure non-zero scrollSessionDuration
+      setTimeout(() => {
+        const wheelEvent = new WheelEvent('wheel', {
+          bubbles: true,
+          cancelable: true,
+          view: window,
+          clientX: x,
+          clientY: y,
+          deltaX: deltaX,
+          deltaY: deltaY,
+          deltaMode: WheelEvent.DOM_DELTA_PIXEL,
+        });
+
+        element.dispatchEvent(wheelEvent);
+
+        // Also perform actual scroll if it's the document
+        if (element === document.documentElement || element === document.body) {
+          window.scrollBy(deltaX, deltaY);
+        } else if (
+          element.scrollHeight > element.clientHeight ||
+          element.scrollWidth > element.clientWidth
+        ) {
+          element.scrollBy(deltaX, deltaY);
+        }
+
+        resolve({
+          x: x,
+          y: y,
+          direction: direction,
+          distance: distance,
+          deltaX: deltaX,
+          deltaY: deltaY,
+          timestamp: Date.now(),
+        });
+      }, 50);
+    });
   }
+
+  /**
+   * Drag from a starting point in a direction
+   */
+  dragDirection(x, y, direction, options = {}) {
+    const distance = options.distance || 100;
+    let endX = x;
+    let endY = y;
+
+    // Calculate end coordinates based on direction
+    switch (direction.toLowerCase()) {
+      case 'up':
+        endY = y - distance;
+        break;
+      case 'down':
+        endY = y + distance;
+        break;
+      case 'left':
+        endX = x - distance;
+        break;
+      case 'right':
+        endX = x + distance;
+        break;
+      default:
+        throw new Error(`Invalid drag direction: ${direction}`);
+    }
+
+    const element = document.elementFromPoint(x, y);
+    if (!element) {
+      throw new Error(`No element found at coordinates (${x}, ${y})`);
+    }
+
+    return new Promise(resolve => {
+      // Dispatch mousedown at start position
+      const mousedownEvent = new MouseEvent('mousedown', {
+        bubbles: true,
+        cancelable: true,
+        view: window,
+        clientX: x,
+        clientY: y,
+        button: 0,
+      });
+      element.dispatchEvent(mousedownEvent);
+
+      // Simulate drag with intermediate mousemove events
+      const steps = 10;
+      const stepX = (endX - x) / steps;
+      const stepY = (endY - y) / steps;
+      let currentStep = 0;
+
+      const dragStep = () => {
+        if (currentStep < steps) {
+          const currentX = x + stepX * currentStep;
+          const currentY = y + stepY * currentStep;
+
+          const mousemoveEvent = new MouseEvent('mousemove', {
+            bubbles: true,
+            cancelable: true,
+            view: window,
+            clientX: currentX,
+            clientY: currentY,
+            button: 0,
+          });
+          document.dispatchEvent(mousemoveEvent);
+
+          currentStep++;
+          setTimeout(dragStep, 10);
+        } else {
+          // Dispatch mouseup at end position
+          const mouseupEvent = new MouseEvent('mouseup', {
+            bubbles: true,
+            cancelable: true,
+            view: window,
+            clientX: endX,
+            clientY: endY,
+            button: 0,
+          });
+          const endElement = document.elementFromPoint(endX, endY);
+          if (endElement) {
+            endElement.dispatchEvent(mouseupEvent);
+          }
+
+          resolve({
+            startX: x,
+            startY: y,
+            endX: endX,
+            endY: endY,
+            direction: direction,
+            distance: distance,
+            element: this.getElementInfoFromNode(element),
+            timestamp: Date.now(),
+          });
+        }
+      };
+
+      dragStep();
+    });
+  }
+
+  /**
+   * Navigate back in browser history
+   */
+  goBack() {
+    const previousUrl = window.location.href;
+    window.history.back();
+
+    return new Promise(resolve => {
+      // Wait a bit for navigation to complete
+      setTimeout(() => {
+        resolve({
+          from: previousUrl,
+          to: window.location.href,
+          timestamp: Date.now(),
+        });
+      }, 500);
+    });
+  }
+
+  /**
+   * System command implementations (kept for compatibility)
+   */
 
   getEnvironmentState() {
     return {
@@ -643,41 +934,6 @@ class ScaleWoBBridge {
     };
   }
 
-  loadScript(url) {
-    return new Promise((resolve, reject) => {
-      const script = document.createElement('script');
-      script.src = url;
-      script.onload = () => resolve({ loaded: url });
-      script.onerror = () => reject(new Error(`Failed to load script: ${url}`));
-      document.head.appendChild(script);
-    });
-  }
-
-  scrollTo(x, y) {
-    window.scrollTo(x, y);
-    return { scrolledTo: { x, y } };
-  }
-
-  wait(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-  }
-
-  getElementInfo(selector) {
-    const element = document.querySelector(selector);
-    if (!element) {
-      throw new Error(`Element not found: ${selector}`);
-    }
-    return this.getElementInfoFromNode(element);
-  }
-
-  takeScreenshot() {
-    // This would require additional setup in a real implementation
-    return {
-      note: 'Screenshot functionality requires additional setup',
-      timestamp: Date.now(),
-    };
-  }
-
   /**
    * Evaluate the current task status in the environment
    */
@@ -689,6 +945,21 @@ class ScaleWoBBridge {
       return result;
     }
     throw new Error('Environment does not have evaluateTask method available');
+  }
+
+  executeScript(script) {
+    try {
+      // Use Function constructor for safer evaluation
+      const func = new Function(script);
+      const result = func();
+      return {
+        success: true,
+        result: result,
+        timestamp: Date.now(),
+      };
+    } catch (error) {
+      throw new Error(`Script execution failed: ${error.message}`);
+    }
   }
 
   /**
