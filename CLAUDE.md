@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## User Requirements
 
-Use serena mcp tools proactively. If you have not read about its initial instructions, read it.
+Use claude-context mcp tools proactively. If you have not read about its initial instructions, read it.
 
 ## Project Overview
 
