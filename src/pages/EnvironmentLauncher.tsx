@@ -31,12 +31,16 @@ const EnvironmentLauncher = () => {
   const { envId } = useParams<{ envId: string }>();
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const consoleContentRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const [consoleEntries, setConsoleEntries] = useState<ConsoleEntry[]>([]);
   const [expandedEntries, setExpandedEntries] = useState<Set<string>>(
     new Set()
   );
   // Environment status state - default to loading on mount
   const [environmentStatus, setEnvironmentStatus] = useState('loading'); // loading, online, offline
+
+  // Scale state for responsive iframe - start with a smaller default to avoid flash
+  const [scale, setScale] = useState(0.5);
 
   // Tab state for right panel
   const [activeTab, setActiveTab] = useState<'functions' | 'filters'>(
@@ -776,6 +780,53 @@ const EnvironmentLauncher = () => {
   // Mobile dimensions for preview
   const mobileDimensions = { width: 390, height: 844 };
 
+  // Calculate and update scale based on container size
+  useEffect(() => {
+    const calculateScale = () => {
+      if (!containerRef.current) return;
+
+      const container = containerRef.current;
+      const containerWidth = container.clientWidth;
+      const containerHeight = container.clientHeight;
+
+      // Add padding/margin buffer (30px on each side for padding)
+      const bufferWidth = 60;
+      const bufferHeight = 60;
+
+      const availableWidth = containerWidth - bufferWidth;
+      const availableHeight = containerHeight - bufferHeight;
+
+      // Calculate scale ratios for both dimensions
+      const scaleX = availableWidth / mobileDimensions.width;
+      const scaleY = availableHeight / mobileDimensions.height;
+
+      // Use the smaller scale to ensure it fits in both dimensions
+      const newScale = Math.min(scaleX, scaleY, 1); // Cap at 1 to avoid upscaling
+
+      setScale(newScale);
+    };
+
+    // Use requestAnimationFrame to ensure DOM is ready and calculate immediately
+    const rafId = requestAnimationFrame(() => {
+      calculateScale();
+    });
+
+    // Add resize listener
+    const resizeObserver = new ResizeObserver(calculateScale);
+    if (containerRef.current) {
+      resizeObserver.observe(containerRef.current);
+    }
+
+    // Also listen to window resize as fallback
+    window.addEventListener('resize', calculateScale);
+
+    return () => {
+      cancelAnimationFrame(rafId);
+      resizeObserver.disconnect();
+      window.removeEventListener('resize', calculateScale);
+    };
+  }, [mobileDimensions.width, mobileDimensions.height]);
+
   // If environment is not found, show error
   if (!environment) {
     return (
@@ -1269,7 +1320,10 @@ const EnvironmentLauncher = () => {
         {/* Iframe Container - Middle */}
         <div className="flex-1 flex flex-col bg-white">
           {/* Iframe Container with Fixed Size - Newspaper Style */}
-          <div className="flex-1 flex items-center justify-center p-6 sm:p-8 bg-gray-50 overflow-hidden">
+          <div
+            ref={containerRef}
+            className="flex-1 flex items-center justify-center p-6 sm:p-8 bg-gray-50 overflow-hidden"
+          >
             <div className="w-full max-w-fit">
               {/* Mobile Device Frame */}
               <div
@@ -1277,6 +1331,10 @@ const EnvironmentLauncher = () => {
                 style={{
                   width: `${mobileDimensions.width}px`,
                   height: `${mobileDimensions.height}px`,
+                  transform: `scale(${scale})`,
+                  transformOrigin: 'center center',
+                  transition:
+                    scale === 0.5 ? 'none' : 'transform 0.3s ease-out',
                 }}
               >
                 <div className="absolute inset-0 bg-gray-800 rounded-2xl p-2 shadow-lg border-2 border-gray-600">
