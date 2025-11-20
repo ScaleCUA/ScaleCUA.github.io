@@ -1,3 +1,6 @@
+## Project ignore
+.leann/
+
 ## Node ignore
 # Logs
 logs
