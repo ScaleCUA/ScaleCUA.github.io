@@ -84,13 +84,15 @@ const Homepage: React.FC = () => {
                   />
                 </svg>
               </Link>
-              <button
-                disabled
-                className="px-8 py-3 border-2 border-gray-400 text-gray-500 text-sm font-bold uppercase tracking-wide cursor-not-allowed bg-gray-100 flex items-center justify-center"
+              <a
+                href="https://lw572lx3ee.feishu.cn/share/base/form/shrcnjzeeqdcf4d6yDPKHw5xbOd"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-8 py-3 border-2 border-gray-800 text-gray-800 text-sm font-bold uppercase tracking-wide hover:bg-gray-100 transition-colors flex items-center justify-center group"
               >
                 Create Your WoB
                 <svg
-                  className="ml-2 w-4 h-4"
+                  className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform duration-200"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -102,7 +104,7 @@ const Homepage: React.FC = () => {
                     d="M12 4v16m8-8H4"
                   />
                 </svg>
-              </button>
+              </a>
               <Link
                 to="/leaderboard"
                 className="px-8 py-3 border-2 border-gray-800 text-gray-800 text-sm font-bold uppercase tracking-wide hover:bg-gray-100 transition-colors flex items-center justify-center group"
