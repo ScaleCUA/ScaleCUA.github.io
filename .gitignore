@@ -1,5 +1,6 @@
 ## Project ignore
 .leann/
+sdk/
 
 ## Node ignore
 # Logs

@@ -60,6 +60,15 @@ const EnvironmentLauncher = () => {
   // Flag to track when we're doing an evaluation refresh (to avoid duplicate success messages)
   const [isEvaluationRefresh, setIsEvaluationRefresh] = useState(false);
 
+  // Trajectory state for action history during evaluation
+  const [trajectory, setTrajectory] = useState<
+    Array<{
+      timestamp: number;
+      type: string;
+      data: Record<string, unknown>;
+    }>
+  >([]);
+
   // Load environment data from service
   const { data: environmentData } = useEnvironmentData();
 
@@ -307,6 +316,9 @@ const EnvironmentLauncher = () => {
     // Clear console entries for fresh start
     setConsoleEntries([]);
 
+    // Clear trajectory for fresh start
+    setTrajectory([]);
+
     // Log evaluation start
     addConsoleEntry('action', 'Starting evaluation - refreshing environment');
 
@@ -373,6 +385,7 @@ const EnvironmentLauncher = () => {
       payload: {
         command: 'evaluate',
         params: parameters,
+        trajectory: trajectory,
       },
     };
 
@@ -398,6 +411,7 @@ const EnvironmentLauncher = () => {
     isEvaluationStarted,
     environment,
     parameters,
+    trajectory,
   ]);
 
   const getConsoleIcon = (type: ConsoleEntry['type']) => {
@@ -703,6 +717,27 @@ const EnvironmentLauncher = () => {
         if (eventPreferences[mappedType as keyof typeof eventPreferences]) {
           addConsoleEntry(mappedType, consoleMessage, data);
         }
+
+        // Capture actionable events in trajectory during evaluation
+        if (isEvaluationStarted && !isEvaluating) {
+          const actionableEventTypes = [
+            'click',
+            'keypress',
+            'scroll',
+            'touch',
+            'navigation',
+          ];
+          if (actionableEventTypes.includes(eventType)) {
+            setTrajectory(prev => [
+              ...prev,
+              {
+                timestamp: Date.now(),
+                type: eventType,
+                data: data,
+              },
+            ]);
+          }
+        }
       }
 
       // Handle legacy user-interaction messages (for backward compatibility)
@@ -775,7 +810,13 @@ const EnvironmentLauncher = () => {
     return () => {
       window.removeEventListener('message', handleMessage);
     };
-  }, [eventPreferences, addConsoleEntry, setIsEvaluating, isEvaluationStarted]);
+  }, [
+    eventPreferences,
+    addConsoleEntry,
+    setIsEvaluating,
+    isEvaluationStarted,
+    isEvaluating,
+  ]);
 
   // Mobile dimensions for preview
   const mobileDimensions = { width: 390, height: 844 };

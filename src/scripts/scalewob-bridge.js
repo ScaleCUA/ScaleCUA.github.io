@@ -940,8 +940,11 @@ class ScaleWoBBridge {
   evaluate(params = {}) {
     // Check if environment has the evaluate method available
     if (typeof window.evaluateTask === 'function') {
-      // Call the environment's own evaluation method with parameters
-      const result = window.evaluateTask(params);
+      // Extract trajectory from params if available
+      const { trajectory, ...evaluationParams } = params;
+
+      // Call the environment's own evaluation method with parameters and trajectory
+      const result = window.evaluateTask(evaluationParams, trajectory);
       return result;
     }
     throw new Error('Environment does not have evaluateTask method available');
