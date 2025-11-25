@@ -1,6 +1,9 @@
-import React, { useState, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useEnvironmentPreviews } from '../services/environmentService';
+import React, { useState, useMemo, useEffect } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import {
+  useEnvironmentPreviews,
+  EnvironmentUtils,
+} from '../services/environmentService';
 import {
   EnvironmentPreview,
   EnvironmentPreviewWithIcon,
@@ -89,10 +92,31 @@ const ErrorState: React.FC<ErrorStateProps> = ({ error, onRetry }) => (
   </div>
 );
 
+const PAGE_SIZE = 10;
+
 const Gallery: React.FC = () => {
   const navigate = useNavigate();
-  const [selectedPlatform, setSelectedPlatform] = useState<string>('all');
-  const [selectedDifficulty, setSelectedDifficulty] = useState<string>('all');
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  // Initialize state from URL params
+  const [selectedPlatform, setSelectedPlatform] = useState<string>(
+    searchParams.get('platform') || 'all'
+  );
+  const [selectedDifficulty, setSelectedDifficulty] = useState<string>(
+    searchParams.get('difficulty') || 'all'
+  );
+  const [searchInput, setSearchInput] = useState<string>(
+    searchParams.get('search') || ''
+  );
+  const [debouncedSearch, setDebouncedSearch] = useState<string>(
+    searchParams.get('search') || ''
+  );
+  const [selectedTags, setSelectedTags] = useState<string[]>(
+    searchParams.get('tags')?.split(',').filter(Boolean) || []
+  );
+  const [currentPage, setCurrentPage] = useState<number>(
+    Number(searchParams.get('page')) || 1
+  );
 
   // Load environment data using the new service
   const hookResult = useEnvironmentPreviews() as {
@@ -103,6 +127,59 @@ const Gallery: React.FC = () => {
   };
 
   const { data: environmentsData, loading, error, retry } = hookResult;
+
+  // Debounce search input
+  useEffect(() => {
+    const timer = setTimeout(() => setDebouncedSearch(searchInput), 300);
+    return () => clearTimeout(timer);
+  }, [searchInput]);
+
+  // Reset to page 1 when filters change
+  useEffect(() => {
+    if (currentPage !== 1) {
+      setCurrentPage(1);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [debouncedSearch, selectedPlatform, selectedDifficulty, selectedTags]);
+
+  // Scroll to top when page changes
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [currentPage]);
+
+  // Sync state to URL params
+  useEffect(() => {
+    const params = new URLSearchParams();
+    if (debouncedSearch) params.set('search', debouncedSearch);
+    if (selectedPlatform !== 'all') params.set('platform', selectedPlatform);
+    if (selectedDifficulty !== 'all')
+      params.set('difficulty', selectedDifficulty);
+    if (selectedTags.length > 0) params.set('tags', selectedTags.join(','));
+    if (currentPage > 1) params.set('page', String(currentPage));
+    setSearchParams(params, { replace: true });
+  }, [
+    debouncedSearch,
+    selectedPlatform,
+    selectedDifficulty,
+    selectedTags,
+    currentPage,
+    setSearchParams,
+  ]);
+
+  // Tag toggle function
+  const toggleTag = (tag: string) => {
+    setSelectedTags(prev =>
+      prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag]
+    );
+  };
+
+  // Derive all unique tags from environment data
+  const allTags = useMemo(() => {
+    if (!environmentsData) return [];
+    const tagSet = new Set<string>();
+    environmentsData.forEach(env => env.tags.forEach(tag => tagSet.add(tag)));
+    return Array.from(tagSet).sort();
+  }, [environmentsData]);
 
   // Map environment data to include React icon components
   const environmentsWithIcons = useMemo((): EnvironmentPreviewWithIcon[] => {
@@ -116,23 +193,58 @@ const Gallery: React.FC = () => {
     });
   }, [environmentsData]);
 
-  // Get filtered environments with icons
-  const filteredEnvironmentsWithIcons = useMemo(() => {
-    if (!environmentsWithIcons) return [];
+  // Get filtered and paginated environments
+  const filteredAndPaginatedEnvironments = useMemo(() => {
+    if (!environmentsWithIcons)
+      return { items: [], totalCount: 0, totalPages: 0 };
 
-    // Apply platform filter
-    let filtered = environmentsWithIcons.filter(
-      env => selectedPlatform === 'all' || env.platform === selectedPlatform
-    );
+    let filtered = environmentsWithIcons;
 
-    // Apply difficulty filter
-    filtered = filtered.filter(
-      env =>
-        selectedDifficulty === 'all' || env.difficulty === selectedDifficulty
-    );
+    // 1. Search filter
+    if (debouncedSearch) {
+      const query = debouncedSearch.toLowerCase();
+      filtered = filtered.filter(
+        env =>
+          env.taskName.toLowerCase().includes(query) ||
+          env.description.toLowerCase().includes(query)
+      );
+    }
 
-    return filtered;
-  }, [environmentsWithIcons, selectedPlatform, selectedDifficulty]);
+    // 2. Platform filter
+    if (selectedPlatform !== 'all') {
+      filtered = filtered.filter(env => env.platform === selectedPlatform);
+    }
+
+    // 3. Difficulty filter
+    if (selectedDifficulty !== 'all') {
+      filtered = filtered.filter(env => env.difficulty === selectedDifficulty);
+    }
+
+    // 4. Tag filter
+    if (selectedTags.length > 0) {
+      filtered = EnvironmentUtils.filterByTags(
+        filtered as EnvironmentPreview[],
+        selectedTags
+      ) as EnvironmentPreviewWithIcon[];
+    }
+
+    // Store total count before pagination
+    const totalCount = filtered.length;
+    const totalPages = Math.ceil(totalCount / PAGE_SIZE);
+
+    // 5. Pagination
+    const startIndex = (currentPage - 1) * PAGE_SIZE;
+    const paginated = filtered.slice(startIndex, startIndex + PAGE_SIZE);
+
+    return { items: paginated, totalCount, totalPages };
+  }, [
+    environmentsWithIcons,
+    debouncedSearch,
+    selectedPlatform,
+    selectedDifficulty,
+    selectedTags,
+    currentPage,
+  ]);
 
   // Show loading state
   if (loading) {
@@ -285,9 +397,17 @@ const Gallery: React.FC = () => {
                     Filters
                   </div>
                   <div className="text-sm font-black text-gray-900">
-                    {filteredEnvironmentsWithIcons.length} results
+                    {filteredAndPaginatedEnvironments.totalCount} results
                   </div>
                 </div>
+
+                <input
+                  type="text"
+                  placeholder="Search environments..."
+                  className="w-full px-4 py-2 mb-4 border-2 border-gray-300 text-sm focus:outline-none focus:border-gray-400"
+                  value={searchInput}
+                  onChange={e => setSearchInput(e.target.value)}
+                />
 
                 <div className="flex gap-2 mb-4">
                   <select
@@ -313,12 +433,42 @@ const Gallery: React.FC = () => {
                   </select>
                 </div>
 
+                {allTags.length > 0 && (
+                  <div className="mb-4">
+                    <div className="text-xs font-bold uppercase text-gray-700 mb-2">
+                      Tags
+                    </div>
+                    <div className="space-y-2">
+                      {allTags.map(tag => (
+                        <label
+                          key={tag}
+                          className="flex items-center space-x-2 cursor-pointer"
+                        >
+                          <input
+                            type="checkbox"
+                            checked={selectedTags.includes(tag)}
+                            onChange={() => toggleTag(tag)}
+                            className="w-4 h-4 border-2 border-gray-300"
+                          />
+                          <span className="text-sm font-medium text-gray-700">
+                            {tag}
+                          </span>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
                 {(selectedPlatform !== 'all' ||
-                  selectedDifficulty !== 'all') && (
+                  selectedDifficulty !== 'all' ||
+                  searchInput ||
+                  selectedTags.length > 0) && (
                   <button
                     onClick={() => {
                       setSelectedPlatform('all');
                       setSelectedDifficulty('all');
+                      setSearchInput('');
+                      setSelectedTags([]);
                     }}
                     className="w-full px-3 py-2 text-sm border-2 border-gray-300 text-gray-700 font-bold uppercase tracking-wide hover:bg-gray-100 transition-colors"
                   >
@@ -336,10 +486,20 @@ const Gallery: React.FC = () => {
                     Filter Options
                   </div>
 
+                  <input
+                    type="text"
+                    placeholder="Search environments..."
+                    className="w-full px-4 py-2 mb-4 border-2 border-gray-300 text-sm focus:outline-none focus:border-gray-400"
+                    value={searchInput}
+                    onChange={e => setSearchInput(e.target.value)}
+                  />
+
                   <button
                     onClick={() => {
                       setSelectedPlatform('all');
                       setSelectedDifficulty('all');
+                      setSearchInput('');
+                      setSelectedTags([]);
                     }}
                     className="w-full px-4 py-2 border-2 border-gray-300 text-gray-700 text-sm font-bold uppercase tracking-wide hover:bg-gray-100 transition-colors mb-6"
                   >
@@ -395,6 +555,32 @@ const Gallery: React.FC = () => {
                         )}
                       </div>
                     </div>
+
+                    {allTags.length > 0 && (
+                      <div>
+                        <h3 className="text-sm font-bold uppercase text-gray-700 mb-3">
+                          Tags
+                        </h3>
+                        <div className="space-y-2">
+                          {allTags.map(tag => (
+                            <label
+                              key={tag}
+                              className="flex items-center space-x-2 cursor-pointer"
+                            >
+                              <input
+                                type="checkbox"
+                                checked={selectedTags.includes(tag)}
+                                onChange={() => toggleTag(tag)}
+                                className="w-4 h-4 border-2 border-gray-300"
+                              />
+                              <span className="text-sm font-medium text-gray-700">
+                                {tag}
+                              </span>
+                            </label>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                   </div>
 
                   <div className="mt-6 pt-6 border-t-2 border-gray-300">
@@ -402,13 +588,13 @@ const Gallery: React.FC = () => {
                       Results
                     </div>
                     <div className="text-lg font-black text-gray-900">
-                      {filteredEnvironmentsWithIcons.length}
+                      {filteredAndPaginatedEnvironments.totalCount}
                     </div>
                     <div className="text-xs text-gray-600">
-                      {filteredEnvironmentsWithIcons.length !== 1
+                      {filteredAndPaginatedEnvironments.totalCount !== 1
                         ? 'environments'
                         : 'environment'}
-                      {filteredEnvironmentsWithIcons.length !==
+                      {filteredAndPaginatedEnvironments.totalCount !==
                         environmentsWithIcons.length &&
                         ` of ${environmentsWithIcons.length} total`}
                     </div>
@@ -420,161 +606,201 @@ const Gallery: React.FC = () => {
               <div className="flex-1">
                 {/* Environment List - Newspaper Style */}
                 <div className="space-y-4 md:space-y-6">
-                  {filteredEnvironmentsWithIcons.map(environment => (
-                    <div key={environment.id} className="group">
-                      <div className="bg-gray-50 border-2 border-gray-300 hover:border-gray-400 hover:bg-gray-100 transition-all duration-200 hover:shadow-sm">
-                        {/* Header */}
-                        <div className="p-4 md:p-6 border-b border-gray-200">
-                          <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
-                            <div className="flex items-start space-x-3 md:space-x-4">
-                              <div className="w-10 h-10 md:w-12 md:h-12 rounded border-2 border-gray-300 bg-gray-100 flex items-center justify-center shrink-0">
-                                <div className="w-5 h-5 md:w-6 md:h-6 text-gray-700">
-                                  {environment.icon}
+                  {filteredAndPaginatedEnvironments.items.map(
+                    (environment: EnvironmentPreviewWithIcon) => (
+                      <div key={environment.id} className="group">
+                        <div className="bg-gray-50 border-2 border-gray-300 hover:border-gray-400 hover:bg-gray-100 transition-all duration-200 hover:shadow-sm">
+                          {/* Header */}
+                          <div className="p-4 md:p-6 border-b border-gray-200">
+                            <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
+                              <div className="flex items-start space-x-3 md:space-x-4">
+                                <div className="w-10 h-10 md:w-12 md:h-12 rounded border-2 border-gray-300 bg-gray-100 flex items-center justify-center shrink-0">
+                                  <div className="w-5 h-5 md:w-6 md:h-6 text-gray-700">
+                                    {environment.icon}
+                                  </div>
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                  <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-3 mb-2 gap-2">
+                                    <h3 className="text-lg md:text-xl font-bold text-gray-900 truncate">
+                                      {environment.taskName}
+                                    </h3>
+                                    <span
+                                      className={`px-2 py-1 md:px-3 text-xs font-bold uppercase tracking-wide border inline-block w-fit ${
+                                        environment.difficulty ===
+                                        'Intermediate'
+                                          ? 'bg-gray-100 text-gray-800 border-gray-400'
+                                          : environment.difficulty ===
+                                              'Advanced'
+                                            ? 'bg-gray-800 text-white border-gray-600'
+                                            : 'bg-red-50 text-red-700 border-red-300'
+                                      }`}
+                                    >
+                                      {environment.difficulty}
+                                    </span>
+                                  </div>
+                                  <p className="text-sm md:text-base text-gray-700 leading-relaxed wrap-break-words">
+                                    {environment.description}
+                                  </p>
                                 </div>
                               </div>
-                              <div className="flex-1 min-w-0">
-                                <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-3 mb-2 gap-2">
-                                  <h3 className="text-lg md:text-xl font-bold text-gray-900 truncate">
-                                    {environment.taskName}
-                                  </h3>
-                                  <span
-                                    className={`px-2 py-1 md:px-3 text-xs font-bold uppercase tracking-wide border inline-block w-fit ${
-                                      environment.difficulty === 'Intermediate'
-                                        ? 'bg-gray-100 text-gray-800 border-gray-400'
-                                        : environment.difficulty === 'Advanced'
-                                          ? 'bg-gray-800 text-white border-gray-600'
-                                          : 'bg-red-50 text-red-700 border-red-300'
-                                    }`}
-                                  >
-                                    {environment.difficulty}
-                                  </span>
-                                </div>
-                                <p className="text-sm md:text-base text-gray-700 leading-relaxed wrap-break-words">
-                                  {environment.description}
-                                </p>
-                              </div>
-                            </div>
-                            <button
-                              onClick={() =>
-                                navigate(`/launcher/${environment.id}`)
-                              }
-                              className="px-4 py-2 md:px-6 md:py-3 bg-gray-900 text-white text-sm font-bold uppercase tracking-wide hover:bg-gray-800 transition-colors flex items-center justify-center group w-full md:w-auto"
-                            >
-                              Launch
-                              <svg
-                                className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform duration-200"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
+                              <button
+                                onClick={() =>
+                                  navigate(`/launcher/${environment.id}`)
+                                }
+                                className="px-4 py-2 md:px-6 md:py-3 bg-gray-900 text-white text-sm font-bold uppercase tracking-wide hover:bg-gray-800 transition-colors flex items-center justify-center group w-full md:w-auto"
                               >
-                                <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth="2"
-                                  d="M13 7l5 5m0 0l-5 5m5-5H6"
-                                />
-                              </svg>
-                            </button>
-                          </div>
-                        </div>
-
-                        {/* Details */}
-                        <div className="p-4 md:p-6">
-                          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
-                            <div className="flex items-center space-x-3">
-                              <svg
-                                className="w-5 h-5 text-gray-600 shrink-0"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                              >
-                                <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth="2"
-                                  d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"
-                                />
-                              </svg>
-                              <div className="min-w-0">
-                                <div className="text-xs font-semibold text-gray-600 uppercase tracking-wide">
-                                  Platform
-                                </div>
-                                <div className="text-sm font-bold text-gray-900 truncate">
-                                  {environment.platform}
-                                </div>
-                              </div>
-                            </div>
-
-                            <div className="flex items-center space-x-3">
-                              <svg
-                                className="w-5 h-5 text-gray-600 shrink-0"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                              >
-                                <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth="2"
-                                  d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"
-                                />
-                              </svg>
-                              <div className="min-w-0">
-                                <div className="text-xs font-semibold text-gray-600 uppercase tracking-wide">
-                                  Complexity
-                                </div>
-                                <div className="text-sm font-bold text-gray-900">
-                                  {environment.metrics.complexity}/10
-                                </div>
-                              </div>
-                            </div>
-
-                            <div className="flex items-center space-x-3">
-                              <svg
-                                className="w-5 h-5 text-gray-600 shrink-0"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                              >
-                                <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth="2"
-                                  d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"
-                                />
-                              </svg>
-                              <div className="min-w-0">
-                                <div className="text-xs font-semibold text-gray-600 uppercase tracking-wide">
-                                  Success Rate
-                                </div>
-                                <div className="text-sm font-bold text-gray-900">
-                                  {environment.metrics.completion}%
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-
-                          {/* Tags */}
-                          <div className="mt-4 md:mt-6 pt-4 md:pt-6 border-t border-gray-200">
-                            <div className="flex flex-wrap gap-1 md:gap-2">
-                              {environment.tags.map((tag, index) => (
-                                <span
-                                  key={index}
-                                  className="px-2 py-1 md:px-3 bg-gray-100 text-gray-700 text-xs font-medium uppercase tracking-wide border border-gray-300"
+                                Launch
+                                <svg
+                                  className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform duration-200"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  viewBox="0 0 24 24"
                                 >
-                                  {tag}
-                                </span>
-                              ))}
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="2"
+                                    d="M13 7l5 5m0 0l-5 5m5-5H6"
+                                  />
+                                </svg>
+                              </button>
+                            </div>
+                          </div>
+
+                          {/* Details */}
+                          <div className="p-4 md:p-6">
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+                              <div className="flex items-center space-x-3">
+                                <svg
+                                  className="w-5 h-5 text-gray-600 shrink-0"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  viewBox="0 0 24 24"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="2"
+                                    d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"
+                                  />
+                                </svg>
+                                <div className="min-w-0">
+                                  <div className="text-xs font-semibold text-gray-600 uppercase tracking-wide">
+                                    Platform
+                                  </div>
+                                  <div className="text-sm font-bold text-gray-900 truncate">
+                                    {environment.platform}
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div className="flex items-center space-x-3">
+                                <svg
+                                  className="w-5 h-5 text-gray-600 shrink-0"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  viewBox="0 0 24 24"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="2"
+                                    d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"
+                                  />
+                                </svg>
+                                <div className="min-w-0">
+                                  <div className="text-xs font-semibold text-gray-600 uppercase tracking-wide">
+                                    Complexity
+                                  </div>
+                                  <div className="text-sm font-bold text-gray-900">
+                                    {environment.metrics.complexity}/10
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div className="flex items-center space-x-3">
+                                <svg
+                                  className="w-5 h-5 text-gray-600 shrink-0"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  viewBox="0 0 24 24"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="2"
+                                    d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"
+                                  />
+                                </svg>
+                                <div className="min-w-0">
+                                  <div className="text-xs font-semibold text-gray-600 uppercase tracking-wide">
+                                    Success Rate
+                                  </div>
+                                  <div className="text-sm font-bold text-gray-900">
+                                    {environment.metrics.completion}%
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                            {/* Tags */}
+                            <div className="mt-4 md:mt-6 pt-4 md:pt-6 border-t border-gray-200">
+                              <div className="flex flex-wrap gap-1 md:gap-2">
+                                {environment.tags.map((tag, index) => (
+                                  <span
+                                    key={index}
+                                    className="px-2 py-1 md:px-3 bg-gray-100 text-gray-700 text-xs font-medium uppercase tracking-wide border border-gray-300"
+                                  >
+                                    {tag}
+                                  </span>
+                                ))}
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  ))}
+                    )
+                  )}
                 </div>
 
+                {/* Pagination Controls */}
+                {filteredAndPaginatedEnvironments.totalPages > 1 && (
+                  <div className="flex items-center justify-center gap-2 mt-8">
+                    <button
+                      onClick={() =>
+                        setCurrentPage(prev => Math.max(1, prev - 1))
+                      }
+                      disabled={currentPage === 1}
+                      className="px-4 py-2 border-2 border-gray-300 text-gray-700 text-sm font-bold uppercase tracking-wide hover:bg-gray-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-transparent"
+                    >
+                      Previous
+                    </button>
+                    <span className="px-4 py-2 text-sm font-bold text-gray-900">
+                      Page {currentPage} of{' '}
+                      {filteredAndPaginatedEnvironments.totalPages}
+                    </span>
+                    <button
+                      onClick={() =>
+                        setCurrentPage(prev =>
+                          Math.min(
+                            filteredAndPaginatedEnvironments.totalPages,
+                            prev + 1
+                          )
+                        )
+                      }
+                      disabled={
+                        currentPage ===
+                        filteredAndPaginatedEnvironments.totalPages
+                      }
+                      className="px-4 py-2 border-2 border-gray-300 text-gray-700 text-sm font-bold uppercase tracking-wide hover:bg-gray-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-transparent"
+                    >
+                      Next
+                    </button>
+                  </div>
+                )}
+
                 {/* Empty State - Newspaper Style */}
-                {filteredEnvironmentsWithIcons.length === 0 && (
+                {filteredAndPaginatedEnvironments.totalCount === 0 && (
                   <div className="text-center py-12 md:py-16">
                     <div className="w-16 h-16 md:w-20 md:h-20 rounded-lg border-2 border-gray-300 bg-gray-100 flex items-center justify-center mx-auto mb-4 md:mb-6">
                       <svg
@@ -601,6 +827,8 @@ const Gallery: React.FC = () => {
                       onClick={() => {
                         setSelectedPlatform('all');
                         setSelectedDifficulty('all');
+                        setSearchInput('');
+                        setSelectedTags([]);
                       }}
                       className="px-6 py-2 md:px-8 md:py-3 bg-gray-900 text-white text-sm font-bold uppercase tracking-wide hover:bg-gray-800 transition-colors"
                     >
