@@ -489,22 +489,10 @@ const Gallery: React.FC = () => {
                   <input
                     type="text"
                     placeholder="Search environments..."
-                    className="w-full px-4 py-2 mb-4 border-2 border-gray-300 text-sm focus:outline-none focus:border-gray-400"
+                    className="w-full px-4 py-2 mb-6 border-2 border-gray-300 text-sm focus:outline-none focus:border-gray-400"
                     value={searchInput}
                     onChange={e => setSearchInput(e.target.value)}
                   />
-
-                  <button
-                    onClick={() => {
-                      setSelectedPlatform('all');
-                      setSelectedDifficulty('all');
-                      setSearchInput('');
-                      setSelectedTags([]);
-                    }}
-                    className="w-full px-4 py-2 border-2 border-gray-300 text-gray-700 text-sm font-bold uppercase tracking-wide hover:bg-gray-100 transition-colors mb-6"
-                  >
-                    Clear All Filters
-                  </button>
 
                   <div className="space-y-6">
                     <div>
@@ -604,6 +592,140 @@ const Gallery: React.FC = () => {
 
               {/* Right Content Area */}
               <div className="flex-1">
+                {/* Active Filter Chips */}
+                {(selectedPlatform !== 'all' ||
+                  selectedDifficulty !== 'all' ||
+                  debouncedSearch ||
+                  selectedTags.length > 0) && (
+                  <div className="mb-6 bg-gray-50 border-2 border-gray-300 p-4">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className="text-xs font-bold uppercase text-gray-700 tracking-wide">
+                        Active Filters:
+                      </span>
+
+                      {/* Search chip */}
+                      {debouncedSearch && (
+                        <button
+                          onClick={() => setSearchInput('')}
+                          className="inline-flex items-center px-3 py-1 bg-gray-900 text-white text-xs font-medium uppercase tracking-wide hover:bg-gray-800 transition-colors group"
+                        >
+                          <span className="mr-2">
+                            Search: &quot;{debouncedSearch}&quot;
+                          </span>
+                          <svg
+                            className="w-3 h-3 group-hover:scale-110 transition-transform"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth="2"
+                              d="M6 18L18 6M6 6l12 12"
+                            />
+                          </svg>
+                        </button>
+                      )}
+
+                      {/* Platform chip */}
+                      {selectedPlatform !== 'all' && (
+                        <button
+                          onClick={() => setSelectedPlatform('all')}
+                          className="inline-flex items-center px-3 py-1 bg-gray-900 text-white text-xs font-medium uppercase tracking-wide hover:bg-gray-800 transition-colors group"
+                        >
+                          <span className="mr-2">
+                            Platform: {selectedPlatform}
+                          </span>
+                          <svg
+                            className="w-3 h-3 group-hover:scale-110 transition-transform"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth="2"
+                              d="M6 18L18 6M6 6l12 12"
+                            />
+                          </svg>
+                        </button>
+                      )}
+
+                      {/* Difficulty chip */}
+                      {selectedDifficulty !== 'all' && (
+                        <button
+                          onClick={() => setSelectedDifficulty('all')}
+                          className="inline-flex items-center px-3 py-1 bg-gray-900 text-white text-xs font-medium uppercase tracking-wide hover:bg-gray-800 transition-colors group"
+                        >
+                          <span className="mr-2">
+                            Difficulty: {selectedDifficulty}
+                          </span>
+                          <svg
+                            className="w-3 h-3 group-hover:scale-110 transition-transform"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth="2"
+                              d="M6 18L18 6M6 6l12 12"
+                            />
+                          </svg>
+                        </button>
+                      )}
+
+                      {/* Tag chips */}
+                      {selectedTags.map(tag => (
+                        <button
+                          key={tag}
+                          onClick={() => toggleTag(tag)}
+                          className="inline-flex items-center px-3 py-1 bg-gray-900 text-white text-xs font-medium uppercase tracking-wide hover:bg-gray-800 transition-colors group"
+                        >
+                          <span className="mr-2">Tag: {tag}</span>
+                          <svg
+                            className="w-3 h-3 group-hover:scale-110 transition-transform"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth="2"
+                              d="M6 18L18 6M6 6l12 12"
+                            />
+                          </svg>
+                        </button>
+                      ))}
+
+                      {/* Clear all button */}
+                      <button
+                        onClick={() => {
+                          setSelectedPlatform('all');
+                          setSelectedDifficulty('all');
+                          setSearchInput('');
+                          setSelectedTags([]);
+                        }}
+                        className="inline-flex items-center px-3 py-1 border-2 border-gray-800 text-gray-800 text-xs font-bold uppercase tracking-wide hover:bg-gray-100 transition-colors ml-auto"
+                      >
+                        Clear All
+                      </button>
+                    </div>
+
+                    {/* Results count */}
+                    <div className="mt-3 pt-3 border-t border-gray-300">
+                      <span className="text-sm font-semibold text-gray-700">
+                        Showing {filteredAndPaginatedEnvironments.totalCount} of{' '}
+                        {environmentsWithIcons.length} environments
+                      </span>
+                    </div>
+                  </div>
+                )}
+
                 {/* Environment List - Newspaper Style */}
                 <div className="space-y-4 md:space-y-6">
                   {filteredAndPaginatedEnvironments.items.map(
