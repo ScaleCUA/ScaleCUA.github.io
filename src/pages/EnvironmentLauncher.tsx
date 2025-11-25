@@ -19,6 +19,7 @@ interface ConsoleEntry {
     | 'blur'
     | 'submit'
     | 'touch'
+    | 'drag'
     | 'navigation'
     | 'init'
     | 'dom-change'
@@ -101,6 +102,7 @@ const EnvironmentLauncher = () => {
     blur: false,
     submit: true,
     touch: true,
+    drag: true,
     navigation: false,
     'dom-change': false,
     unknown: false,
@@ -194,6 +196,11 @@ const EnvironmentLauncher = () => {
       touch: {
         label: 'Touch',
         description: 'Touch and gesture events',
+        category: 'Interactions',
+      },
+      drag: {
+        label: 'Drag',
+        description: 'Mouse drag gestures',
         category: 'Interactions',
       },
       navigation: {
@@ -297,6 +304,8 @@ const EnvironmentLauncher = () => {
         return 'bg-indigo-500 text-white';
       case 'touch':
         return 'bg-pink-500 text-white';
+      case 'drag':
+        return 'bg-purple-600 text-white';
       case 'navigation':
         return 'bg-cyan-500 text-white';
       case 'dom-change':
@@ -562,6 +571,16 @@ const EnvironmentLauncher = () => {
           <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
         </svg>
       ),
+      drag: (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="w-3 h-3"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+        >
+          <path d="M10 3L6 7h3v6H6l4 4 4-4h-3V7h3l-4-4z" />
+        </svg>
+      ),
       navigation: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -672,6 +691,7 @@ const EnvironmentLauncher = () => {
             blur: 'blur',
             submit: 'submit',
             touchstart: 'touch',
+            drag: 'drag',
           };
 
           if (eventType === 'user-action') {
@@ -725,6 +745,7 @@ const EnvironmentLauncher = () => {
             'keypress',
             'scroll',
             'touch',
+            'drag',
             'navigation',
           ];
           if (actionableEventTypes.includes(eventType)) {

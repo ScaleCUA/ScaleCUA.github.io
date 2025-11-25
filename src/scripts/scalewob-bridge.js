@@ -208,8 +208,22 @@ class ScaleWoBBridge {
   setupEventTracking() {
     this.log('Setting up event tracking...');
 
+    // Drag tracking state (shared with click handler)
+    let dragState = {
+      isDragging: false,
+      startX: 0,
+      startY: 0,
+      startTime: 0,
+      target: null,
+    };
+
     // Click tracking (legacy format)
     const clickHandler = e => {
+      // Skip click if a drag just occurred
+      if (dragState.isDragging) {
+        return;
+      }
+
       const target = e.target;
       const details = {
         tagName: target.tagName,
@@ -467,6 +481,91 @@ class ScaleWoBBridge {
     };
     document.addEventListener('touchstart', touchstartHandler, true);
     this.eventListeners.set('touchstart', touchstartHandler);
+
+    // Drag tracking
+    const mousedownHandler = e => {
+      dragState = {
+        isDragging: false,
+        startX: e.clientX,
+        startY: e.clientY,
+        startTime: Date.now(),
+        target: e.target,
+      };
+    };
+
+    const mousemoveHandler = e => {
+      if (dragState.startTime === 0) return;
+
+      const deltaX = e.clientX - dragState.startX;
+      const deltaY = e.clientY - dragState.startY;
+      const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+
+      if (!dragState.isDragging && distance > 5) {
+        dragState.isDragging = true;
+      }
+    };
+
+    const mouseupHandler = e => {
+      const wasDragging = dragState.isDragging;
+
+      if (wasDragging) {
+        const deltaX = e.clientX - dragState.startX;
+        const deltaY = e.clientY - dragState.startY;
+        const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+        const duration = Date.now() - dragState.startTime;
+
+        const absDeltaX = Math.abs(deltaX);
+        const absDeltaY = Math.abs(deltaY);
+        let direction;
+        if (absDeltaX > absDeltaY) {
+          direction = deltaX > 0 ? 'right' : 'left';
+        } else {
+          direction = deltaY > 0 ? 'down' : 'up';
+        }
+
+        const details = {
+          startX: dragState.startX,
+          startY: dragState.startY,
+          endX: e.clientX,
+          endY: e.clientY,
+          deltaX: deltaX,
+          deltaY: deltaY,
+          distance: Math.round(distance),
+          direction: direction,
+          duration: duration,
+          target: {
+            tagName: dragState.target?.tagName || 'unknown',
+            id: dragState.target?.id || '',
+            className: dragState.target?.className || '',
+          },
+          timestamp: Date.now(),
+        };
+
+        this.sendEvent(
+          'drag',
+          `Dragged ${direction} (${Math.round(distance)}px)`,
+          details
+        );
+      }
+
+      // Reset drag state after a small delay to let click handler check it first
+      setTimeout(() => {
+        dragState = {
+          isDragging: false,
+          startX: 0,
+          startY: 0,
+          startTime: 0,
+          target: null,
+        };
+      }, 0);
+    };
+
+    document.addEventListener('mousedown', mousedownHandler, true);
+    document.addEventListener('mousemove', mousemoveHandler, true);
+    document.addEventListener('mouseup', mouseupHandler, true);
+    this.eventListeners.set('mousedown', mousedownHandler);
+    this.eventListeners.set('mousemove', mousemoveHandler);
+    this.eventListeners.set('mouseup', mouseupHandler);
 
     // DOM change tracking (legacy format)
     const mutationObserver = new MutationObserver(mutations => {
@@ -979,6 +1078,8 @@ class ScaleWoBBridge {
         document.removeEventListener(event, handler);
       } else if (event === 'scroll') {
         window.removeEventListener(event, handler);
+      } else if (['mousedown', 'mousemove', 'mouseup'].includes(event)) {
+        document.removeEventListener(event, handler, true);
       } else {
         // Most events are on document with capture: true
         document.removeEventListener(event, handler, true);
