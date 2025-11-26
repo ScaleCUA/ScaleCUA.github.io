@@ -141,13 +141,13 @@ const Homepage: React.FC = () => {
 
           {/* News Items */}
           <div className="py-8">
-            <div className="space-y-6">
+            <div className="space-y-3">
               {/* News Item 1 - SDK Release (Released) */}
               <div className="border-2 border-gray-300 bg-gray-50 hover:bg-gray-100 transition-colors duration-200">
-                <div className="p-6">
+                <div className="p-3">
                   <div className="flex items-start justify-between gap-4">
                     <div className="flex-1">
-                      <div className="flex items-center gap-3 mb-3">
+                      <div className="flex items-center gap-3 mb-2">
                         <span className="px-3 py-1 bg-green-600 text-white text-xs font-bold uppercase tracking-wide">
                           SDK
                         </span>
@@ -155,15 +155,15 @@ const Homepage: React.FC = () => {
                           2025.11.26
                         </span>
                       </div>
-                      <h3 className="text-xl font-bold text-gray-900 mb-2">
+                      <h3 className="text-lg font-bold text-gray-900 mb-2">
                         Python SDK for Agent Development
                       </h3>
-                      <p className="text-base text-gray-700 leading-relaxed mb-3">
+                      <p className="text-sm text-gray-700 leading-relaxed mb-2">
                         Official Python SDK to streamline agent development and
                         evaluation on ScaleWoB environments. Includes utilities
                         for environment interaction and result analysis.
                       </p>
-                      <div className="flex flex-wrap gap-3">
+                      <div className="flex flex-wrap gap-2">
                         <a
                           href="https://github.com/ScaleWoB/ScaleWoB"
                           target="_blank"
@@ -197,9 +197,9 @@ const Homepage: React.FC = () => {
                       </div>
                     </div>
                     <div className="shrink-0">
-                      <div className="w-12 h-12 bg-green-100 border-2 border-green-300 flex items-center justify-center">
+                      <div className="w-10 h-10 bg-green-100 border-2 border-green-300 flex items-center justify-center">
                         <svg
-                          className="w-6 h-6 text-green-600"
+                          className="w-5 h-5 text-green-600"
                           fill="none"
                           stroke="currentColor"
                           viewBox="0 0 24 24"
@@ -219,10 +219,10 @@ const Homepage: React.FC = () => {
 
               {/* News Item 2 - Dataset Release (Coming Soon - Disabled) */}
               <div className="border-2 border-gray-200 bg-gray-100 opacity-60 cursor-not-allowed">
-                <div className="p-6">
+                <div className="p-3">
                   <div className="flex items-start justify-between gap-4">
                     <div className="flex-1">
-                      <div className="flex items-center gap-3 mb-3">
+                      <div className="flex items-center gap-3 mb-2">
                         <span className="px-3 py-1 bg-gray-400 text-white text-xs font-bold uppercase tracking-wide">
                           Dataset
                         </span>
@@ -230,19 +230,19 @@ const Homepage: React.FC = () => {
                           Coming Soon
                         </span>
                       </div>
-                      <h3 className="text-xl font-bold text-gray-600 mb-2">
+                      <h3 className="text-lg font-bold text-gray-600 mb-2">
                         ScaleWoB Dataset v1.0
                       </h3>
-                      <p className="text-base text-gray-500 leading-relaxed">
+                      <p className="text-sm text-gray-500 leading-relaxed">
                         Initial release of the ScaleWoB dataset featuring 1000+
                         diverse GUI agent tasks across web, mobile, and desktop
                         platforms. Available for download and research use.
                       </p>
                     </div>
                     <div className="shrink-0">
-                      <div className="w-12 h-12 bg-gray-200 border-2 border-gray-300 flex items-center justify-center">
+                      <div className="w-10 h-10 bg-gray-200 border-2 border-gray-300 flex items-center justify-center">
                         <svg
-                          className="w-6 h-6 text-gray-400"
+                          className="w-5 h-5 text-gray-400"
                           fill="none"
                           stroke="currentColor"
                           viewBox="0 0 24 24"
@@ -262,10 +262,10 @@ const Homepage: React.FC = () => {
 
               {/* News Item 3 - Paper Release (Coming Soon - Disabled) */}
               <div className="border-2 border-gray-200 bg-gray-100 opacity-60 cursor-not-allowed">
-                <div className="p-6">
+                <div className="p-3">
                   <div className="flex items-start justify-between gap-4">
                     <div className="flex-1">
-                      <div className="flex items-center gap-3 mb-3">
+                      <div className="flex items-center gap-3 mb-2">
                         <span className="px-3 py-1 bg-gray-400 text-white text-xs font-bold uppercase tracking-wide">
                           Paper
                         </span>
@@ -273,19 +273,19 @@ const Homepage: React.FC = () => {
                           Coming Soon
                         </span>
                       </div>
-                      <h3 className="text-xl font-bold text-gray-600 mb-2">
+                      <h3 className="text-lg font-bold text-gray-600 mb-2">
                         Research Paper Publication
                       </h3>
-                      <p className="text-base text-gray-500 leading-relaxed">
+                      <p className="text-sm text-gray-500 leading-relaxed">
                         Comprehensive research paper detailing the ScaleWoB
                         methodology, benchmark design, and evaluation results.
                         Includes baseline performance analysis.
                       </p>
                     </div>
                     <div className="shrink-0">
-                      <div className="w-12 h-12 bg-gray-200 border-2 border-gray-300 flex items-center justify-center">
+                      <div className="w-10 h-10 bg-gray-200 border-2 border-gray-300 flex items-center justify-center">
                         <svg
-                          className="w-6 h-6 text-gray-400"
+                          className="w-5 h-5 text-gray-400"
                           fill="none"
                           stroke="currentColor"
                           viewBox="0 0 24 24"

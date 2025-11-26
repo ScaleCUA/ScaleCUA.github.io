@@ -93,7 +93,7 @@ const ErrorState: React.FC<ErrorStateProps> = ({ error, onRetry }) => (
   </div>
 );
 
-const PAGE_SIZE = 10;
+const PAGE_SIZE = 100;
 
 const Environments: React.FC = () => {
   const navigate = useNavigate();
@@ -725,23 +725,23 @@ const Environments: React.FC = () => {
                 )}
 
                 {/* Environment List - Newspaper Style */}
-                <div className="space-y-4 md:space-y-6">
+                <div className="space-y-3 md:space-y-4">
                   {filteredAndPaginatedEnvironments.items.map(
                     (environment: EnvironmentPreviewWithIcon) => (
                       <div key={environment.id} className="group">
                         <div className="bg-gray-50 border-2 border-gray-300 hover:border-gray-400 hover:bg-gray-100 transition-all duration-200 hover:shadow-sm">
                           {/* Header */}
-                          <div className="p-4 md:p-6 border-b border-gray-200">
+                          <div className="p-3 md:p-4 border-b border-gray-200">
                             <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
                               <div className="flex items-start space-x-3 md:space-x-4">
-                                <div className="w-10 h-10 md:w-12 md:h-12 rounded border-2 border-gray-300 bg-gray-100 flex items-center justify-center shrink-0">
-                                  <div className="w-5 h-5 md:w-6 md:h-6 text-gray-700">
+                                <div className="w-8 h-8 md:w-10 md:h-10 rounded border-2 border-gray-300 bg-gray-100 flex items-center justify-center shrink-0">
+                                  <div className="w-4 h-4 md:w-5 md:h-5 text-gray-700">
                                     {environment.icon}
                                   </div>
                                 </div>
                                 <div className="flex-1 min-w-0">
-                                  <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-3 mb-2 gap-2">
-                                    <h3 className="text-lg md:text-xl font-bold text-gray-900 truncate">
+                                  <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-3 mb-1 gap-2">
+                                    <h3 className="text-base md:text-lg font-bold text-gray-900 truncate">
                                       {environment.taskName}
                                     </h3>
                                     <span
@@ -758,7 +758,7 @@ const Environments: React.FC = () => {
                                       {environment.difficulty}
                                     </span>
                                   </div>
-                                  <p className="text-sm md:text-base text-gray-700 leading-relaxed wrap-break-words">
+                                  <p className="text-xs md:text-sm text-gray-700 leading-relaxed wrap-break-words">
                                     {environment.description}
                                   </p>
                                 </div>
@@ -767,7 +767,7 @@ const Environments: React.FC = () => {
                                 onClick={() =>
                                   navigate(`/launcher/${environment.id}`)
                                 }
-                                className="px-4 py-2 md:px-6 md:py-3 bg-gray-900 text-white text-sm font-bold uppercase tracking-wide hover:bg-gray-800 transition-colors flex items-center justify-center group w-full md:w-auto"
+                                className="px-3 py-1.5 md:px-4 md:py-2 bg-gray-900 text-white text-sm font-bold uppercase tracking-wide hover:bg-gray-800 transition-colors flex items-center justify-center group w-full md:w-auto"
                               >
                                 Launch
                                 <svg
@@ -788,8 +788,8 @@ const Environments: React.FC = () => {
                           </div>
 
                           {/* Details */}
-                          <div className="p-4 md:p-6">
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+                          <div className="p-3 md:p-4">
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4">
                               <div className="flex items-center space-x-3">
                                 <svg
                                   className="w-5 h-5 text-gray-600 shrink-0"
@@ -864,8 +864,8 @@ const Environments: React.FC = () => {
                             </div>
 
                             {/* Tags */}
-                            <div className="mt-4 md:mt-6 pt-4 md:pt-6 border-t border-gray-200">
-                              <div className="flex flex-wrap gap-1 md:gap-2">
+                            <div className="mt-3 md:mt-4 pt-3 md:pt-4 border-t border-gray-200">
+                              <div className="flex flex-wrap gap-1">
                                 {environment.tags.map((tag, index) => (
                                   <span
                                     key={index}
