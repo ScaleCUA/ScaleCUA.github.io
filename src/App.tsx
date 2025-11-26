@@ -3,7 +3,7 @@ import Layout from './components/common/Layout';
 import Homepage from './pages/Homepage';
 import LeaderboardHome from './pages/LeaderboardHome';
 
-import Gallery from './pages/Gallery';
+import Environments from './pages/Environments';
 import EnvironmentWrapper from './pages/EnvironmentWrapper';
 
 function App() {
@@ -28,10 +28,10 @@ function App() {
         />
 
         <Route
-          path="/gallery"
+          path="/environments"
           element={
             <Layout>
-              <Gallery />
+              <Environments />
             </Layout>
           }
         />

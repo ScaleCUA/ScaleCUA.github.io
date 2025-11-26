@@ -46,7 +46,7 @@ ScaleWoB is a GUI Agent Benchmark website for fair evaluation of GUI agents usin
 
 ```
 src/
-├── pages/              # Route-level components (Homepage, LeaderboardHome, Gallery, etc.)
+├── pages/              # Route-level components (Homepage, LeaderboardHome, Environments, etc.)
 ├── components/
 │   ├── common/         # Shared layout components (Layout, Navigation, Footer, etc.)
 │   └── leaderboard/    # Leaderboard-specific components
@@ -64,7 +64,7 @@ The app uses **HashRouter** (essential for GitHub Pages) with these main routes:
 
 - `/` - Homepage with hero section and features
 - `/leaderboard` - Agent performance rankings
-- `/gallery` - Environment showcase with filtering
+- `/environments` - Environment showcase with filtering
 - `/launcher/:envId` - Dynamic environment launcher
 
 ### Key Features

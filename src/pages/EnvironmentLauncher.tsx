@@ -904,7 +904,7 @@ const EnvironmentLauncher = () => {
             Environment &quot;{envId}&quot; is not available.
           </p>
           <Link
-            to="/gallery"
+            to="/environments"
             className="inline-flex items-center px-4 py-2 bg-gray-800 text-white rounded-sm hover:bg-gray-700 transition-colors"
           >
             <svg
@@ -920,7 +920,7 @@ const EnvironmentLauncher = () => {
                 d="M10 19l-7-7m0 0l7-7m-7 7h18"
               />
             </svg>
-            Back to Gallery
+            Back to Environments
           </Link>
         </div>
       </div>
@@ -934,9 +934,9 @@ const EnvironmentLauncher = () => {
         <div className="px-4 py-2">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3 min-w-0 flex-1">
-              {/* Back to Gallery Button */}
+              {/* Back to Environments Button */}
               <Link
-                to="/gallery"
+                to="/environments"
                 className="px-3 py-1 bg-gray-900 text-white text-xs font-bold uppercase tracking-wide hover:bg-gray-800 transition-colors flex items-center flex-shrink-0"
               >
                 <svg

@@ -7,7 +7,7 @@ const Navigation: React.FC = () => {
   const navItems = [
     { name: 'Home', path: '/' },
     { name: 'Leaderboards', path: '/leaderboard' },
-    { name: 'Gallery', path: '/gallery' },
+    { name: 'Environments', path: '/environments' },
   ];
 
   const isActive = (path: string) => location.pathname === path;

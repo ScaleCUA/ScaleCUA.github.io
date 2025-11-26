@@ -40,10 +40,10 @@ const LoadingState: React.FC = () => (
       <div className="text-center">
         <div className="w-20 h-20 border-4 border-gray-200 border-t-gray-800 rounded-full animate-spin mx-auto mb-6"></div>
         <h3 className="text-2xl font-bold text-gray-900 mb-2 uppercase tracking-wide">
-          Loading Gallery
+          Loading Environments
         </h3>
         <p className="text-lg text-gray-700">
-          Please wait while we fetch the latest gallery data...
+          Please wait while we fetch the latest environment data...
         </p>
       </div>
     </div>
@@ -76,10 +76,11 @@ const ErrorState: React.FC<ErrorStateProps> = ({ error, onRetry }) => (
           </svg>
         </div>
         <h3 className="text-2xl font-bold text-gray-900 mb-2 uppercase tracking-wide">
-          Failed to Load Gallery
+          Failed to Load Environments
         </h3>
         <p className="text-lg text-gray-700 mb-6">
-          {error || 'An unexpected error occurred while loading gallery data.'}
+          {error ||
+            'An unexpected error occurred while loading environment data.'}
         </p>
         <button
           onClick={onRetry}
@@ -94,7 +95,7 @@ const ErrorState: React.FC<ErrorStateProps> = ({ error, onRetry }) => (
 
 const PAGE_SIZE = 10;
 
-const Gallery: React.FC = () => {
+const Environments: React.FC = () => {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -267,7 +268,7 @@ const Gallery: React.FC = () => {
                     Explore AI-Generated Testing Environments
                   </div>
                 </div>
-                {/* Gallery Icon */}
+                {/* Environment Icon */}
                 <div className="ml-6 shrink-0">
                   <div className="w-16 h-16 md:w-20 md:h-20 rounded-lg border-2 border-gray-300 bg-gray-100 flex items-center justify-center shadow-sm">
                     <svg
@@ -315,7 +316,7 @@ const Gallery: React.FC = () => {
                     Explore AI-Generated Testing Environments
                   </div>
                 </div>
-                {/* Gallery Icon */}
+                {/* Environment Icon */}
                 <div className="ml-6 shrink-0">
                   <div className="w-16 h-16 md:w-20 md:h-20 rounded-lg border-2 border-gray-300 bg-gray-100 flex items-center justify-center shadow-sm">
                     <svg
@@ -964,4 +965,4 @@ const Gallery: React.FC = () => {
   );
 };
 
-export default Gallery;
+export default Environments;

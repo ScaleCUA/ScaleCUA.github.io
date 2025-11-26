@@ -15,7 +15,8 @@ const Homepage: React.FC = () => {
                   ScaleWoB
                 </h1>
                 <div className="text-lg font-medium text-gray-700">
-                  Scalable World of Bits - Synthetic Computer-Use Environments for GUI Agents
+                  Scalable World of Bits - Synthetic Computer-Use Environments
+                  for GUI Agents
                 </div>
               </div>
               {/* GitHub-style Avatar */}
@@ -46,14 +47,16 @@ const Homepage: React.FC = () => {
                 About
               </div>
               <p className="text-base text-gray-700 leading-relaxed mb-8 wrap-break-words">
-                GUI agents require training and evaluation in diverse interactive computer-use environments, 
-                yet high-quality such environments remain scarce. 
-                ScaleWoB addresses this gap through semi-automated environment synthesis. 
-                Each environment in ScaleWoB is proposed by domain experts & crowd workers and developed with AI,
-                featuring realistic interfaces and content, 
-                and capable of executing complex tasks with verifiable, rule-based rewards. 
-                ScaleWoB now offers a large and varied collection of 1000+ tasks and environments 
-                spanning three major platforms including mobile, web and desktop.
+                GUI agents require training and evaluation in diverse
+                interactive computer-use environments, yet high-quality such
+                environments remain scarce. ScaleWoB addresses this gap through
+                semi-automated environment synthesis. Each environment in
+                ScaleWoB is proposed by domain experts & crowd workers and
+                developed with AI, featuring realistic interfaces and content,
+                and capable of executing complex tasks with verifiable,
+                rule-based rewards. ScaleWoB now offers a large and varied
+                collection of 1000+ tasks and environments spanning three major
+                platforms including mobile, web and desktop.
               </p>
             </div>
 
@@ -63,7 +66,7 @@ const Homepage: React.FC = () => {
             {/* Action Buttons */}
             <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6">
               <Link
-                to="/gallery"
+                to="/environments"
                 className="px-8 py-3 bg-gray-900 text-white text-sm font-bold uppercase tracking-wide hover:bg-gray-800 transition-colors flex items-center justify-center group"
               >
                 View Environments
@@ -147,8 +150,9 @@ const Homepage: React.FC = () => {
                       AI-Generated Environments
                     </h4>
                     <p className="text-sm md:text-base text-gray-700 leading-relaxed wrap-break-words">
-                      Unique testing environment generated dynamically for each task, 
-                      enabling large-scale and diverse agent environment simulation.
+                      Unique testing environment generated dynamically for each
+                      task, enabling large-scale and diverse agent environment
+                      simulation.
                     </p>
                   </div>
                 </div>
@@ -162,8 +166,8 @@ const Homepage: React.FC = () => {
                       Stable and Fast Execution
                     </h4>
                     <p className="text-sm md:text-base text-gray-700 leading-relaxed wrap-break-words">
-                      Lightweight frontend and backend with synthetic in-app data,
-                      making the tests fast and reproducible.
+                      Lightweight frontend and backend with synthetic in-app
+                      data, making the tests fast and reproducible.
                     </p>
                   </div>
                 </div>
@@ -177,8 +181,8 @@ const Homepage: React.FC = () => {
                       Cross-Platform Testing
                     </h4>
                     <p className="text-sm md:text-base text-gray-700 leading-relaxed wrap-break-words">
-                      Comprehensive evaluation framework supporting web, desktop and mobile 
-                      platforms within unified testing interface.
+                      Comprehensive evaluation framework supporting web, desktop
+                      and mobile platforms within unified testing interface.
                     </p>
                   </div>
                 </div>

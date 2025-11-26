@@ -42,10 +42,10 @@ const Footer: React.FC = () => {
               </li>
               <li>
                 <a
-                  href="/gallery"
+                  href="/environments"
                   className="text-gray-600 hover:text-gray-900 transition-colors duration-200"
                 >
-                  Gallery
+                  Environments
                 </a>
               </li>
             </ul>
