@@ -11,14 +11,11 @@ const LeaderboardHome: React.FC = () => {
           <div className="py-8 border-b-2 border-gray-400">
             <div className="flex items-start justify-between">
               <div className="flex-1">
-                <div className="text-sm font-bold uppercase tracking-wider text-gray-600 mb-2">
-                  Performance Rankings
-                </div>
                 <h1 className="text-5xl md:text-7xl font-black text-gray-900 mb-2 leading-none">
-                  LEADERBOARD
+                  Leaderboard
                 </h1>
                 <div className="text-lg font-medium text-gray-700">
-                  Competitive GUI Agent Evaluation
+                  Benchmarking Results of GUI Agents on ScaleWoB
                 </div>
               </div>
               {/* Trophy Icon */}
@@ -58,8 +55,8 @@ const LeaderboardHome: React.FC = () => {
                   </div>
                   <p className="text-sm text-gray-600 mt-1">
                     {activeTab === 'open'
-                      ? 'Open evaluation results and community rankings'
-                      : 'Authorized closed benchmark with fair evaluation'}
+                      ? 'Self-submitted results on public ScaleWoB environments'
+                      : 'Verified results on our private ScaleWoB environments'}
                   </p>
                 </div>
                 <div className="flex items-center space-x-2">
@@ -71,7 +68,7 @@ const LeaderboardHome: React.FC = () => {
                         : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-100'
                     }`}
                   >
-                    Open
+                    Submitted
                   </button>
                   <button
                     onClick={() => setActiveTab('closed')}
@@ -81,7 +78,7 @@ const LeaderboardHome: React.FC = () => {
                         : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-100'
                     }`}
                   >
-                    Closed
+                    Verified
                   </button>
                   <div className="text-xs font-medium text-gray-600 ml-4">
                     <span className="uppercase tracking-wide">Updated:</span>{' '}
