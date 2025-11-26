@@ -352,14 +352,11 @@ const Gallery: React.FC = () => {
           <div className="py-8 border-b-2 border-gray-400">
             <div className="flex items-start justify-between">
               <div className="flex-1">
-                <div className="text-sm font-bold uppercase tracking-wider text-gray-600 mb-2">
-                  Environment Collection
-                </div>
                 <h1 className="text-5xl md:text-7xl font-black text-gray-900 mb-2 leading-none">
-                  GALLERY
+                  Environments
                 </h1>
                 <div className="text-lg font-medium text-gray-700">
-                  Explore AI-Generated Testing Environments
+                  View Environments Available in ScaleWoB
                 </div>
               </div>
               {/* Gallery Icon */}
