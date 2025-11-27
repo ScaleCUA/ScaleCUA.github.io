@@ -803,13 +803,6 @@ const Environments: React.FC = () => {
                                     >
                                       {environment.difficulty}
                                     </span>
-                                    <span className="px-2 py-1 text-xs font-medium text-gray-700 bg-gray-50 border border-gray-300">
-                                      Complexity:{' '}
-                                      {environment.metrics.complexity}/10
-                                    </span>
-                                    <span className="px-2 py-1 text-xs font-medium text-gray-700 bg-gray-50 border border-gray-300">
-                                      Success: {environment.metrics.completion}%
-                                    </span>
                                   </div>
                                   <p className="text-xs md:text-sm text-gray-700 leading-relaxed line-clamp-2">
                                     {environment.description}
