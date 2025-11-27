@@ -319,6 +319,8 @@ const EnvironmentLauncher = () => {
   const startEvaluation = useCallback(() => {
     if (!iframeRef.current) return;
 
+    // Switch to Evaluate Mode
+    setIsPlayMode(false);
     setIsEvaluationStarted(true);
     setIsEvaluating(false);
 
@@ -329,7 +331,10 @@ const EnvironmentLauncher = () => {
     setTrajectory([]);
 
     // Log evaluation start
-    addConsoleEntry('action', 'Starting evaluation - refreshing environment');
+    addConsoleEntry(
+      'action',
+      'Starting evaluation - switching to Evaluate Mode'
+    );
 
     // Set loading state first to ensure overlay shows
     setEnvironmentStatus('loading');
@@ -821,6 +826,8 @@ const EnvironmentLauncher = () => {
           setIsEvaluating(false);
           // Reset evaluation started state to allow new evaluations
           setIsEvaluationStarted(false);
+          // Return to Play Mode after evaluation completes
+          setIsPlayMode(true);
         }
         // For non-evaluate responses, do nothing to allow Python SDK to receive them
       }
@@ -1077,82 +1084,29 @@ const EnvironmentLauncher = () => {
                     </p>
                   </div>
 
-                  {/* Play Mode Switch */}
-                  <div className="p-4 bg-white border-2 border-gray-300 rounded-lg">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <h3 className="text-sm font-bold text-gray-900">
-                          Play Mode
-                        </h3>
-                        <p className="text-xs text-gray-600">
-                          Free interaction with the environment
-                        </p>
-                      </div>
-                      <button
-                        onClick={() => {
-                          const newPlayMode = !isPlayMode;
-                          setIsPlayMode(newPlayMode);
-
-                          if (newPlayMode) {
-                            // Switching to play mode, reset all evaluation state
-                            setIsEvaluationStarted(false);
-                            setIsEvaluating(false);
-                            setParameters({}); // Clear parameters when switching to play mode
-                            setIsEvaluationRefresh(false); // Reset evaluation refresh flag
-                            addConsoleEntry(
-                              'info',
-                              'Switched to Play Mode - Free interaction enabled'
-                            );
-                          } else {
-                            // Switching to evaluate mode
-                            setIsEvaluationStarted(false);
-                            setIsEvaluating(false);
-                            addConsoleEntry(
-                              'info',
-                              'Switched to Evaluate Mode - Use Start/Finish buttons'
-                            );
-                          }
-                        }}
-                        className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 border-2 ${
-                          isPlayMode
-                            ? 'bg-green-600 border-green-500'
-                            : 'bg-gray-300 border-gray-400'
-                        }`}
-                      >
-                        <span
-                          className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform duration-200 border ${
-                            isPlayMode
-                              ? 'translate-x-6 border-green-300'
-                              : 'translate-x-1 border-gray-400'
-                          }`}
-                        />
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* Evaluation Controls (always visible, disabled in play mode) */}
+                  {/* Evaluation Controls */}
                   <div className="space-y-4">
                     <div className="p-4 bg-white border-2 border-gray-300 rounded-lg">
                       <h3 className="text-sm font-bold text-gray-900 mb-3">
                         Evaluation Controls
                       </h3>
-                      <p className="text-xs text-gray-600 mb-4">
-                        Start and finish evaluation recording
-                        {isPlayMode && (
-                          <span className="block mt-1 text-amber-600 font-medium">
-                            ⚠️ Switch to Evaluate Mode to enable these controls
-                          </span>
-                        )}
-                      </p>
+                      <div className="text-xs text-gray-500 space-y-1 mb-4">
+                        <p>
+                          • Press START to start your task session. The
+                          environment will be reset to the initial state.
+                        </p>
+                        <p>
+                          • Press FINISH to end your task session. The
+                          environment will output the task score.
+                        </p>
+                      </div>
 
                       <div className="space-y-3">
                         <button
                           onClick={startEvaluation}
-                          disabled={
-                            isPlayMode || (isEvaluationStarted && !isEvaluating)
-                          }
+                          disabled={isEvaluationStarted && !isEvaluating}
                           className={`w-full px-4 py-2 text-sm font-bold uppercase tracking-wide rounded transition-colors duration-200 flex items-center justify-center ${
-                            isPlayMode || (isEvaluationStarted && !isEvaluating)
+                            isEvaluationStarted && !isEvaluating
                               ? 'bg-gray-200 text-gray-500 cursor-not-allowed border-2 border-gray-300'
                               : 'bg-green-600 text-white hover:bg-green-700 border-2 border-green-500'
                           }`}
@@ -1176,20 +1130,16 @@ const EnvironmentLauncher = () => {
                               d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                             />
                           </svg>
-                          {isPlayMode
-                            ? 'Start (Disabled)'
-                            : isEvaluationStarted && !isEvaluating
-                              ? 'Evaluation in Progress'
-                              : 'Start'}
+                          {isEvaluationStarted && !isEvaluating
+                            ? 'Evaluation in Progress'
+                            : 'Start Evaluation'}
                         </button>
 
                         <button
                           onClick={finishEvaluation}
-                          disabled={
-                            isPlayMode || !isEvaluationStarted || isEvaluating
-                          }
+                          disabled={!isEvaluationStarted || isEvaluating}
                           className={`w-full px-4 py-2 text-sm font-bold uppercase tracking-wide rounded transition-colors duration-200 flex items-center justify-center ${
-                            isPlayMode || !isEvaluationStarted || isEvaluating
+                            !isEvaluationStarted || isEvaluating
                               ? 'bg-gray-200 text-gray-500 cursor-not-allowed border-2 border-gray-300'
                               : 'bg-blue-600 text-white hover:bg-blue-700 border-2 border-blue-500'
                           }`}
@@ -1211,7 +1161,7 @@ const EnvironmentLauncher = () => {
                             {isEvaluating ? (
                               <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
                             ) : null}
-                            {isPlayMode ? 'Finish (Disabled)' : 'Finish'}
+                            Finish Evaluation
                           </>
                         </button>
                       </div>
@@ -1224,14 +1174,8 @@ const EnvironmentLauncher = () => {
                       <ParameterInput
                         params={environment.params}
                         onParametersChange={setParameters}
-                        disabled={isPlayMode || !isEvaluationStarted}
-                        disabledReason={
-                          isPlayMode && !isEvaluationStarted
-                            ? 'both'
-                            : isPlayMode
-                              ? 'play-mode'
-                              : 'not-started'
-                        }
+                        disabled={!isEvaluationStarted}
+                        disabledReason="not-started"
                       />
                     )}
                 </div>
