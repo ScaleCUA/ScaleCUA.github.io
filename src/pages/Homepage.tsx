@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const Homepage: React.FC = () => {
+  const [showLanguageOptions, setShowLanguageOptions] = useState(false);
+
   return (
     <div className="bg-white">
       {/* Header Section - Newspaper Style */}
@@ -84,27 +86,47 @@ const Homepage: React.FC = () => {
                   />
                 </svg>
               </Link>
-              <a
-                href="https://lw572lx3ee.feishu.cn/share/base/form/shrcnjzeeqdcf4d6yDPKHw5xbOd"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-8 py-3 border-2 border-gray-800 text-gray-800 text-sm font-bold uppercase tracking-wide hover:bg-gray-100 transition-colors flex items-center justify-center group"
-              >
-                Create Environment
-                <svg
-                  className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform duration-200"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
+              <div className="relative w-full sm:w-auto">
+                <button
+                  onClick={() => setShowLanguageOptions(!showLanguageOptions)}
+                  className={`w-full px-8 py-3 border-2 border-gray-800 text-gray-800 text-sm font-bold uppercase tracking-wide hover:bg-gray-100 transition-colors flex items-center justify-center group ${showLanguageOptions ? 'bg-gray-100' : ''}`}
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M12 4v16m8-8H4"
-                  />
-                </svg>
-              </a>
+                  Create Environment
+                  <svg
+                    className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform duration-200"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M12 4v16m8-8H4"
+                    />
+                  </svg>
+                </button>
+                {showLanguageOptions && (
+                  <div className="absolute top-full mt-2 left-0 right-0 border-2 border-gray-800 bg-white shadow-lg z-10">
+                    <a
+                      href="https://lw572lx3ee.feishu.cn/share/base/form/shrcnjzeeqdcf4d6yDPKHw5xbOd"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block px-6 py-3 text-sm font-bold uppercase tracking-wide text-gray-800 hover:bg-gray-100 transition-colors border-b border-gray-300"
+                    >
+                      中文版本
+                    </a>
+                    <a
+                      href="https://lw572lx3ee.feishu.cn/share/base/form/shrcnoK335CJpC0tKwORe5Gfwme"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block px-6 py-3 text-sm font-bold uppercase tracking-wide text-gray-800 hover:bg-gray-100 transition-colors"
+                    >
+                      ENGLISH
+                    </a>
+                  </div>
+                )}
+              </div>
               <Link
                 to="/leaderboard"
                 className="px-8 py-3 border-2 border-gray-800 text-gray-800 text-sm font-bold uppercase tracking-wide hover:bg-gray-100 transition-colors flex items-center justify-center group"
