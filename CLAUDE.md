@@ -153,7 +153,7 @@ Each environment has:
 
 - **Task name and description**: Clear definition of the evaluation task
 - **Platform**: Web Applications, Desktop Apps, Mobile Interfaces
-- **Difficulty level**: Intermediate, Advanced, Expert
+- **Difficulty level**: Basic, Advanced, Expert
 - **Performance metrics**: Completion rates and complexity scores
 - **Color theme**: Visual consistency (warm, coral, gold)
 - **Parameters**: Typed evaluation inputs for dynamic configuration

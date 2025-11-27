@@ -17,7 +17,7 @@ const EnvironmentPlaceholder = () => {
         taskName: 'Unknown Environment',
         description: 'Environment not found',
         platform: 'Web Applications',
-        difficulty: 'Intermediate',
+        difficulty: 'Basic',
         tags: [],
         metrics: { completion: 0, complexity: 1 },
         icon: 'help',
@@ -38,7 +38,7 @@ const EnvironmentPlaceholder = () => {
         return 'bg-red-50 text-red-700 border-red-300';
       case 'advanced':
         return 'bg-purple-50 text-purple-700 border-purple-300';
-      case 'intermediate':
+      case 'basic':
         return 'bg-blue-50 text-blue-700 border-blue-300';
       default:
         return 'bg-gray-50 text-gray-800 border-gray-200';

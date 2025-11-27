@@ -9,7 +9,7 @@ export type Platform =
   | 'Web Applications'
   | 'Desktop Apps'
   | 'Mobile Interfaces';
-export type Difficulty = 'Intermediate' | 'Advanced' | 'Expert';
+export type Difficulty = 'Basic' | 'Advanced' | 'Expert';
 export type ColorTheme = 'warm' | 'coral' | 'gold';
 
 // Parameter types for evaluation input

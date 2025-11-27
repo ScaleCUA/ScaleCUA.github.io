@@ -157,7 +157,7 @@ class EnvironmentDataService {
                 id: env.id || `env-${Date.now()}`,
                 taskName: env.taskName || 'Untitled Environment',
                 platform: env.platform || 'Web Applications',
-                difficulty: env.difficulty || 'Intermediate',
+                difficulty: env.difficulty || 'Basic',
                 description: env.description || '',
                 tags: Array.isArray(env.tags) ? env.tags : [],
                 metrics: {
