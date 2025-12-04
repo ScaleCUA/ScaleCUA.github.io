@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import {
   useEnvironmentPreviews,
@@ -139,7 +139,7 @@ const ErrorState: React.FC<ErrorStateProps> = ({ error, onRetry }) => (
   </div>
 );
 
-const PAGE_SIZE = 100;
+const PAGE_SIZE = 20;
 
 const Environments: React.FC = () => {
   const navigate = useNavigate();
@@ -166,6 +166,32 @@ const Environments: React.FC = () => {
   );
   const [copiedId, setCopiedId] = useState<string | null>(null);
 
+  // Track whether we're restoring state from sessionStorage
+  const isRestoringState = useRef(false);
+
+  // Restore state from sessionStorage if returning from launcher
+  useEffect(() => {
+    const savedState = sessionStorage.getItem('environments-state');
+    if (savedState) {
+      try {
+        isRestoringState.current = true; // Set flag before restoration
+        const state = JSON.parse(savedState);
+        if (state.platform) setSelectedPlatform(state.platform);
+        if (state.difficulty) setSelectedDifficulty(state.difficulty);
+        if (state.search) setSearchInput(state.search);
+        if (state.tags?.length) setSelectedTags(state.tags);
+        if (state.page) setCurrentPage(state.page);
+      } catch {
+        // Ignore parse errors
+      }
+      sessionStorage.removeItem('environments-state');
+      // Reset flag after a microtask to allow state updates to settle
+      setTimeout(() => {
+        isRestoringState.current = false;
+      }, 0);
+    }
+  }, []);
+
   // Load environment data using the new service
   const hookResult = useEnvironmentPreviews() as {
     data: EnvironmentPreview[] | null;
@@ -184,6 +210,10 @@ const Environments: React.FC = () => {
 
   // Reset to page 1 when filters change
   useEffect(() => {
+    // Skip reset if we're restoring state from sessionStorage
+    if (isRestoringState.current) {
+      return;
+    }
     if (currentPage !== 1) {
       setCurrentPage(1);
     }
@@ -843,9 +873,19 @@ const Environments: React.FC = () => {
                                   )}
                                 </div>
                                 <button
-                                  onClick={() =>
-                                    navigate(`/launcher/${environment.id}`)
-                                  }
+                                  onClick={() => {
+                                    sessionStorage.setItem(
+                                      'environments-state',
+                                      JSON.stringify({
+                                        platform: selectedPlatform,
+                                        difficulty: selectedDifficulty,
+                                        search: searchInput,
+                                        tags: selectedTags,
+                                        page: currentPage,
+                                      })
+                                    );
+                                    navigate(`/launcher/${environment.id}`);
+                                  }}
                                   className="px-3 py-1.5 md:px-4 md:py-2 bg-gray-900 text-white text-sm font-bold uppercase tracking-wide hover:bg-gray-800 transition-colors flex items-center justify-center group"
                                 >
                                   Launch

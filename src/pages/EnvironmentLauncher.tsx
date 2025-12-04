@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useEnvironmentData } from '../services/environmentService';
 import { EnvironmentPreview } from '../types/environment';
 import ParameterInput from '../components/common/ParameterInput';
@@ -30,6 +30,7 @@ interface ConsoleEntry {
 
 const EnvironmentLauncher = () => {
   const { envId } = useParams<{ envId: string }>();
+  const navigate = useNavigate();
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const consoleContentRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -910,8 +911,8 @@ const EnvironmentLauncher = () => {
           <p className="text-gray-600 mb-4">
             Environment &quot;{envId}&quot; is not available.
           </p>
-          <Link
-            to="/environments"
+          <button
+            onClick={() => navigate(-1)}
             className="inline-flex items-center px-4 py-2 bg-gray-800 text-white rounded-sm hover:bg-gray-700 transition-colors"
           >
             <svg
@@ -928,7 +929,7 @@ const EnvironmentLauncher = () => {
               />
             </svg>
             Back to Environments
-          </Link>
+          </button>
         </div>
       </div>
     );
@@ -942,8 +943,8 @@ const EnvironmentLauncher = () => {
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3 min-w-0 flex-1">
               {/* Back to Environments Button */}
-              <Link
-                to="/environments"
+              <button
+                onClick={() => navigate(-1)}
                 className="px-3 py-1 bg-gray-900 text-white text-xs font-bold uppercase tracking-wide hover:bg-gray-800 transition-colors flex items-center flex-shrink-0"
               >
                 <svg
@@ -960,7 +961,7 @@ const EnvironmentLauncher = () => {
                   />
                 </svg>
                 Back
-              </Link>
+              </button>
 
               <h1 className="text-lg font-bold text-gray-900 truncate">
                 {environment.taskName}
